@@ -1,22 +1,23 @@
-# Bienes Raíces Altair (real-estate-1)
+# Bienes Raíces Altair
 
-Sitio Next.js para **Bienes Raíces Altair**, con catálogo importado desde [bienesraicesaltair.com](https://bienesraicesaltair.com).
+Sitio basado en [stellier7/real-estate-template](https://github.com/stellier7/real-estate-template), con el catálogo completo importado desde [bienesraicesaltair.com](https://bienesraicesaltair.com).
 
-## Desarrollo local
+## Desarrollo
 
 ```bash
 npm install
-python3 scripts/scrape-altair.py   # importa ~500 inmuebles a src/data/properties.json
+python3 scripts/scrape-altair.py   # actualiza src/data/properties.json
 npm run dev
 ```
 
-## Scripts
+## Datos
 
-| Script | Descripción |
-|--------|-------------|
-| `scripts/scrape-altair.py` | Extrae agencia + listados + detalle desde el sitio Wasi |
-| `scripts/bootstrap-origin-template.sh` | Clona `santiagotellier/real-estate-template` vía Origin CLI cuando hay `CURSOR_AUTH_TOKEN` |
+| Archivo | Contenido |
+|---------|-----------|
+| `src/data/properties.json` | Agencia + 475 inmuebles (scrape Wasi) |
+| `src/content/site/config.ts` | Marca, contacto y navegación |
+| `src/lib/properties/map-altair.ts` | Mapeo JSON → modelo del template |
 
 ## Despliegue
 
-Compatible con Vercel (`vercel.json` incluido).
+Ver `docs/DEPLOY-VERCEL.md`. Defina `NEXT_PUBLIC_SITE_URL` con la URL de producción.

@@ -1,21 +1,78 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --background: #f7f4ef;
+  --foreground: #141310;
+  --muted: #5c574f;
+  --accent: #8a6a4b;
+  --line: rgba(20, 19, 16, 0.12);
+  --surface: #ffffff;
+  --max-width: 88rem;
+  --section-y: clamp(4rem, 8vw, 7rem);
+  --motion-duration: 0.55s;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-serif: var(--font-cormorant);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-line: var(--line);
+  --color-surface: var(--surface);
+  --font-sans: var(--font-dm-sans);
+  --font-display: var(--font-cormorant);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-duration: 0.01ms;
+  }
 }
 
 body {
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
 }
 
-.font-serif {
+.font-display {
   font-family: var(--font-cormorant), Georgia, serif;
+}
+
+.prose-editorial {
+  max-width: 42rem;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--muted);
+}
+
+.prose-editorial p + p {
+  margin-top: 1.25rem;
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  animation: fade-up var(--motion-duration) ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    animation: none;
+  }
 }

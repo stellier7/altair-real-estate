@@ -1,114 +1,116 @@
-import Link from "next/link";
-import { PropertyGrid } from "@/components/PropertyGrid";
-import { getFeaturedProperties, getStats } from "@/lib/properties";
-import { site, whatsappHref } from "@/lib/site";
+import Image from "next/image";
+import { PropertyCard } from "@/components/directory/PropertyCard";
+import { Container } from "@/components/layout/Container";
+import { Section } from "@/components/layout/Section";
+import { TextLink } from "@/components/ui/TextLink";
+import { siteConfig } from "@/content/site/config";
+import { catalogStats, propertyRepository } from "@/lib/properties/repository";
 
 export default function HomePage() {
-  const featured = getFeaturedProperties(9);
-  const stats = getStats();
+  const featured = propertyRepository
+    .getAll()
+    .filter((property) => property.featured)
+    .slice(0, 3);
+  const stats = catalogStats();
+  const heroImage =
+    featured[0]?.media.heroImage.src ??
+    "https://images.wasi.co/empresas/b20190828112855.png";
 
   return (
     <>
-      <section className="relative overflow-hidden bg-gradient-to-br from-sky-950 via-sky-900 to-slate-900 text-white">
-        <div className="mx-auto max-w-6xl px-4 py-16 md:py-24">
-          <p className="text-sm font-semibold uppercase tracking-widest text-sky-200">Tegucigalpa · Honduras</p>
-          <h1 className="mt-4 max-w-3xl font-serif text-4xl font-semibold leading-tight md:text-5xl">
-            {site.name}
+      <section className="relative min-h-[88vh] overflow-hidden">
+        <Image
+          src={heroImage}
+          alt={siteConfig.name}
+          fill
+          priority
+          unoptimized
+          sizes="100vw"
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-background/20" />
+        <Container className="relative flex min-h-[88vh] flex-col justify-end pb-16 pt-28">
+          <p className="text-xs uppercase tracking-[0.24em] text-muted">
+            Tegucigalpa · Francisco Morazán · Honduras
+          </p>
+          <h1 className="mt-4 max-w-4xl font-display text-5xl leading-[1.02] sm:text-6xl lg:text-7xl">
+            {siteConfig.name}
           </h1>
-          <p className="mt-4 max-w-2xl text-lg text-sky-100">{site.description}</p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href="/propiedades?tipo=venta"
-              className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-sky-900 hover:bg-sky-50"
-            >
-              Ver ventas
-            </Link>
-            <Link
-              href="/propiedades?tipo=alquiler"
-              className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10"
-            >
-              Ver alquileres
-            </Link>
-            <a
-              href={whatsappHref("Hola, busco asesoría en bienes raíces.")}
-              className="rounded-full bg-emerald-500 px-6 py-3 text-sm font-semibold text-white hover:bg-emerald-600"
-              target="_blank"
-              rel="noreferrer"
-            >
-              WhatsApp
-            </a>
+          <p className="prose-editorial mt-6 max-w-2xl">{siteConfig.description}</p>
+          <p className="mt-4 text-sm text-muted">{siteConfig.tagline}</p>
+          <div className="mt-10 flex flex-wrap gap-6">
+            <TextLink href="/properties?listing=sale">Ver ventas</TextLink>
+            <TextLink href="/properties?listing=rent">Ver alquileres</TextLink>
+            <TextLink href="/contact">Contacto</TextLink>
           </div>
           {stats.total > 0 ? (
-            <dl className="mt-10 flex flex-wrap gap-8 text-sm">
+            <dl className="mt-10 flex flex-wrap gap-10 text-sm">
               <div>
-                <dt className="text-sky-300">Inmuebles</dt>
-                <dd className="text-2xl font-bold">{stats.total}</dd>
+                <dt className="text-muted">Inmuebles</dt>
+                <dd className="font-display text-3xl">{stats.total}</dd>
               </div>
               <div>
-                <dt className="text-sky-300">En venta</dt>
-                <dd className="text-2xl font-bold">{stats.forSale}</dd>
+                <dt className="text-muted">En venta</dt>
+                <dd className="font-display text-3xl">{stats.forSale}</dd>
               </div>
               <div>
-                <dt className="text-sky-300">En alquiler</dt>
-                <dd className="text-2xl font-bold">{stats.forRent}</dd>
+                <dt className="text-muted">En alquiler</dt>
+                <dd className="font-display text-3xl">{stats.forRent}</dd>
               </div>
             </dl>
           ) : null}
-        </div>
+        </Container>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-14">
-        <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <h2 className="font-serif text-3xl font-semibold text-slate-900">Últimos inmuebles</h2>
-            <p className="mt-1 text-slate-600">Destacados del catálogo importado de bienesraicesaltair.com</p>
-          </div>
-          <Link href="/propiedades" className="text-sm font-semibold text-sky-700 hover:text-sky-900">
-            Ver todo el catálogo →
-          </Link>
+      <Section>
+        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+          <h2 className="font-display text-4xl sm:text-5xl">Quiénes somos</h2>
+          <p className="prose-editorial">
+            Somos una empresa de bienes raíces en Tegucigalpa especializada en ventas y rentas de
+            propiedades comerciales, residenciales e industriales. Ofrecemos experiencia,
+            profesionalismo y ética a nuestros clientes.
+          </p>
         </div>
-        <PropertyGrid properties={featured} />
-      </section>
+      </Section>
 
-      <section className="border-t border-slate-200 bg-white">
-        <div className="mx-auto grid max-w-6xl gap-8 px-4 py-14 md:grid-cols-2">
-          <div>
-            <h2 className="font-serif text-2xl font-semibold">Ubicación y contacto</h2>
-            <p className="mt-3 text-slate-600">{site.address.line1}</p>
-            <p className="text-slate-600">
-              {site.address.city} — {site.address.region}, {site.address.country}
-            </p>
-            <ul className="mt-4 space-y-2 text-sm">
-              <li>
-                <strong>Teléfono:</strong>{" "}
-                <a href={`tel:${site.phone}`} className="text-sky-700">{site.phone}</a>
-              </li>
-              <li>
-                <strong>Móvil:</strong>{" "}
-                <a href={`tel:${site.mobile}`} className="text-sky-700">{site.mobile}</a>
-              </li>
-              <li>
-                <strong>Email:</strong>{" "}
-                <a href={`mailto:${site.email}`} className="text-sky-700">{site.email}</a>
-              </li>
-            </ul>
-          </div>
-          <div className="rounded-2xl bg-slate-100 p-6">
-            <h3 className="font-semibold text-slate-900">¿Busca asesoría?</h3>
-            <p className="mt-2 text-sm text-slate-600">
-              Escríbanos por WhatsApp o visite nuestra oficina en Metropolis.
-            </p>
-            <a
-              href={whatsappHref("Hola, me gustaría recibir asesoría de Bienes Raíces Altair.")}
-              className="mt-4 inline-block rounded-full bg-sky-700 px-5 py-2.5 text-sm font-semibold text-white"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Contactar por WhatsApp
-            </a>
-          </div>
+      <Section id="featured">
+        <div className="mb-12 flex items-end justify-between gap-6">
+          <h2 className="font-display text-4xl sm:text-5xl">Inmuebles destacados</h2>
+          <TextLink href="/properties">Ver catálogo</TextLink>
         </div>
-      </section>
+        <div className="grid gap-20">
+          {featured.map((property, index) => (
+            <PropertyCard key={property.id} property={property} priority={index === 0} />
+          ))}
+        </div>
+      </Section>
+
+      <Section className="bg-surface">
+        <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <h2 className="font-display text-4xl sm:text-5xl">Servicios</h2>
+            <p className="prose-editorial mt-6">
+              Asesoría en compra y venta de casas, apartamentos, terrenos, locales, bodegas y
+              oficinas en Tegucigalpa y otras ciudades de Honduras.
+            </p>
+            <TextLink href="/services" className="mt-8">Conocer servicios</TextLink>
+          </div>
+          <ul className="grid gap-4 text-muted sm:grid-cols-2">
+            {[
+              "Venta residencial",
+              "Alquileres",
+              "Propiedad comercial",
+              "Terrenos y fincas",
+              "Oficinas y locales",
+              "Asesoría personalizada",
+            ].map((item) => (
+              <li key={item} className="border-t border-line pt-4 text-sm uppercase tracking-[0.14em]">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Section>
     </>
   );
 }
