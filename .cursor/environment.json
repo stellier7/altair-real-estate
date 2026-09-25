@@ -1,0 +1,12 @@
+{
+  "name": "Altair Real Estate",
+  "install": "npm ci\npython3 scripts/scrape-altair.py\nbash scripts/bootstrap-origin-template.sh",
+  "start": "bash scripts/bootstrap-origin-template.sh",
+  "terminals": [
+    {
+      "name": "Next.js dev",
+      "command": "npm run dev",
+      "description": "Local preview for the Altair site"
+    }
+  ]
+}

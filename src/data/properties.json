@@ -1,0 +1,21 @@
+{
+  "agency": {
+    "name": "Bienes Raices Altair",
+    "description": "Somos una empresa de Bienes Raices en Tegucigalpa especializados en ventas y rentas de propiedades comerciales, residenciales e industriales.",
+    "logo": "https://images.wasi.co/empresas/b20190828112855.png",
+    "phone": "+50422620218",
+    "mobile": "+50498002237",
+    "email": "ventas@bienesraicesaltair.com",
+    "whatsapp": "+50498002237",
+    "address": {
+      "street": "Condominios Metropolis, Torre 2, Local 21802",
+      "city": "Tegucigalpa",
+      "region": "Francisco Morazán",
+      "country": "Honduras"
+    },
+    "sourceWebsite": "https://bienesraicesaltair.com",
+    "scrapedAt": "2026-09-25T00:00:00Z"
+  },
+  "properties": [],
+  "stats": { "total": 0, "forSale": 0, "forRent": 0 }
+}
