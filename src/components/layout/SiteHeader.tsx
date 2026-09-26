@@ -1,35 +1,43 @@
+import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/content/site/config";
+import { Button } from "@/components/ui/Button";
 import { Container } from "./Container";
 import { MobileNav } from "./MobileNav";
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-background/90 backdrop-blur-md">
-      <Container className="flex h-16 items-center justify-between gap-6 sm:h-20">
+    <header className="sticky top-0 z-50 border-b border-line bg-background/85 backdrop-blur-md transition-shadow duration-300">
+      <Container className="flex h-16 items-center justify-between gap-4 sm:h-20">
         <Link href="/" className="focus-ring flex items-center gap-3">
-          <img
+          <Image
             src={siteConfig.logo}
             alt={siteConfig.name}
-            className="h-10 w-auto max-w-[180px] object-contain"
+            width={160}
+            height={48}
+            className="h-10 w-auto max-w-[160px] object-contain"
+            priority
           />
           <span className="hidden font-display text-xl tracking-tight sm:inline sm:text-2xl">
             {siteConfig.name}
           </span>
         </Link>
         <nav
-          className="hidden items-center gap-8 text-sm uppercase tracking-[0.18em] text-muted md:flex"
-          aria-label="Primary"
+          className="hidden items-center gap-6 text-sm uppercase tracking-[0.16em] text-muted lg:flex"
+          aria-label="Principal"
         >
           {siteConfig.nav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="focus-ring transition-colors hover:text-foreground"
+              className="focus-ring nav-link transition-colors hover:text-foreground"
             >
               {item.label}
             </Link>
           ))}
+          <Button href="/contact" variant="primary" className="!px-5 !py-2.5">
+            Contacto
+          </Button>
         </nav>
         <MobileNav />
       </Container>

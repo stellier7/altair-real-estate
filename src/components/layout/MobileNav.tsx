@@ -8,7 +8,7 @@ export function MobileNav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="md:hidden">
+    <div className="lg:hidden">
       <button
         type="button"
         className="focus-ring text-sm uppercase tracking-[0.18em] text-muted"
@@ -16,7 +16,7 @@ export function MobileNav() {
         aria-controls="mobile-nav-panel"
         onClick={() => setOpen((value) => !value)}
       >
-        {open ? "Close" : "Menu"}
+        {open ? "Cerrar" : "Menú"}
       </button>
       {open ? (
         <nav

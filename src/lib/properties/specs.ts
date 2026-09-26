@@ -16,6 +16,32 @@ const COMMERCIAL_TYPES: PropertyType[] = [
   "industrial",
 ];
 
+const TYPE_LABELS: Record<PropertyType, string> = {
+  residential: "Residencial",
+  apartment: "Apartamento",
+  villa: "Villa",
+  house: "Casa",
+  condominium: "Condominio",
+  commercial: "Comercial",
+  office: "Oficina",
+  retail: "Local comercial",
+  hotel: "Hotel",
+  development: "Desarrollo",
+  land: "Terreno",
+  lot: "Lote",
+  industrial: "Industrial",
+  investment: "Inversión",
+};
+
+const STATUS_LABELS: Record<Property["status"], string> = {
+  available: "Disponible",
+  sold: "Vendido",
+  reserved: "Reservado",
+  under_development: "En desarrollo",
+  coming_soon: "Próximamente",
+  off_market: "Fuera de mercado",
+};
+
 export function supportsResidentialSpecs(type: PropertyType): boolean {
   return RESIDENTIAL_TYPES.includes(type);
 }
@@ -37,11 +63,17 @@ export function supportsInvestmentBlock(property: Property): boolean {
 }
 
 export function formatPropertyType(type: PropertyType): string {
-  return type.replace(/_/g, " ");
+  return TYPE_LABELS[type] ?? type;
 }
 
 export function formatStatus(status: Property["status"]): string {
-  return status.replace(/_/g, " ");
+  return STATUS_LABELS[status] ?? status;
+}
+
+export function formatListingTag(tag: string): string {
+  if (tag === "venta") return "Venta";
+  if (tag === "alquiler") return "Alquiler";
+  return tag;
 }
 
 export function getDisplayPrice(property: Property): string | null {
@@ -55,7 +87,7 @@ export function getDisplayPrice(property: Property): string | null {
     property.pricing?.amount !== undefined &&
     property.pricing.currency
   ) {
-    return new Intl.NumberFormat("en", {
+    return new Intl.NumberFormat("es-HN", {
       style: "currency",
       currency: property.pricing.currency,
       maximumFractionDigits: 0,

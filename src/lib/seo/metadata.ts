@@ -68,7 +68,9 @@ export function buildPropertyMetadata(property: Property): Metadata {
 
 export function buildPropertyJsonLd(property: Property): Record<string, unknown> {
   const price = property.pricing?.amount;
-  const currency = property.pricing?.currency ?? "EUR";
+  const currency =
+    property.pricing?.currency ??
+    (property.pricing?.display?.includes("HNL") ? "HNL" : "USD");
 
   return {
     "@context": "https://schema.org",

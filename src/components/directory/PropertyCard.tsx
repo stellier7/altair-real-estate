@@ -6,6 +6,8 @@ import {
   formatStatus,
   getDisplayPrice,
 } from "@/lib/properties/specs";
+import { propertyCopy } from "@/lib/i18n/property-copy";
+import { Button } from "@/components/ui/Button";
 
 type PropertyCardProps = {
   property: Property;
@@ -19,7 +21,7 @@ export function PropertyCard({ property, priority }: PropertyCardProps) {
     <article className="group grid gap-4 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:gap-10">
       <Link
         href={`/properties/${property.slug}`}
-        className="focus-ring relative block aspect-[4/3] overflow-hidden bg-foreground/5 lg:aspect-[16/11]"
+        className="focus-ring image-frame relative block aspect-[4/3] overflow-hidden bg-foreground/5 lg:aspect-[16/11]"
       >
         <Image
           src={property.media.heroImage.src}
@@ -27,7 +29,7 @@ export function PropertyCard({ property, priority }: PropertyCardProps) {
           fill
           priority={priority}
           sizes="(max-width: 1024px) 100vw, 55vw"
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02] motion-reduce:transition-none"
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none"
         />
       </Link>
       <div className="flex flex-col gap-3 pb-2">
@@ -35,23 +37,24 @@ export function PropertyCard({ property, priority }: PropertyCardProps) {
           {formatPropertyType(property.propertyType)} · {formatStatus(property.status)}
         </p>
         <h2 className="font-display text-3xl leading-tight sm:text-4xl">
-          <Link href={`/properties/${property.slug}`} className="focus-ring">
+          <Link href={`/properties/${property.slug}`} className="focus-ring transition-colors hover:text-accent">
             {property.name}
           </Link>
         </h2>
         <p className="text-sm text-muted">{property.location.label}</p>
         {property.shortDescription ? (
-          <p className="prose-editorial text-base">{property.shortDescription}</p>
+          <p className="prose-editorial text-base line-clamp-3">{property.shortDescription}</p>
         ) : null}
         {price ? (
           <p className="mt-2 text-sm uppercase tracking-[0.16em]">{price}</p>
         ) : null}
-        <Link
+        <Button
           href={`/properties/${property.slug}`}
-          className="focus-ring mt-4 text-sm uppercase tracking-[0.18em] text-accent"
+          variant="outline"
+          className="mt-4 w-fit"
         >
-          View property
-        </Link>
+          {propertyCopy.viewProperty}
+        </Button>
       </div>
     </article>
   );

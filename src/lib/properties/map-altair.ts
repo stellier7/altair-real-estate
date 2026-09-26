@@ -78,7 +78,9 @@ function extractPricing(raw: AltairRawProperty): PropertyPricing | undefined {
       display: `L${hnl[1]} HNL`,
     };
   }
-  const usd = text.match(/(?:US\$|USD\s*)\$?\s*([\d][\d,]*)/i) ?? text.match(/Precio\s*\$?\s*([\d][\d,]*)/i);
+  const usd =
+    text.match(/(?:US\$|USD\s*)\$?\s*([\d][\d,]*)/i) ??
+    text.match(/Precio\s*(?:US\$|USD\s*)?\$?\s*([\d][\d,]*)/i);
   if (usd) {
     const amount = Number.parseInt(usd[1].replace(/,/g, ""), 10);
     return {
@@ -89,7 +91,12 @@ function extractPricing(raw: AltairRawProperty): PropertyPricing | undefined {
   }
   const generic = text.match(/\$\s*([\d][\d,]*)/);
   if (generic) {
-    return { display: `US$${generic[1]} USD` };
+    const amount = Number.parseInt(generic[1].replace(/,/g, ""), 10);
+    return {
+      amount,
+      currency: "USD",
+      display: `US$${generic[1]} USD`,
+    };
   }
   return { priceOnRequest: true, display: "Consultar precio" };
 }

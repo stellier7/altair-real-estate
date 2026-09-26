@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PropertyCard } from "@/components/directory/PropertyCard";
 import { DirectoryFilters } from "@/components/directory/DirectoryFilters";
+import { RevealOnScroll } from "@/components/motion/RevealOnScroll";
 import { Section } from "@/components/layout/Section";
 import { catalogStats, propertyRepository } from "@/lib/properties/repository";
 import type { PropertyType } from "@/lib/properties/types";
@@ -39,11 +40,13 @@ export default async function PropertiesPage({ searchParams }: PropertiesPagePro
   return (
     <>
       <Section className="pb-0">
-        <h1 className="font-display text-5xl sm:text-6xl">Propiedades</h1>
-        <p className="prose-editorial mt-6 max-w-2xl">
+        <RevealOnScroll>
+          <h1 className="font-display text-5xl sm:text-6xl">Propiedades</h1>
+          <p className="prose-editorial mt-6 max-w-2xl">
           {stats.total} inmuebles importados de bienesraicesaltair.com — {stats.forSale} en venta y{" "}
           {stats.forRent} en alquiler. Cada ficha incluye galería, descripción y contacto directo.
-        </p>
+          </p>
+        </RevealOnScroll>
         <DirectoryFilters
           currentType={params.type}
           currentListing={params.listing}
@@ -60,7 +63,9 @@ export default async function PropertiesPage({ searchParams }: PropertiesPagePro
         {results.length > 0 ? (
           <div className="grid gap-20">
             {results.map((property, index) => (
-              <PropertyCard key={property.id} property={property} priority={index < 2} />
+              <RevealOnScroll key={property.id} delayMs={(index % 4) * 70}>
+                <PropertyCard property={property} priority={index < 2} />
+              </RevealOnScroll>
             ))}
           </div>
         ) : null}

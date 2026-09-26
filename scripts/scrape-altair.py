@@ -135,6 +135,11 @@ def parse_detail(url: str, pid: str) -> dict[str, Any]:
     description_html = ld.get("description", "")
     description = strip_html(description_html) if description_html else ""
 
+    if not price_label and description:
+        pm = re.search(r"Precio\s*([^\n\r<]+)", description, re.I)
+        if pm:
+            price_label = pm.group(1).strip().rstrip(".")
+
     return {
         "id": pid,
         "slug": slug,

@@ -1,5 +1,6 @@
 import type { PropertyType } from "@/lib/properties/types";
 import { formatPropertyType } from "@/lib/properties/specs";
+import { Button } from "@/components/ui/Button";
 
 const TYPES: PropertyType[] = [
   "house",
@@ -67,12 +68,9 @@ export function DirectoryFilters({
         </select>
       </label>
       <div className="sm:col-span-3">
-        <button
-          type="submit"
-          className="focus-ring text-sm uppercase tracking-[0.18em] text-accent"
-        >
+        <Button type="submit" variant="secondary">
           Aplicar filtros
-        </button>
+        </Button>
       </div>
     </form>
   );

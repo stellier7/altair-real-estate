@@ -1,5 +1,6 @@
 import { buildWhatsAppUrl } from "@/lib/contact/whatsapp";
 import { siteConfig } from "@/content/site/config";
+import { Button } from "@/components/ui/Button";
 
 type WhatsAppContactProps = {
   heading?: string;
@@ -15,20 +16,12 @@ export function WhatsAppContact({ heading, message }: WhatsAppContactProps) {
         <h2 className="font-display text-2xl sm:text-3xl">{heading}</h2>
       ) : null}
       <p className="prose-editorial mt-4">
-        Message us on WhatsApp for viewings, availability, and off-market introductions.
-        We typically respond during business hours.
+        Escríbanos por WhatsApp para visitas, disponibilidad y asesoría personalizada. Respondemos
+        en horario de oficina.
       </p>
-      <a
-        href={url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="focus-ring mt-8 inline-flex items-center gap-3 text-sm uppercase tracking-[0.18em] text-accent"
-      >
-        Chat on WhatsApp
-        <span className="text-muted normal-case tracking-normal">
-          {siteConfig.whatsapp.display}
-        </span>
-      </a>
+      <Button href={url} variant="secondary" className="mt-8" target="_blank" rel="noopener noreferrer">
+        WhatsApp · {siteConfig.whatsapp.display}
+      </Button>
     </div>
   );
 }
