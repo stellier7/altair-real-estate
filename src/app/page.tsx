@@ -50,7 +50,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section className="bg-surface">
+      <Section className="bg-surface/80">
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
           <RevealOnScroll>
             <h2 className="font-display text-4xl sm:text-5xl">Servicios</h2>

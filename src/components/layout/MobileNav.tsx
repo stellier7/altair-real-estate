@@ -11,7 +11,7 @@ export function MobileNav() {
     <div className="lg:hidden">
       <button
         type="button"
-        className="focus-ring text-sm uppercase tracking-[0.18em] text-muted"
+        className="focus-ring rounded-full border border-line/70 bg-surface/80 px-4 py-2 text-sm uppercase tracking-[0.18em] text-muted shadow-[var(--shadow-soft)]"
         aria-expanded={open}
         aria-controls="mobile-nav-panel"
         onClick={() => setOpen((value) => !value)}
@@ -21,7 +21,7 @@ export function MobileNav() {
       {open ? (
         <nav
           id="mobile-nav-panel"
-          className="absolute inset-x-0 top-full border-b border-line bg-background px-5 py-6"
+          className="absolute inset-x-3 top-[calc(100%+0.35rem)] rounded-[var(--radius-lg)] border border-line/80 bg-background/95 px-5 py-6 shadow-[var(--shadow-card)] backdrop-blur-lg"
           aria-label="Mobile"
         >
           <ul className="flex flex-col gap-4 text-lg">

@@ -130,7 +130,7 @@ export function PropertyPageComposer({ property }: PropertyPageComposerProps) {
       ) : null}
 
       {residentialRows.length + commercialRows.length + landRows.length > 0 ? (
-        <Section className="bg-surface">
+        <Section className="bg-surface/90">
           <RevealOnScroll>
             <h2 className="font-display text-3xl sm:text-4xl">{propertyCopy.specifications}</h2>
             <dl className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -211,7 +211,7 @@ export function PropertyPageComposer({ property }: PropertyPageComposerProps) {
       ) : null}
 
       {supportsInvestmentBlock(property) && property.investment ? (
-        <Section className="bg-surface">
+        <Section className="bg-surface/90">
           <RevealOnScroll>
             <h2 className="font-display text-3xl sm:text-4xl">{propertyCopy.investment}</h2>
             <dl className="mt-6 grid gap-6 sm:grid-cols-2">

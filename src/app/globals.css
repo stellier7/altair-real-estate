@@ -6,11 +6,18 @@
   --muted: #5a544c;
   --accent: #9a734f;
   --accent-soft: rgba(154, 115, 79, 0.14);
-  --line: rgba(18, 17, 14, 0.11);
+  --line: rgba(18, 17, 14, 0.1);
   --surface: #fffcf7;
   --max-width: 88rem;
   --section-y: clamp(4rem, 8vw, 7rem);
-  --motion-duration: 0.65s;
+  --motion-duration: 0.7s;
+  --radius-sm: 0.75rem;
+  --radius-md: 1.25rem;
+  --radius-lg: 1.75rem;
+  --radius-xl: 2.25rem;
+  --shadow-soft: 0 18px 48px -28px rgba(18, 17, 14, 0.35);
+  --shadow-card: 0 22px 50px -32px rgba(18, 17, 14, 0.42);
+  --shadow-header: 0 12px 40px -24px rgba(18, 17, 14, 0.28);
 }
 
 @theme inline {
@@ -43,7 +50,7 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: 50;
-  opacity: 0.035;
+  opacity: 0.03;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -64,13 +71,13 @@ body::before {
 
 .focus-ring:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 3px;
+  outline-offset: 4px;
 }
 
 @keyframes fade-up {
   from {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -84,7 +91,7 @@ body::before {
 
 .reveal-on-scroll {
   opacity: 0;
-  transform: translateY(22px);
+  transform: translateY(24px);
   transition:
     opacity var(--motion-duration) cubic-bezier(0.22, 1, 0.36, 1),
     transform var(--motion-duration) cubic-bezier(0.22, 1, 0.36, 1);
@@ -95,39 +102,84 @@ body::before {
   transform: translateY(0);
 }
 
+.hero-shell {
+  border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+  box-shadow: var(--shadow-soft);
+}
+
 .stat-pill {
   min-width: 7rem;
-  padding: 0.75rem 1rem;
+  padding: 0.85rem 1.15rem;
   border: 1px solid var(--line);
-  background: color-mix(in srgb, var(--surface) 82%, transparent);
-  backdrop-filter: blur(8px);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-soft);
+}
+
+.image-frame {
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+  transition:
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.group:hover .image-frame {
+  transform: translateY(-3px);
+  box-shadow: 0 28px 56px -34px rgba(18, 17, 14, 0.48);
 }
 
 .image-frame::after {
   content: "";
   position: absolute;
   inset: 0;
+  border-radius: inherit;
   border: 1px solid transparent;
-  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+  transition: border-color 0.45s ease, box-shadow 0.45s ease;
   pointer-events: none;
 }
 
 .group:hover .image-frame::after {
-  border-color: color-mix(in srgb, var(--accent) 35%, transparent);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 12%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
 .spec-tile {
-  transition: transform 0.35s ease, background-color 0.35s ease;
+  border-radius: var(--radius-md);
+  padding: 0.35rem 0.5rem 0.75rem;
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.45s ease,
+    box-shadow 0.45s ease;
 }
 
 .spec-tile:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   background: var(--accent-soft);
+  box-shadow: var(--shadow-soft);
 }
 
 .service-line {
+  border-radius: var(--radius-sm);
   animation: fade-up var(--motion-duration) cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.surface-panel {
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-soft);
+}
+
+.input-soft {
+  border-radius: var(--radius-md);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transition:
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.input-soft:focus-visible {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  box-shadow: 0 10px 28px -22px rgba(18, 17, 14, 0.35);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -138,5 +190,9 @@ body::before {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+
+  .group:hover .image-frame {
+    transform: none;
   }
 }

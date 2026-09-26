@@ -21,7 +21,7 @@ export function PropertyCard({ property, priority }: PropertyCardProps) {
     <article className="group grid gap-4 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:gap-10">
       <Link
         href={`/properties/${property.slug}`}
-        className="focus-ring image-frame relative block aspect-[4/3] overflow-hidden bg-foreground/5 lg:aspect-[16/11]"
+        className="focus-ring image-frame relative block aspect-[4/3] overflow-hidden bg-foreground/5 lg:aspect-[16/11] !rounded-[var(--radius-xl)]"
       >
         <Image
           src={property.media.heroImage.src}

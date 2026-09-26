@@ -7,7 +7,7 @@ import { MobileNav } from "./MobileNav";
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-background/85 backdrop-blur-md transition-shadow duration-300">
+    <header className="sticky top-0 z-50 border-b border-line/80 bg-background/88 shadow-[var(--shadow-header)] backdrop-blur-lg transition-shadow duration-500">
       <Container className="flex h-16 items-center justify-between gap-4 sm:h-20">
         <Link href="/" className="focus-ring flex items-center gap-3">
           <Image
@@ -35,7 +35,7 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
-          <Button href="/contact" variant="primary" className="!px-5 !py-2.5">
+          <Button href="/contact" variant="primary" className="!px-6 !py-2.5">
             Contacto
           </Button>
         </nav>

@@ -28,7 +28,7 @@ export function DirectoryFilters({
   return (
     <form
       method="get"
-      className="grid gap-4 border-y border-line py-6 sm:grid-cols-[1fr_auto_auto] sm:items-end"
+      className="surface-panel mt-8 grid gap-4 border border-line/80 bg-surface/70 px-5 py-6 sm:grid-cols-[1fr_auto_auto] sm:items-end sm:px-6"
     >
       <label className="grid gap-2 text-sm">
         <span className="text-xs uppercase tracking-[0.2em] text-muted">Buscar</span>
@@ -37,7 +37,7 @@ export function DirectoryFilters({
           name="q"
           defaultValue={currentQuery ?? ""}
           placeholder="Ciudad, título o zona"
-          className="focus-ring border-b border-line bg-transparent py-2 text-foreground outline-none"
+          className="input-soft focus-ring border border-line/80 bg-background/50 px-4 py-2.5 text-foreground outline-none"
         />
       </label>
       <label className="grid gap-2 text-sm">
@@ -45,7 +45,7 @@ export function DirectoryFilters({
         <select
           name="type"
           defaultValue={currentType ?? ""}
-          className="focus-ring border-b border-line bg-transparent py-2 outline-none"
+          className="input-soft focus-ring border border-line/80 bg-background/50 px-4 py-2.5 outline-none"
         >
           <option value="">Todos</option>
           {TYPES.map((type) => (
@@ -60,7 +60,7 @@ export function DirectoryFilters({
         <select
           name="listing"
           defaultValue={currentListing ?? ""}
-          className="focus-ring border-b border-line bg-transparent py-2 outline-none"
+          className="input-soft focus-ring border border-line/80 bg-background/50 px-4 py-2.5 outline-none"
         >
           <option value="">Venta y alquiler</option>
           <option value="sale">Venta</option>
