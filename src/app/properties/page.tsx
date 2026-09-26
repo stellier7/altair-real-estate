@@ -61,7 +61,7 @@ export default async function PropertiesPage({ searchParams }: PropertiesPagePro
           <p className="mb-10 text-sm text-muted">{results.length} resultados</p>
         )}
         {results.length > 0 ? (
-          <div className="grid gap-20">
+          <div className="grid gap-8 lg:gap-10">
             {results.map((property, index) => (
               <RevealOnScroll key={property.id} delayMs={(index % 4) * 70}>
                 <PropertyCard property={property} priority={index < 2} />

@@ -41,7 +41,7 @@ export default function HomePage() {
             Ver catálogo
           </Button>
         </RevealOnScroll>
-        <div className="grid gap-20">
+        <div className="grid gap-8 lg:gap-10">
           {featured.map((property, index) => (
             <RevealOnScroll key={property.id} delayMs={index * 80}>
               <PropertyCard property={property} priority={index === 0} />

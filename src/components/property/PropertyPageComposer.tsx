@@ -276,7 +276,7 @@ export function PropertyPageComposer({ property }: PropertyPageComposerProps) {
               {propertyCopy.viewAll}
             </Button>
           </RevealOnScroll>
-          <div className="grid gap-16">
+          <div className="grid gap-8 lg:gap-10">
             {related.map((item, index) => (
               <RevealOnScroll key={item.id} delayMs={index * 60}>
                 <PropertyCard property={item} />

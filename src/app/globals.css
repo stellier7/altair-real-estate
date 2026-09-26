@@ -169,6 +169,36 @@ body::before {
   box-shadow: var(--shadow-soft);
 }
 
+.property-card {
+  border-radius: var(--radius-xl);
+  border: 1px solid color-mix(in srgb, var(--line) 90%, transparent);
+  background: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--surface) 96%, white) 0%,
+    color-mix(in srgb, var(--background) 88%, var(--surface)) 100%
+  );
+  box-shadow: var(--shadow-soft);
+  transition:
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.45s ease;
+}
+
+.property-card:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--accent) 22%, var(--line));
+  box-shadow: 0 26px 54px -36px rgba(18, 17, 14, 0.45);
+}
+
+.property-card .image-frame {
+  box-shadow: 0 14px 36px -28px rgba(18, 17, 14, 0.35);
+}
+
+.property-card:hover .image-frame {
+  transform: none;
+  box-shadow: 0 18px 40px -30px rgba(18, 17, 14, 0.42);
+}
+
 .input-soft {
   border-radius: var(--radius-md);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
@@ -193,6 +223,10 @@ body::before {
   }
 
   .group:hover .image-frame {
+    transform: none;
+  }
+
+  .property-card:hover {
     transform: none;
   }
 }
