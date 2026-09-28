@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "analyze-images": "python3 scripts/analyze-image-borders.py",
+    "analyze-images:covers": "python3 scripts/analyze-image-borders.py --covers-only"
   },
   "dependencies": {
     "next": "^16.3.6",

@@ -1,9 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 import { PropertyListingImage } from "@/components/media/PropertyListingImage";
-import { normalizeWasiImageUrl } from "@/lib/images/wasi-url";
 import type { ImageAsset } from "@/lib/properties/types";
 
 type PropertyGalleryProps = {
@@ -45,13 +43,7 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
               aria-label={`Ver imagen ${index + 1}`}
               aria-current={index === active}
             >
-              <Image
-                src={normalizeWasiImageUrl(image.src)}
-                alt=""
-                fill
-                sizes="112px"
-                className="listing-image object-cover object-center"
-              />
+              <PropertyListingImage src={image.src} alt="" sizes="112px" />
             </button>
           ))}
         </div>

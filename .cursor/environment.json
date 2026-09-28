@@ -1,6 +1,6 @@
 {
   "name": "Altair Real Estate",
-  "install": "npm ci\npython3 scripts/scrape-altair.py",
+  "install": "npm ci\npython3 scripts/scrape-altair.py\npython3 scripts/analyze-image-borders.py --covers-only",
   "terminals": [
     {
       "name": "Next.js dev",
