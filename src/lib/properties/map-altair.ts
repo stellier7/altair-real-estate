@@ -1,3 +1,4 @@
+import { normalizeWasiImageUrl } from "@/lib/images/wasi-url";
 import type { Property, PropertyPricing, PropertyType } from "./types";
 
 export type AltairCatalog = {
@@ -116,8 +117,12 @@ export function mapAltairProperty(
   scrapedAt?: string,
 ): Property {
   const propertyType = mapPropertyType(raw.propertyType || "");
-  const hero = raw.coverImage || raw.images[0] || "";
-  const gallery = raw.images.filter((src) => src && src !== hero).slice(0, 8);
+  const heroRaw = raw.coverImage || raw.images[0] || "";
+  const hero = heroRaw ? normalizeWasiImageUrl(heroRaw) : "";
+  const gallery = raw.images
+    .filter((src) => src && src !== heroRaw)
+    .slice(0, 8)
+    .map((src) => normalizeWasiImageUrl(src));
 
   const listingTag =
     raw.listingType === "sale"

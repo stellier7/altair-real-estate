@@ -158,6 +158,11 @@ body::before {
   }
 }
 
+.listing-image {
+  min-width: 100%;
+  min-height: 100%;
+}
+
 .image-frame {
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-card);

@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { PropertyListingImage } from "@/components/media/PropertyListingImage";
 import type { Property } from "@/lib/properties/types";
 import {
   formatPropertyType,
@@ -23,15 +23,14 @@ export function PropertyCard({ property, priority }: PropertyCardProps) {
       <div className="grid gap-6 p-5 sm:p-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-8 lg:p-8">
         <Link
           href={`/properties/${property.slug}`}
-          className="focus-ring image-frame relative block aspect-[4/3] overflow-hidden bg-foreground/5 lg:aspect-[16/11] rounded-[var(--radius-lg)]"
+          className="focus-ring image-frame relative block aspect-[4/3] overflow-hidden bg-foreground/10 lg:aspect-[16/11] rounded-[var(--radius-lg)]"
         >
-          <Image
+          <PropertyListingImage
             src={property.media.heroImage.src}
             alt={property.media.heroImage.alt}
-            fill
             priority={priority}
             sizes="(max-width: 1024px) 100vw, 48vw"
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] motion-reduce:transition-none"
+            className="transition-transform duration-700 ease-out group-hover:scale-[1.03] motion-reduce:transition-none"
           />
         </Link>
         <div className="flex flex-col gap-3 lg:py-1">

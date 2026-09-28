@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { PropertyListingImage } from "@/components/media/PropertyListingImage";
+import { normalizeWasiImageUrl } from "@/lib/images/wasi-url";
 import type { ImageAsset } from "@/lib/properties/types";
 
 type PropertyGalleryProps = {
@@ -21,12 +23,11 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
       <div
         className="relative aspect-[16/10] overflow-hidden rounded-[var(--radius-xl)] bg-foreground/5 shadow-[var(--shadow-card)]"
       >
-        <Image
+        <PropertyListingImage
           src={current.src}
           alt={current.alt}
-          fill
           sizes="100vw"
-          className="object-cover transition-opacity duration-500 ease-out"
+          className="transition-opacity duration-500 ease-out"
         />
       </div>
       {images.length > 1 ? (
@@ -44,7 +45,13 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
               aria-label={`Ver imagen ${index + 1}`}
               aria-current={index === active}
             >
-              <Image src={image.src} alt="" fill sizes="112px" className="object-cover" />
+              <Image
+                src={normalizeWasiImageUrl(image.src)}
+                alt=""
+                fill
+                sizes="112px"
+                className="listing-image object-cover object-center"
+              />
             </button>
           ))}
         </div>

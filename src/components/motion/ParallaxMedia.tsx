@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { normalizeWasiImageUrl } from "@/lib/images/wasi-url";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 type ParallaxMediaProps = {
@@ -88,7 +89,7 @@ export function ParallaxMedia({
         }}
       >
         <Image
-          src={src}
+          src={normalizeWasiImageUrl(src)}
           alt={alt}
           fill
           priority={priority}
