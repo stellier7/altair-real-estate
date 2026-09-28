@@ -29,31 +29,43 @@ export function HomeHero({ heroImage, stats }: HomeHeroProps) {
           <p className="prose-editorial mt-6 max-w-2xl">{siteConfig.description}</p>
           <p className="mt-4 text-sm text-muted">{siteConfig.tagline}</p>
         </RevealOnScroll>
-        <RevealOnScroll delayMs={200} className="mt-10 flex flex-wrap gap-4">
-          <Button href="/properties?listing=sale" variant="primary">
+        <RevealOnScroll delayMs={200} className="mt-10 grid w-full grid-cols-3 gap-2 sm:gap-3">
+          <Button
+            href="/properties?listing=sale"
+            variant="primary"
+            className="hero-cta-btn w-full min-w-0 justify-center !px-2 !py-2.5 !text-[10px] !tracking-[0.12em] sm:!px-5 sm:!py-3 sm:!text-xs sm:!tracking-[0.18em]"
+          >
             Ver ventas
           </Button>
-          <Button href="/properties?listing=rent" variant="outline">
+          <Button
+            href="/properties?listing=rent"
+            variant="outline"
+            className="hero-cta-btn w-full min-w-0 justify-center !px-2 !py-2.5 !text-[10px] !tracking-[0.12em] sm:!px-5 sm:!py-3 sm:!text-xs sm:!tracking-[0.18em]"
+          >
             Ver alquileres
           </Button>
-          <Button href="/contact" variant="ghost">
+          <Button
+            href="/contact"
+            variant="ghost"
+            className="hero-cta-btn w-full min-w-0 justify-center !px-2 !py-2.5 !text-[10px] !tracking-[0.12em] sm:!px-5 sm:!py-3 sm:!text-xs sm:!tracking-[0.18em]"
+          >
             Contacto
           </Button>
         </RevealOnScroll>
         {stats.total > 0 ? (
-          <RevealOnScroll delayMs={260} className="mt-10">
-            <dl className="flex flex-wrap gap-10 text-sm">
-              <div className="stat-pill">
+          <RevealOnScroll delayMs={260} className="mt-6 sm:mt-8">
+            <dl className="grid w-full grid-cols-3 gap-2 sm:gap-4 text-sm">
+              <div className="stat-pill hero-stat-pill">
                 <dt className="text-muted">Inmuebles</dt>
-                <dd className="font-display text-3xl">{stats.total}</dd>
+                <dd className="font-display text-2xl sm:text-3xl">{stats.total}</dd>
               </div>
-              <div className="stat-pill">
+              <div className="stat-pill hero-stat-pill">
                 <dt className="text-muted">En venta</dt>
-                <dd className="font-display text-3xl">{stats.forSale}</dd>
+                <dd className="font-display text-2xl sm:text-3xl">{stats.forSale}</dd>
               </div>
-              <div className="stat-pill">
+              <div className="stat-pill hero-stat-pill">
                 <dt className="text-muted">En alquiler</dt>
-                <dd className="font-display text-3xl">{stats.forRent}</dd>
+                <dd className="font-display text-2xl sm:text-3xl">{stats.forRent}</dd>
               </div>
             </dl>
           </RevealOnScroll>
