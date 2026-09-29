@@ -3,19 +3,21 @@
 import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/content/site/config";
-import { useScrollHeaderVisibility } from "@/lib/layout/useScrollHeaderVisibility";
+import { useScrollLinkedHeader } from "@/lib/layout/useScrollLinkedHeader";
 import { Container } from "./Container";
 import { MobileNav } from "./MobileNav";
 
 export function SiteHeader() {
-  const visible = useScrollHeaderVisibility();
+  const { headerRef, translateY, isFullyHidden } = useScrollLinkedHeader();
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b border-line/80 bg-background/88 shadow-[var(--shadow-header)] backdrop-blur-lg transition-[transform,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none motion-reduce:transform-none ${
-        visible ? "translate-y-0" : "-translate-y-full pointer-events-none"
+      ref={headerRef}
+      style={{ transform: `translate3d(0, ${translateY}px, 0)` }}
+      className={`sticky top-0 z-50 border-b border-line/80 bg-background/88 shadow-[var(--shadow-header)] backdrop-blur-lg will-change-transform motion-reduce:transform-none ${
+        isFullyHidden ? "pointer-events-none" : ""
       }`}
-      {...(visible ? {} : { inert: true })}
+      {...(isFullyHidden ? { inert: true } : {})}
     >
       <a
         href="#contenido-principal"
