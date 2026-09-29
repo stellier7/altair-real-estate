@@ -11,7 +11,7 @@ export function MobileNav() {
     <div className="relative lg:hidden">
       <button
         type="button"
-        className="focus-ring inline-flex min-h-11 items-center rounded-full border border-line/70 bg-surface/80 px-4 py-2 text-sm font-medium uppercase tracking-[0.14em] text-muted shadow-[var(--shadow-soft)]"
+        className="focus-ring inline-flex min-h-10 items-center rounded-full border border-line/70 bg-surface/80 px-3.5 py-1.5 text-xs font-medium uppercase tracking-[0.14em] text-muted shadow-[var(--shadow-soft)]"
         aria-expanded={open}
         aria-controls="mobile-nav-panel"
         onClick={() => setOpen((value) => !value)}

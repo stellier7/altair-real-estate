@@ -32,5 +32,11 @@ export const siteConfig = {
     { label: "Servicios", href: "/services" },
     { label: "Contacto", href: "/contact" },
   ],
+  /** Homepage “Inmuebles destacados” — explicit order (slug includes id suffix). */
+  homeFeaturedPropertySlugs: [
+    "casa-venta-tegucigalpa-10297448",
+    "casa-alquiler-tegucigalpa-10291033",
+    "terreno-venta-tegucigalpa-10440769",
+  ],
   sourceWebsite: agency.sourceWebsite,
 } as const;

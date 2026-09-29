@@ -20,6 +20,8 @@
   --shadow-soft: 0 18px 48px -28px rgba(18, 17, 14, 0.35);
   --shadow-card: 0 22px 50px -32px rgba(18, 17, 14, 0.42);
   --shadow-header: 0 12px 40px -24px rgba(18, 17, 14, 0.28);
+  --site-header-height: 3.25rem;
+  --site-header-height-md: 3.75rem;
   --type-measure: 65ch;
   --type-display-hero: clamp(2.75rem, 4.2vw + 1.25rem, 4.75rem);
   --type-display-section: clamp(2.125rem, 2.8vw + 1rem, 3.25rem);

@@ -5,12 +5,16 @@ import { Section } from "@/components/layout/Section";
 import { Button } from "@/components/ui/Button";
 import { siteConfig } from "@/content/site/config";
 import { catalogStats, propertyRepository } from "@/lib/properties/repository";
+import type { Property } from "@/lib/properties/types";
+
+function getHomeFeaturedProperties(): Property[] {
+  return siteConfig.homeFeaturedPropertySlugs
+    .map((slug) => propertyRepository.getBySlug(slug))
+    .filter((property): property is Property => property !== undefined);
+}
 
 export default function HomePage() {
-  const featured = propertyRepository
-    .getAll()
-    .filter((property) => property.featured)
-    .slice(0, 3);
+  const featured = getHomeFeaturedProperties();
   const stats = catalogStats();
   const heroImage = siteConfig.heroImage;
 
