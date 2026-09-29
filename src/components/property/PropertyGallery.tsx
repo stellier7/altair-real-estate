@@ -1,8 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { PropertyListingImage } from "@/components/media/PropertyListingImage";
 import type { ImageAsset } from "@/lib/properties/types";
+import { useGalleryScrollScrub } from "./useGalleryScrollScrub";
 
 const SWIPE_THRESHOLD_PX = 40;
 
@@ -43,21 +44,27 @@ function ChevronRightIcon() {
 }
 
 export function PropertyGallery({ images }: PropertyGalleryProps) {
-  const [active, setActive] = useState(0);
-  const current = images[active] ?? images[0];
+  const viewportRef = useRef<HTMLDivElement>(null);
   const swipeStart = useRef<{ x: number; pointerId: number } | null>(null);
   const thumbRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const count = images.length;
   const hasMultiple = count > 1;
 
+  const { activeIndex, trackTranslatePercent, setIndex } = useGalleryScrollScrub({
+    count,
+    enabled: hasMultiple,
+    viewportRef,
+  });
+
+  const active = activeIndex;
+  const current = images[active] ?? images[0];
+
   const goToIndex = useCallback(
     (index: number) => {
-      if (count === 0) return;
-      const next = ((index % count) + count) % count;
-      setActive(next);
+      setIndex(index);
     },
-    [count],
+    [setIndex],
   );
 
   const goNext = useCallback(() => {
@@ -134,6 +141,7 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
   return (
     <div className="grid gap-5">
       <div
+        ref={viewportRef}
         className="relative aspect-[16/10] overflow-hidden rounded-[var(--radius-xl)] bg-foreground/5 shadow-[var(--shadow-card)] touch-pan-y"
         role="group"
         aria-roledescription="carrusel"
@@ -144,12 +152,38 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerCancel}
       >
-        <PropertyListingImage
-          src={current.src}
-          alt={current.alt}
-          sizes="100vw"
-          className="pointer-events-none transition-opacity duration-500 ease-out motion-reduce:transition-none"
-        />
+        <div
+          className="flex h-full will-change-transform motion-reduce:transition-none"
+          style={{
+            transform: `translate3d(${trackTranslatePercent}%, 0, 0)`,
+          }}
+          aria-hidden={hasMultiple}
+        >
+          {hasMultiple
+            ? images.map((image, index) => (
+                <div
+                  key={`${image.src}-${index}`}
+                  className="relative h-full min-w-full shrink-0 grow-0 basis-full"
+                >
+                  <PropertyListingImage
+                    src={image.src}
+                    alt={index === active ? image.alt : ""}
+                    sizes="100vw"
+                    className="pointer-events-none"
+                  />
+                </div>
+              ))
+            : (
+                <div className="relative h-full min-w-full shrink-0 basis-full">
+                  <PropertyListingImage
+                    src={current.src}
+                    alt={current.alt}
+                    sizes="100vw"
+                    className="pointer-events-none"
+                  />
+                </div>
+              )}
+        </div>
         {hasMultiple ? (
           <>
             <p className="sr-only" aria-live="polite" aria-atomic="true">
