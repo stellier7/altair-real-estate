@@ -180,6 +180,16 @@ body::before {
   box-shadow: var(--shadow-soft);
 }
 
+.hero-bg-image {
+  object-position: center 42%;
+}
+
+@media (min-width: 640px) {
+  .hero-bg-image {
+    object-position: center 38%;
+  }
+}
+
 .hero-shell-min {
   min-height: min(100svh, 52rem);
 }
