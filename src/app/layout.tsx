@@ -28,7 +28,7 @@ export default function RootLayout({
     <html lang="es">
       <body className={`${cormorant.variable} ${dmSans.variable} antialiased`}>
         <SiteHeader />
-        <main>{children}</main>
+        <main id="contenido-principal">{children}</main>
         <SiteFooter />
       </body>
     </html>
