@@ -35,16 +35,16 @@ export function PropertyCard({ property, priority }: PropertyCardProps) {
         </Link>
         <div className="flex flex-col gap-3 lg:py-1">
           <div className="flex flex-wrap items-center gap-2">
-            <p className="text-xs uppercase tracking-[0.2em] text-muted">
+            <p className="type-meta-caps">
               {formatPropertyType(property.propertyType)} · {formatStatus(property.status)}
             </p>
             {listingTag ? (
-              <span className="rounded-full border border-line/80 bg-background/60 px-3 py-1 text-[10px] uppercase tracking-[0.16em] text-muted shadow-[0_8px_20px_-16px_rgba(18,17,14,0.35)]">
+              <span className="type-meta-caps rounded-full border border-line/80 bg-background/60 px-3 py-1 shadow-[0_8px_20px_-16px_rgba(18,17,14,0.35)]">
                 {listingTag === "venta" ? "Venta" : "Alquiler"}
               </span>
             ) : null}
           </div>
-          <h2 className="font-display text-3xl leading-tight sm:text-4xl">
+          <h2 className="type-display-card">
             <Link
               href={`/properties/${property.slug}`}
               className="focus-ring rounded-sm transition-colors hover:text-accent"
@@ -52,12 +52,12 @@ export function PropertyCard({ property, priority }: PropertyCardProps) {
               {property.name}
             </Link>
           </h2>
-          <p className="text-sm text-muted">{property.location.label}</p>
+          <p className="type-meta">{property.location.label}</p>
           {property.shortDescription ? (
-            <p className="prose-editorial text-base line-clamp-3">{property.shortDescription}</p>
+            <p className="prose-editorial line-clamp-3">{property.shortDescription}</p>
           ) : null}
           {price ? (
-            <p className="mt-1 inline-flex w-fit rounded-full border border-line/70 bg-surface/80 px-4 py-1.5 text-xs uppercase tracking-[0.16em] shadow-[0_10px_24px_-18px_rgba(18,17,14,0.3)]">
+            <p className="type-meta-caps mt-1 inline-flex w-fit rounded-full border border-line/70 bg-surface/80 px-4 py-1.5 shadow-[0_10px_24px_-18px_rgba(18,17,14,0.3)]">
               {price}
             </p>
           ) : null}

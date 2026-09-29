@@ -21,7 +21,7 @@ export default function HomePage() {
       <Section>
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
           <RevealOnScroll>
-            <h2 className="font-display text-4xl sm:text-5xl">Quiénes somos</h2>
+            <h2 className="type-display-section">Quiénes somos</h2>
           </RevealOnScroll>
           <RevealOnScroll delayMs={100}>
             <p className="prose-editorial">
@@ -35,7 +35,7 @@ export default function HomePage() {
 
       <Section id="featured">
         <RevealOnScroll className="mb-12 flex flex-wrap items-end justify-between gap-6">
-          <h2 className="font-display text-4xl sm:text-5xl">Inmuebles destacados</h2>
+          <h2 className="type-display-section">Inmuebles destacados</h2>
           <Button href="/properties" variant="outline">
             Ver catálogo
           </Button>
@@ -52,7 +52,7 @@ export default function HomePage() {
       <Section className="bg-surface/80">
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
           <RevealOnScroll>
-            <h2 className="font-display text-4xl sm:text-5xl">Servicios</h2>
+            <h2 className="type-display-section">Servicios</h2>
             <p className="prose-editorial mt-6">
               Asesoría en compra y venta de casas, apartamentos, terrenos, locales, bodegas y
               oficinas en Tegucigalpa y otras ciudades de Honduras.
@@ -62,7 +62,7 @@ export default function HomePage() {
             </Button>
           </RevealOnScroll>
           <RevealOnScroll delayMs={120}>
-            <ul className="grid gap-4 text-muted sm:grid-cols-2">
+            <ul className="grid gap-4 sm:grid-cols-2">
               {[
                 "Venta residencial",
                 "Alquileres",
@@ -73,7 +73,7 @@ export default function HomePage() {
               ].map((item, i) => (
                 <li
                   key={item}
-                  className="service-line border-t border-line pt-4 text-sm uppercase tracking-[0.14em]"
+                  className="service-line type-meta-caps border-t border-line pt-4"
                   style={{ animationDelay: `${i * 60}ms` }}
                 >
                   {item}
