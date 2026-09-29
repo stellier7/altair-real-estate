@@ -3,11 +3,9 @@
 import Link from "next/link";
 import { useState } from "react";
 import { siteConfig } from "@/content/site/config";
-import { buildWhatsAppUrl } from "@/lib/contact/whatsapp";
 
 export function MobileNav() {
   const [open, setOpen] = useState(false);
-  const whatsappUrl = buildWhatsAppUrl();
 
   return (
     <div className="relative lg:hidden">
@@ -27,17 +25,6 @@ export function MobileNav() {
           aria-label="Navegación móvil"
         >
           <ul className="flex flex-col gap-1">
-            <li className="mb-2 border-b border-line pb-4">
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="focus-ring inline-flex min-h-11 w-full items-center rounded-full bg-accent px-4 text-sm font-medium text-background transition-colors hover:bg-[#8f6847]"
-                onClick={() => setOpen(false)}
-              >
-                WhatsApp · {siteConfig.whatsapp.display}
-              </a>
-            </li>
             {siteConfig.nav.map((item) => (
               <li key={item.href}>
                 <Link
