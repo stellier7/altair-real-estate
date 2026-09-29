@@ -7,9 +7,9 @@ const variantClasses: Record<ButtonVariant, string> = {
   primary:
     "border border-foreground/10 bg-foreground text-background shadow-[0_14px_36px_-14px_rgba(18,17,14,0.55)] hover:-translate-y-0.5 hover:shadow-[0_20px_44px_-16px_rgba(18,17,14,0.6)] active:translate-y-0 active:shadow-[0_10px_24px_-12px_rgba(18,17,14,0.45)]",
   secondary:
-    "border border-accent/20 bg-accent text-background shadow-[0_14px_34px_-14px_rgba(154,115,79,0.65)] hover:-translate-y-0.5 hover:bg-[#8f6847] hover:shadow-[0_20px_42px_-16px_rgba(154,115,79,0.7)] active:translate-y-0",
+    "border border-foreground/15 bg-surface/80 text-foreground shadow-[0_10px_28px_-18px_rgba(18,17,14,0.35)] backdrop-blur-sm hover:-translate-y-0.5 hover:border-foreground/25 hover:bg-surface hover:shadow-[0_16px_36px_-18px_rgba(18,17,14,0.4)] active:translate-y-0",
   outline:
-    "border border-foreground/15 bg-surface/60 text-foreground shadow-[0_10px_28px_-18px_rgba(18,17,14,0.35)] backdrop-blur-sm hover:-translate-y-0.5 hover:border-accent/40 hover:text-accent hover:shadow-[0_16px_36px_-18px_rgba(18,17,14,0.4)] active:translate-y-0",
+    "border border-foreground/15 bg-surface/60 text-foreground shadow-[0_10px_28px_-18px_rgba(18,17,14,0.35)] backdrop-blur-sm hover:-translate-y-0.5 hover:border-foreground/30 hover:bg-surface/90 hover:shadow-[0_16px_36px_-18px_rgba(18,17,14,0.4)] active:translate-y-0",
   ghost:
     "border border-transparent bg-foreground/[0.04] text-foreground shadow-[0_8px_24px_-20px_rgba(18,17,14,0.35)] hover:-translate-y-0.5 hover:bg-foreground/[0.07] hover:shadow-[0_14px_32px_-18px_rgba(18,17,14,0.38)] active:translate-y-0",
 };

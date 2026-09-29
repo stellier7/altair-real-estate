@@ -1,6 +1,5 @@
 import { buildWhatsAppUrl } from "@/lib/contact/whatsapp";
 import { siteConfig } from "@/content/site/config";
-import { Button } from "@/components/ui/Button";
 
 type WhatsAppContactProps = {
   heading?: string;
@@ -19,9 +18,18 @@ export function WhatsAppContact({ heading, message }: WhatsAppContactProps) {
         Escríbanos por WhatsApp para visitas, disponibilidad y asesoría personalizada. Respondemos
         en horario de oficina.
       </p>
-      <Button href={url} variant="secondary" className="mt-8" target="_blank" rel="noopener noreferrer">
-        WhatsApp · {siteConfig.whatsapp.display}
-      </Button>
+      <p className="type-meta mt-6">
+        Use el botón flotante de WhatsApp o{" "}
+        <a
+          href={url}
+          className="focus-ring font-medium text-foreground underline decoration-line underline-offset-4 transition-colors hover:decoration-foreground/50"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          abrir chat · {siteConfig.whatsapp.display}
+        </a>
+        .
+      </p>
     </div>
   );
 }
