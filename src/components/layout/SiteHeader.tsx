@@ -13,32 +13,37 @@ export function SiteHeader() {
       >
         Saltar al contenido
       </a>
-      <Container className="flex h-16 items-center justify-between gap-4 sm:h-20">
-        <Link href="/" className="focus-ring flex shrink-0 items-center">
-          <Image
-            src={siteConfig.logo}
-            alt={siteConfig.name}
-            width={160}
-            height={48}
-            className="h-10 w-auto max-w-[160px] object-contain"
-            priority
-          />
+      <Container className="flex h-16 items-center gap-3 sm:h-20 sm:gap-4">
+        <Link href="/" className="focus-ring group flex shrink-0 items-center">
+          <span className="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full border border-line/70 bg-surface shadow-[var(--shadow-soft)] transition-[border-color,box-shadow] duration-200 group-hover:border-line group-hover:shadow-[var(--shadow-card)] sm:h-12 sm:w-12">
+            <Image
+              src={siteConfig.logo}
+              alt={siteConfig.name}
+              width={96}
+              height={96}
+              className="h-[88%] w-[88%] object-contain"
+              priority
+            />
+          </span>
         </Link>
-        <nav
-          className="hidden items-center gap-5 text-sm lg:flex"
-          aria-label="Principal"
-        >
-          {siteConfig.nav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="focus-ring type-meta-caps inline-flex min-h-11 items-center px-1 transition-colors hover:text-foreground"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-        <MobileNav />
+
+        <div className="ml-auto flex items-center gap-2 sm:gap-3">
+          <nav
+            className="hidden items-center gap-1 text-sm lg:flex xl:gap-2"
+            aria-label="Principal"
+          >
+            {siteConfig.nav.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="focus-ring type-meta-caps inline-flex min-h-11 items-center rounded-full px-3 transition-colors hover:bg-surface hover:text-foreground xl:px-3.5"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+          <MobileNav />
+        </div>
       </Container>
     </header>
   );
