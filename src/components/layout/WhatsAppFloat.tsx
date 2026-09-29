@@ -23,7 +23,7 @@ export function WhatsAppFloat() {
       href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="focus-ring fixed z-40 inline-flex h-14 w-14 items-center justify-center rounded-full bg-accent text-background shadow-[var(--shadow-card)] transition-[transform,background-color,box-shadow] duration-200 hover:scale-[1.03] hover:bg-[#8f6847] hover:shadow-[var(--shadow-soft)] bottom-[max(1.25rem,env(safe-area-inset-bottom,0px))] right-[max(1.25rem,env(safe-area-inset-right,0px))]"
+      className="focus-ring fixed z-40 inline-flex h-14 w-14 items-center justify-center rounded-full bg-[var(--whatsapp)] text-white shadow-[var(--shadow-card)] transition-[transform,background-color,box-shadow] duration-200 hover:scale-[1.03] hover:bg-[var(--whatsapp-hover)] hover:shadow-[var(--shadow-soft)] bottom-[max(1.25rem,env(safe-area-inset-bottom,0px))] right-[max(1.25rem,env(safe-area-inset-right,0px))]"
       aria-label={`WhatsApp ${siteConfig.whatsapp.display}`}
     >
       <WhatsAppIcon />

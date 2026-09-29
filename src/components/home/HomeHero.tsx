@@ -6,7 +6,6 @@ import { RevealOnScroll } from "@/components/motion/RevealOnScroll";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
 import { siteConfig } from "@/content/site/config";
-import { buildWhatsAppUrl } from "@/lib/contact/whatsapp";
 
 const heroCopy = {
   headline: "Compra o alquila en Tegucigalpa",
@@ -22,8 +21,6 @@ type HomeHeroProps = {
 };
 
 export function HomeHero({ heroImage, stats }: HomeHeroProps) {
-  const whatsappUrl = buildWhatsAppUrl();
-
   return (
     <ParallaxMedia
       src={heroImage}
@@ -73,17 +70,6 @@ export function HomeHero({ heroImage, stats }: HomeHeroProps) {
         ) : null}
 
         <RevealOnScroll delayMs={220} className="hero-actions w-full max-w-none sm:max-w-[36rem]">
-          <Button
-            href={whatsappUrl}
-            variant="secondary"
-            className="hero-cta-btn w-full justify-center normal-case tracking-normal sm:tracking-[0.06em]"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`WhatsApp ${siteConfig.whatsapp.display}`}
-          >
-            <span className="sm:hidden">WhatsApp</span>
-            <span className="hidden sm:inline">WhatsApp · {siteConfig.whatsapp.display}</span>
-          </Button>
           <div className="hero-catalog-actions">
             <Button
               href="/properties?listing=sale"
