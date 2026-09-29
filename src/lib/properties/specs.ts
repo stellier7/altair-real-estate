@@ -76,6 +76,27 @@ export function formatListingTag(tag: string): string {
   return tag;
 }
 
+const FILTER_PROPERTY_TYPES: PropertyType[] = [
+  "house",
+  "apartment",
+  "villa",
+  "land",
+  "commercial",
+  "office",
+  "retail",
+  "industrial",
+  "condominium",
+];
+
+export function parsePropertyFilterType(value: string | undefined): PropertyType | undefined {
+  if (!value) {
+    return undefined;
+  }
+  return FILTER_PROPERTY_TYPES.includes(value as PropertyType)
+    ? (value as PropertyType)
+    : undefined;
+}
+
 export function getDisplayPrice(property: Property): string | null {
   if (property.pricing?.display) {
     return property.pricing.display;

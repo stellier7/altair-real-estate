@@ -81,10 +81,8 @@ export function PropertyPageComposer({ property }: PropertyPageComposerProps) {
             <p className="text-xs uppercase tracking-[0.2em] text-muted">
               {formatPropertyType(property.propertyType)} · {formatStatus(property.status)}
             </p>
-            <h2 className="mt-3 font-display text-4xl leading-tight sm:text-5xl lg:text-6xl">
-              {property.title ?? property.name}
-            </h2>
-            <p className="mt-4 text-lg text-muted">{property.location.label}</p>
+            <h2 className="sr-only">{propertyCopy.summaryHeading}</h2>
+            <p className="mt-3 text-lg text-muted">{property.location.label}</p>
             {property.location.address ? (
               <p className="mt-2 text-sm text-muted">{property.location.address}</p>
             ) : null}
@@ -236,7 +234,10 @@ export function PropertyPageComposer({ property }: PropertyPageComposerProps) {
             <ul className="mt-6 space-y-3">
               {[...(property.floorPlans ?? []), ...(property.documents ?? [])].map((doc) => (
                 <li key={doc.url}>
-                  <a href={doc.url} className="focus-ring text-accent">
+                  <a
+                    href={doc.url}
+                    className="focus-ring font-medium text-foreground underline decoration-line underline-offset-4 transition-colors hover:decoration-foreground/50"
+                  >
                     {doc.title}
                   </a>
                 </li>

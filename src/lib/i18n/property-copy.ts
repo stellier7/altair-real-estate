@@ -23,6 +23,11 @@ export const propertyCopy = {
   whatsapp: "WhatsApp",
   viewProperty: "Ver propiedad",
   enquireWhatsApp: "Consultar por WhatsApp",
+  summaryHeading: "Resumen",
+  catalogEmptyTitle: "Sin resultados para estos filtros",
+  catalogEmptyBody:
+    "Pruebe otra búsqueda, cambie el tipo de inmueble o quite los filtros para ver todo el catálogo.",
+  catalogViewAll: "Ver todo el catálogo",
   specLabels: {
     totalArea: "Área total",
     lotSize: "Terreno",
