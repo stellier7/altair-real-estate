@@ -1,21 +1,31 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/content/site/config";
+import { useScrollHeaderVisibility } from "@/lib/layout/useScrollHeaderVisibility";
 import { Container } from "./Container";
 import { MobileNav } from "./MobileNav";
 
 export function SiteHeader() {
+  const visible = useScrollHeaderVisibility();
+
   return (
-    <header className="sticky top-0 z-50 border-b border-line/80 bg-background/88 shadow-[var(--shadow-header)] backdrop-blur-lg transition-shadow duration-500">
+    <header
+      className={`sticky top-0 z-50 border-b border-line/80 bg-background/88 shadow-[var(--shadow-header)] backdrop-blur-lg transition-[transform,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none motion-reduce:transform-none ${
+        visible ? "translate-y-0" : "-translate-y-full pointer-events-none"
+      }`}
+      {...(visible ? {} : { inert: true })}
+    >
       <a
         href="#contenido-principal"
         className="focus-ring sr-only left-4 top-4 z-[60] rounded-md bg-background px-4 py-2 text-sm font-medium text-foreground focus:not-sr-only focus:absolute"
       >
         Saltar al contenido
       </a>
-      <Container className="flex h-16 items-center gap-3 sm:h-20 sm:gap-4">
+      <Container className="flex h-[var(--site-header-height)] items-center gap-2.5 sm:gap-3 md:h-[var(--site-header-height-md)]">
         <Link href="/" className="focus-ring group flex shrink-0 items-center">
-          <span className="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full border border-line/70 bg-surface shadow-[var(--shadow-soft)] transition-[border-color,box-shadow] duration-200 group-hover:border-line group-hover:shadow-[var(--shadow-card)] sm:h-12 sm:w-12">
+          <span className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full border border-line/70 bg-surface shadow-[var(--shadow-soft)] transition-[border-color,box-shadow] duration-200 group-hover:border-line group-hover:shadow-[var(--shadow-card)] sm:h-10 sm:w-10">
             <Image
               src={siteConfig.logo}
               alt={siteConfig.name}
@@ -36,7 +46,7 @@ export function SiteHeader() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="focus-ring type-meta-caps inline-flex min-h-11 items-center rounded-full px-3 transition-colors hover:bg-surface hover:text-foreground xl:px-3.5"
+                className="focus-ring type-meta-caps inline-flex min-h-10 items-center rounded-full px-2.5 transition-colors hover:bg-surface hover:text-foreground xl:px-3"
               >
                 {item.label}
               </Link>
