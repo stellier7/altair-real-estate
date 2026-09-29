@@ -28,6 +28,10 @@ export function buildSiteMetadata(overrides?: {
     description,
     metadataBase: new URL(baseUrl),
     alternates: { canonical: absoluteUrl(path) },
+    icons: {
+      icon: [{ url: "/icon.png", type: "image/png", sizes: "512x512" }],
+      apple: [{ url: "/icon.png", type: "image/png", sizes: "512x512" }],
+    },
     openGraph: {
       title,
       description,
