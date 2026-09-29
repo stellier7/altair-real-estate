@@ -1,10 +1,20 @@
 "use client";
 
+import Link from "next/link";
 import { ParallaxMedia } from "@/components/motion/ParallaxMedia";
 import { RevealOnScroll } from "@/components/motion/RevealOnScroll";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
 import { siteConfig } from "@/content/site/config";
+import { buildWhatsAppUrl } from "@/lib/contact/whatsapp";
+
+const heroCopy = {
+  headline: "Compra o alquila en Tegucigalpa",
+  lead:
+    "Casas, apartamentos, terrenos y locales comerciales en venta y alquiler, con asesoría local de Bienes Raíces Altair.",
+  imageAlt:
+    "Vista de una propiedad en Tegucigalpa, Honduras, representando el catálogo de la agencia",
+} as const;
 
 type HomeHeroProps = {
   heroImage: string;
@@ -12,35 +22,42 @@ type HomeHeroProps = {
 };
 
 export function HomeHero({ heroImage, stats }: HomeHeroProps) {
+  const whatsappUrl = buildWhatsAppUrl();
+
   return (
-    <ParallaxMedia src={heroImage} alt={siteConfig.name} priority>
-      <Container className="relative flex min-h-[88vh] flex-col justify-end pb-16 pt-28">
+    <ParallaxMedia
+      src={heroImage}
+      alt={heroCopy.imageAlt}
+      priority
+      minHeightClass="hero-shell-min"
+    >
+      <Container className="hero-panel relative w-full">
         <RevealOnScroll>
-          <h1 className="type-display-hero max-w-4xl">{siteConfig.name}</h1>
-          <p className="type-meta mt-4">
-            Tegucigalpa, Francisco Morazán · Honduras
+          <h1 className="type-display-hero max-w-4xl text-pretty">{heroCopy.headline}</h1>
+          <p className="type-meta mt-4 max-w-2xl text-pretty">
+            <span className="block font-medium text-foreground sm:inline">{siteConfig.name}</span>
+            <span aria-hidden="true" className="hidden sm:inline">
+              {" "}
+              ·{" "}
+            </span>
+            <span className="mt-1 block sm:mt-0 sm:inline">
+              Tegucigalpa, Francisco Morazán, Honduras
+            </span>
           </p>
         </RevealOnScroll>
         <RevealOnScroll delayMs={100}>
-          <p className="prose-editorial mt-6">{siteConfig.description}</p>
-          <p className="type-caption mt-4">{siteConfig.tagline}</p>
+          <p className="prose-editorial mt-5 max-w-2xl sm:mt-6">{heroCopy.lead}</p>
         </RevealOnScroll>
-        <RevealOnScroll delayMs={180} className="mt-10 grid w-full grid-cols-3 gap-2 sm:gap-3">
-          <Button href="/properties?listing=sale" variant="primary" className="hero-cta-btn w-full min-w-0 justify-center">
-            Ver ventas
-          </Button>
-          <Button href="/properties?listing=rent" variant="outline" className="hero-cta-btn w-full min-w-0 justify-center">
-            Ver alquileres
-          </Button>
-          <Button href="/contact" variant="ghost" className="hero-cta-btn w-full min-w-0 justify-center">
-            Contacto
-          </Button>
-        </RevealOnScroll>
+
         {stats.total > 0 ? (
-          <RevealOnScroll delayMs={240} className="mt-6 sm:mt-8">
-            <dl className="grid w-full grid-cols-3 gap-2 sm:gap-4">
+          <RevealOnScroll delayMs={160} className="hero-stat-band w-full max-w-2xl">
+            <p className="sr-only">
+              Resumen del catálogo: {stats.total} inmuebles publicados, {stats.forSale} en venta y{" "}
+              {stats.forRent} en alquiler.
+            </p>
+            <dl className="hero-stat-grid sm:max-w-xl" aria-label="Resumen del catálogo">
               <div className="stat-pill hero-stat-pill">
-                <dt className="type-stat-label">Inmuebles</dt>
+                <dt className="type-stat-label">En catálogo</dt>
                 <dd className="type-stat-value mt-1">{stats.total}</dd>
               </div>
               <div className="stat-pill hero-stat-pill">
@@ -54,6 +71,45 @@ export function HomeHero({ heroImage, stats }: HomeHeroProps) {
             </dl>
           </RevealOnScroll>
         ) : null}
+
+        <RevealOnScroll delayMs={220} className="hero-actions w-full max-w-none sm:max-w-[36rem]">
+          <Button
+            href={whatsappUrl}
+            variant="secondary"
+            className="hero-cta-btn w-full justify-center normal-case tracking-normal sm:tracking-[0.06em]"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`WhatsApp ${siteConfig.whatsapp.display}`}
+          >
+            <span className="sm:hidden">WhatsApp</span>
+            <span className="hidden sm:inline">WhatsApp · {siteConfig.whatsapp.display}</span>
+          </Button>
+          <div className="hero-catalog-actions">
+            <Button
+              href="/properties?listing=sale"
+              variant="primary"
+              className="hero-cta-btn w-full min-w-0 justify-center"
+            >
+              <span className="sm:hidden">En venta</span>
+              <span className="hidden sm:inline">Propiedades en venta</span>
+            </Button>
+            <Button
+              href="/properties?listing=rent"
+              variant="outline"
+              className="hero-cta-btn w-full min-w-0 justify-center"
+            >
+              <span className="sm:hidden">En alquiler</span>
+              <span className="hidden sm:inline">Propiedades en alquiler</span>
+            </Button>
+          </div>
+          <Link
+            href="/contact"
+            className="focus-ring type-meta inline-flex min-h-11 max-w-full items-center py-2 text-pretty transition-colors hover:text-accent"
+          >
+            <span className="sm:hidden">Formulario de contacto</span>
+            <span className="hidden sm:inline">También puedes usar el formulario de contacto</span>
+          </Link>
+        </RevealOnScroll>
       </Container>
     </ParallaxMedia>
   );
