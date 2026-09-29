@@ -4,6 +4,7 @@ const agency = altairCatalog.agency;
 
 export const siteConfig = {
   name: "Bienes Raíces Altair",
+  heroImage: "/images/site/hero.jpg",
   tagline: "Experiencia, profesionalismo y ética en bienes raíces",
   description: agency.description,
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",

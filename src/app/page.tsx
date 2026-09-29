@@ -3,6 +3,7 @@ import { PropertyCard } from "@/components/directory/PropertyCard";
 import { RevealOnScroll } from "@/components/motion/RevealOnScroll";
 import { Section } from "@/components/layout/Section";
 import { Button } from "@/components/ui/Button";
+import { siteConfig } from "@/content/site/config";
 import { catalogStats, propertyRepository } from "@/lib/properties/repository";
 
 export default function HomePage() {
@@ -11,9 +12,7 @@ export default function HomePage() {
     .filter((property) => property.featured)
     .slice(0, 3);
   const stats = catalogStats();
-  const heroImage =
-    featured[0]?.media.heroImage.src ??
-    "https://images.wasi.co/empresas/b20190828112855.png";
+  const heroImage = siteConfig.heroImage;
 
   return (
     <>
