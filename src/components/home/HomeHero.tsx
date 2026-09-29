@@ -1,10 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { ParallaxMedia } from "@/components/motion/ParallaxMedia";
 import { RevealOnScroll } from "@/components/motion/RevealOnScroll";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
 import { siteConfig } from "@/content/site/config";
+import { buildWhatsAppUrl } from "@/lib/contact/whatsapp";
 
 const heroCopy = {
   headline: "Compra o alquila en Tegucigalpa",
@@ -20,6 +22,8 @@ type HomeHeroProps = {
 };
 
 export function HomeHero({ heroImage, stats }: HomeHeroProps) {
+  const whatsappUrl = buildWhatsAppUrl();
+
   return (
     <ParallaxMedia src={heroImage} alt={heroCopy.imageAlt} priority>
       <Container className="relative flex min-h-[88vh] flex-col justify-end pb-16 pt-28">
@@ -30,38 +34,19 @@ export function HomeHero({ heroImage, stats }: HomeHeroProps) {
           </p>
         </RevealOnScroll>
         <RevealOnScroll delayMs={100}>
-          <p className="prose-editorial mt-6">{heroCopy.lead}</p>
+          <p className="prose-editorial mt-6 max-w-2xl">{heroCopy.lead}</p>
         </RevealOnScroll>
-        <RevealOnScroll delayMs={180} className="mt-10 grid w-full grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-3">
-          <Button
-            href="/properties?listing=sale"
-            variant="primary"
-            className="hero-cta-btn w-full min-w-0 justify-center"
-          >
-            Propiedades en venta
-          </Button>
-          <Button
-            href="/properties?listing=rent"
-            variant="outline"
-            className="hero-cta-btn w-full min-w-0 justify-center"
-          >
-            Propiedades en alquiler
-          </Button>
-          <Button
-            href="/contact"
-            variant="ghost"
-            className="hero-cta-btn w-full min-w-0 justify-center"
-          >
-            Hablar con un asesor
-          </Button>
-        </RevealOnScroll>
+
         {stats.total > 0 ? (
-          <RevealOnScroll delayMs={240} className="mt-6 sm:mt-8">
+          <RevealOnScroll delayMs={160} className="hero-stat-band w-full max-w-2xl">
             <p className="sr-only">
               Resumen del catálogo: {stats.total} inmuebles publicados, {stats.forSale} en venta y{" "}
               {stats.forRent} en alquiler.
             </p>
-            <dl className="grid w-full grid-cols-3 gap-2 sm:gap-4" aria-label="Resumen del catálogo">
+            <dl
+              className="grid grid-cols-3 gap-2 sm:max-w-xl sm:gap-4"
+              aria-label="Resumen del catálogo"
+            >
               <div className="stat-pill hero-stat-pill">
                 <dt className="type-stat-label">En catálogo</dt>
                 <dd className="type-stat-value mt-1">{stats.total}</dd>
@@ -77,6 +62,40 @@ export function HomeHero({ heroImage, stats }: HomeHeroProps) {
             </dl>
           </RevealOnScroll>
         ) : null}
+
+        <RevealOnScroll delayMs={220} className="hero-actions w-full">
+          <Button
+            href={whatsappUrl}
+            variant="secondary"
+            className="hero-cta-btn w-full justify-center normal-case tracking-normal sm:tracking-[0.06em]"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            WhatsApp · {siteConfig.whatsapp.display}
+          </Button>
+          <div className="hero-catalog-actions">
+            <Button
+              href="/properties?listing=sale"
+              variant="primary"
+              className="hero-cta-btn w-full min-w-0 justify-center"
+            >
+              Propiedades en venta
+            </Button>
+            <Button
+              href="/properties?listing=rent"
+              variant="outline"
+              className="hero-cta-btn w-full min-w-0 justify-center"
+            >
+              Propiedades en alquiler
+            </Button>
+          </div>
+          <Link
+            href="/contact"
+            className="focus-ring type-meta inline-flex min-h-11 items-center py-2 transition-colors hover:text-accent"
+          >
+            También puedes usar el formulario de contacto
+          </Link>
+        </RevealOnScroll>
       </Container>
     </ParallaxMedia>
   );

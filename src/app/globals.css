@@ -192,12 +192,27 @@ body::before {
 
 .hero-cta-btn {
   min-width: 0;
+  min-height: 2.75rem;
   padding-inline: 0.65rem;
   padding-block: 0.7rem;
   font-size: var(--type-label);
   font-weight: 600;
   letter-spacing: 0.14em;
   line-height: 1.25;
+}
+
+.hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 2.5rem;
+  max-width: 36rem;
+}
+
+.hero-catalog-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
 }
 
 @media (min-width: 640px) {
@@ -207,6 +222,17 @@ body::before {
     font-size: 0.8125rem;
     letter-spacing: 0.16em;
   }
+
+  .hero-catalog-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+}
+
+.hero-stat-band {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid color-mix(in srgb, var(--line) 85%, transparent);
 }
 
 .hero-stat-pill {
