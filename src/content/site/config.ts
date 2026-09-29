@@ -36,7 +36,7 @@ export const siteConfig = {
   homeFeaturedPropertySlugs: [
     "casa-venta-tegucigalpa-10297448",
     "casa-alquiler-tegucigalpa-10291033",
-    "apartamento-venta-tegucigalpa-10298270",
+    "terreno-venta-tegucigalpa-10440769",
   ],
   sourceWebsite: agency.sourceWebsite,
 } as const;
