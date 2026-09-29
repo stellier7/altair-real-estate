@@ -12,7 +12,7 @@ const heroCopy = {
   lead:
     "Casas, apartamentos, terrenos y locales comerciales en venta y alquiler, con asesoría local de Bienes Raíces Altair.",
   imageAlt:
-    "Vista de una propiedad en Tegucigalpa, Honduras, representando el catálogo de la agencia",
+    "Residencia contemporánea con vista al valle al atardecer, imagen principal del sitio",
 } as const;
 
 type HomeHeroProps = {
@@ -27,6 +27,7 @@ export function HomeHero({ heroImage, stats }: HomeHeroProps) {
       alt={heroCopy.imageAlt}
       priority
       minHeightClass="hero-shell-min"
+      imageClassName="hero-bg-image"
     >
       <Container className="hero-panel relative w-full">
         <RevealOnScroll>

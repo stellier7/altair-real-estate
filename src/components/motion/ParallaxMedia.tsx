@@ -12,6 +12,7 @@ type ParallaxMediaProps = {
   className?: string;
   overlayClassName?: string;
   minHeightClass?: string;
+  imageClassName?: string;
 };
 
 export function ParallaxMedia({
@@ -22,6 +23,7 @@ export function ParallaxMedia({
   className = "",
   overlayClassName = "bg-gradient-to-t from-background via-background/45 to-background/15",
   minHeightClass = "min-h-[88vh]",
+  imageClassName = "",
 }: ParallaxMediaProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const targetOffset = useRef(0);
@@ -94,7 +96,7 @@ export function ParallaxMedia({
           fill
           priority={priority}
           sizes="100vw"
-          className="object-cover"
+          className={`object-cover ${imageClassName}`.trim()}
         />
       </div>
       <div className={`absolute inset-0 ${overlayClassName}`} />
