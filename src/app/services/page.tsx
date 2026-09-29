@@ -49,7 +49,7 @@ export default function ServicesPage() {
         </div>
         <a
           href={buildWhatsAppUrl()}
-          className="focus-ring mt-12 inline-block text-sm uppercase tracking-[0.18em] text-accent"
+          className="focus-ring mt-12 inline-block text-sm uppercase tracking-[0.18em] text-foreground underline decoration-line underline-offset-4 transition-colors hover:decoration-foreground/50"
           target="_blank"
           rel="noopener noreferrer"
         >

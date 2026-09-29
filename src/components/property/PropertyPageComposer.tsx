@@ -70,7 +70,6 @@ export function PropertyPageComposer({ property }: PropertyPageComposerProps) {
     : `https://www.openstreetmap.org/search?query=${encodeURIComponent(property.location.label)}`;
 
   const whatsappUrl = buildPropertyWhatsAppUrl(property.name);
-  const ctaLabel = property.contact?.ctaLabel ?? propertyCopy.enquireWhatsApp;
 
   return (
     <>
@@ -97,15 +96,6 @@ export function PropertyPageComposer({ property }: PropertyPageComposerProps) {
             {property.shortDescription ? (
               <p className="prose-editorial mt-6">{property.shortDescription}</p>
             ) : null}
-            <Button
-              href={whatsappUrl}
-              variant="secondary"
-              className="mt-8"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {ctaLabel}
-            </Button>
           </RevealOnScroll>
         </div>
       </Section>

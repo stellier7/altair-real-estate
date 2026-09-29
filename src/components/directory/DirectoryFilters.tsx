@@ -68,7 +68,7 @@ export function DirectoryFilters({
         </select>
       </label>
       <div className="sm:col-span-3">
-        <Button type="submit" variant="secondary">
+        <Button type="submit" variant="primary">
           Aplicar filtros
         </Button>
       </div>

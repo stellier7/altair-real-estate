@@ -57,7 +57,7 @@ export default function HomePage() {
               Asesoría en compra y venta de casas, apartamentos, terrenos, locales, bodegas y
               oficinas en Tegucigalpa y otras ciudades de Honduras.
             </p>
-            <Button href="/services" variant="secondary" className="mt-8">
+            <Button href="/services" variant="outline" className="mt-8">
               Conocer servicios
             </Button>
           </RevealOnScroll>
