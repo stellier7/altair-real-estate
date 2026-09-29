@@ -3,9 +3,9 @@
 import { useCallback, useEffect, useRef } from "react";
 import { PropertyListingImage } from "@/components/media/PropertyListingImage";
 import type { ImageAsset } from "@/lib/properties/types";
-import { useGalleryScrollScrub } from "./useGalleryScrollScrub";
+import { useGallerySnapCarousel } from "./useGallerySnapCarousel";
 
-const SWIPE_THRESHOLD_PX = 40;
+const SWIPE_COMMIT_THRESHOLD_PX = 40;
 
 type PropertyGalleryProps = {
   images: ImageAsset[];
@@ -51,7 +51,14 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
   const count = images.length;
   const hasMultiple = count > 1;
 
-  const { activeIndex, trackTranslatePercent, setIndex } = useGalleryScrollScrub({
+  const {
+    activeIndex,
+    trackTranslatePercent,
+    dragOffsetPx,
+    setIndex,
+    setDragOffset,
+    commitDrag,
+  } = useGallerySnapCarousel({
     count,
     enabled: hasMultiple,
     viewportRef,
@@ -102,6 +109,14 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
     event.currentTarget.setPointerCapture(event.pointerId);
   };
 
+  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    const start = swipeStart.current;
+    if (!start || start.pointerId !== event.pointerId) return;
+
+    const deltaX = event.clientX - start.x;
+    setDragOffset(deltaX);
+  };
+
   const finishSwipe = (event: React.PointerEvent<HTMLDivElement>) => {
     const start = swipeStart.current;
     if (!start || start.pointerId !== event.pointerId) return;
@@ -113,12 +128,19 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
       event.currentTarget.releasePointerCapture(event.pointerId);
     }
 
-    if (Math.abs(deltaX) < SWIPE_THRESHOLD_PX) return;
-    if (deltaX > 0) {
-      goPrev();
-    } else {
-      goNext();
+    const width = viewportRef.current?.clientWidth ?? 0;
+
+    if (Math.abs(deltaX) >= SWIPE_COMMIT_THRESHOLD_PX) {
+      if (deltaX > 0) {
+        goNext();
+      } else {
+        goPrev();
+      }
+      setDragOffset(0);
+      return;
     }
+
+    commitDrag(width);
   };
 
   const handlePointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
@@ -131,12 +153,18 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
       if (event.currentTarget.hasPointerCapture(event.pointerId)) {
         event.currentTarget.releasePointerCapture(event.pointerId);
       }
+      const width = viewportRef.current?.clientWidth ?? 0;
+      commitDrag(width);
     }
   };
 
   if (!current) {
     return null;
   }
+
+  const trackTransform = hasMultiple
+    ? `translate3d(calc(${trackTranslatePercent}% + ${dragOffsetPx}px), 0, 0)`
+    : undefined;
 
   return (
     <div className="grid gap-5">
@@ -149,14 +177,20 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
         tabIndex={hasMultiple ? 0 : undefined}
         onKeyDown={handleKeyDown}
         onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerCancel}
       >
         <div
-          className="flex h-full will-change-transform motion-reduce:transition-none"
-          style={{
-            transform: `translate3d(${trackTranslatePercent}%, 0, 0)`,
-          }}
+          className="flex h-full motion-reduce:transition-none"
+          style={
+            trackTransform
+              ? {
+                  transform: trackTransform,
+                  willChange: dragOffsetPx !== 0 ? "transform" : undefined,
+                }
+              : undefined
+          }
           aria-hidden={hasMultiple}
         >
           {hasMultiple
@@ -170,6 +204,7 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
                     alt={index === active ? image.alt : ""}
                     sizes="100vw"
                     className="pointer-events-none"
+                    priority={index === 0}
                   />
                 </div>
               ))
@@ -180,6 +215,7 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
                     alt={current.alt}
                     sizes="100vw"
                     className="pointer-events-none"
+                    priority
                   />
                 </div>
               )}
