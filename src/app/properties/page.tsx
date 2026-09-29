@@ -72,7 +72,13 @@ export default async function PropertiesPage({ searchParams }: PropertiesPagePro
         />
       </Section>
 
-      <Section className="pt-10">
+      <Section className="pt-10" id="catalog-results">
+        <a
+          href="#catalog-results"
+          className="focus-ring sr-only rounded-md bg-background px-4 py-2 text-sm font-medium text-foreground focus:not-sr-only focus:mb-6 focus:inline-block"
+        >
+          {propertyCopy.catalogSkipToResults}
+        </a>
         {pagination.totalItems === 0 ? (
           <div className="max-w-xl rounded-[var(--radius-lg)] border border-line/80 bg-surface/60 px-6 py-8">
             <h2 className="font-display text-2xl">{propertyCopy.catalogEmptyTitle}</h2>

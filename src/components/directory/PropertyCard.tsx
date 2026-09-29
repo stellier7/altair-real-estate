@@ -39,7 +39,7 @@ export function PropertyCard({ property, priority }: PropertyCardProps) {
               {formatPropertyType(property.propertyType)} · {formatStatus(property.status)}
             </p>
             {listingTag ? (
-              <span className="type-meta-caps rounded-full border border-line/80 bg-background/60 px-3 py-1 shadow-[0_8px_20px_-16px_rgba(18,17,14,0.35)]">
+              <span className="type-meta-caps rounded-full border border-line/80 bg-background/60 px-3 py-1 shadow-[var(--shadow-soft)]">
                 {listingTag === "venta" ? "Venta" : "Alquiler"}
               </span>
             ) : null}
@@ -57,7 +57,7 @@ export function PropertyCard({ property, priority }: PropertyCardProps) {
             <p className="prose-editorial line-clamp-3">{property.shortDescription}</p>
           ) : null}
           {price ? (
-            <p className="type-meta-caps mt-1 inline-flex w-fit rounded-full border border-line/70 bg-surface/80 px-4 py-1.5 shadow-[0_10px_24px_-18px_rgba(18,17,14,0.3)]">
+            <p className="type-meta-caps mt-1 inline-flex w-fit rounded-full border border-line/70 bg-surface/80 px-4 py-1.5 shadow-[var(--shadow-soft)]">
               {price}
             </p>
           ) : null}
