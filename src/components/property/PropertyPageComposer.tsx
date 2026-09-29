@@ -17,6 +17,7 @@ import { RevealOnScroll } from "@/components/motion/RevealOnScroll";
 import { Button } from "@/components/ui/Button";
 import { buildPropertyWhatsAppUrl } from "@/lib/contact/whatsapp";
 import { PropertyCard } from "@/components/directory/PropertyCard";
+import { PropertyDescription } from "./PropertyDescription";
 import { PropertyGallery } from "./PropertyGallery";
 import { PropertyHero } from "./PropertyHero";
 
@@ -111,10 +112,9 @@ export function PropertyPageComposer({ property }: PropertyPageComposerProps) {
       ) : null}
 
       {property.description ? (
-        <Section>
+        <Section className="border-t border-line/80 pt-2">
           <RevealOnScroll>
-            <h2 className="font-display text-3xl sm:text-4xl">{propertyCopy.theProperty}</h2>
-            <p className="prose-editorial mt-6 whitespace-pre-line">{property.description}</p>
+            <PropertyDescription description={property.description} />
           </RevealOnScroll>
         </Section>
       ) : null}
