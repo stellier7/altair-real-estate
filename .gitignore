@@ -5,3 +5,7 @@ out/
 .template/
 *.log
 .DS_Store
+
+# Impeccable: platform binary is downloaded on first run; runtime state is local
+.cursor/skills/impeccable/scripts/bin/
+.impeccable/
