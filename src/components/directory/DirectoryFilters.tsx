@@ -1,5 +1,6 @@
 import type { PropertyType } from "@/lib/properties/types";
 import { formatPropertyType } from "@/lib/properties/specs";
+import { propertyCopy } from "@/lib/i18n/property-copy";
 import { Button } from "@/components/ui/Button";
 
 const TYPES: PropertyType[] = [
@@ -67,8 +68,9 @@ export function DirectoryFilters({
           <option value="rent">Alquiler</option>
         </select>
       </label>
-      <div className="sm:col-span-3">
-        <Button type="submit" variant="primary">
+      <div className="flex flex-col gap-3 sm:col-span-3 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-sm text-muted">{propertyCopy.catalogFilterHint}</p>
+        <Button type="submit" variant="primary" className="shrink-0">
           Aplicar filtros
         </Button>
       </div>
