@@ -1,7 +1,9 @@
 /** Spanish UI strings for property surfaces */
 
 export const propertyCopy = {
-  theProperty: "La propiedad",
+  /** Screen-reader section title; visible hierarchy comes from lead + body layout. */
+  descriptionAccessibleTitle: "Descripción completa",
+  descriptionDetailsLabel: "Detalles de la publicación",
   specifications: "Especificaciones",
   features: "Características",
   amenities: "Amenidades",
