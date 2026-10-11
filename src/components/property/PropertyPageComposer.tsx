@@ -11,7 +11,6 @@ import {
   supportsResidentialSpecs,
 } from "@/lib/properties/specs";
 import { propertyCopy } from "@/lib/i18n/property-copy";
-import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { RevealOnScroll } from "@/components/motion/RevealOnScroll";
 import { Button } from "@/components/ui/Button";
@@ -78,7 +77,7 @@ export function PropertyPageComposer({ property }: PropertyPageComposerProps) {
 
       <Section>
         <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
-          <RevealOnScroll>
+          <div>
             <p className="text-xs uppercase tracking-[0.2em] text-muted">
               {formatPropertyType(property.propertyType)} · {formatStatus(property.status)}
             </p>
@@ -87,33 +86,26 @@ export function PropertyPageComposer({ property }: PropertyPageComposerProps) {
             {property.location.address ? (
               <p className="mt-2 text-sm text-muted">{property.location.address}</p>
             ) : null}
-          </RevealOnScroll>
-          <RevealOnScroll delayMs={100} className="border-t border-line pt-6 lg:border-t-0 lg:pt-0">
+          </div>
+          <div className="border-t border-line pt-6 lg:border-t-0 lg:pt-0">
             {price ? (
               <p className="text-sm uppercase tracking-[0.18em]">{price}</p>
             ) : null}
             {property.shortDescription ? (
               <p className="prose-editorial mt-6">{property.shortDescription}</p>
             ) : null}
-          </RevealOnScroll>
+          </div>
         </div>
+        {gallery.length > 0 ? (
+          <div className="mt-10 lg:mt-16">
+            <PropertyGallery images={allImages} />
+          </div>
+        ) : null}
       </Section>
 
-      {gallery.length > 0 ? (
-        <Section bleed>
-          <Container>
-            <RevealOnScroll>
-              <PropertyGallery images={allImages} />
-            </RevealOnScroll>
-          </Container>
-        </Section>
-      ) : null}
-
       {property.description ? (
-        <Section className="border-t border-line/80 pt-2">
-          <RevealOnScroll>
-            <PropertyDescription description={property.description} />
-          </RevealOnScroll>
+        <Section className="border-t border-line/80">
+          <PropertyDescription description={property.description} />
         </Section>
       ) : null}
 
