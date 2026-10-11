@@ -119,10 +119,14 @@ export function mapAltairProperty(
   const propertyType = mapPropertyType(raw.propertyType || "");
   const heroRaw = raw.coverImage || raw.images[0] || "";
   const hero = heroRaw ? normalizeWasiImageUrl(heroRaw) : "";
-  const gallery = raw.images
-    .filter((src) => src && src !== heroRaw)
-    .slice(0, 8)
-    .map((src) => normalizeWasiImageUrl(src));
+  const gallery = [
+    ...new Set(
+      raw.images
+        .filter((src) => src && src !== heroRaw)
+        .map((src) => normalizeWasiImageUrl(src)),
+    ),
+  ].filter((src) => src !== hero);
+  const photoCount = gallery.length + 1;
 
   const listingTag =
     raw.listingType === "sale"
@@ -169,9 +173,9 @@ export function mapAltairProperty(
         width: 1200,
         height: 800,
       },
-      gallery: gallery.map((src) => ({
+      gallery: gallery.map((src, index) => ({
         src,
-        alt: raw.title,
+        alt: `${raw.title.trim()} — foto ${index + 2} de ${photoCount}`,
         width: 1200,
         height: 800,
       })),

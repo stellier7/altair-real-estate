@@ -124,7 +124,7 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
   return (
     <div className="grid gap-5">
       <p className="sr-only" aria-live="polite" aria-atomic="true">
-        Imagen {active + 1} de {count}: {current.alt}
+        Imagen {active + 1} de {count}
       </p>
       <div
         className="relative aspect-[16/10] touch-pan-y select-none overflow-hidden rounded-[var(--radius-xl)] bg-foreground/5 shadow-[var(--shadow-card)]"
