@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
+    // Bypass Vercel Hobby Image Optimization transformation limits.
+    // Listing images are already resized by the Wasi CDN.
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
