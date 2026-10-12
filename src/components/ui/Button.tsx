@@ -7,11 +7,11 @@ const variantClasses: Record<ButtonVariant, string> = {
   primary:
     "border border-accent/25 bg-accent text-background shadow-[0_14px_36px_-14px_rgba(101,80,160,0.45)] hover:-translate-y-0.5 hover:bg-accent-hover hover:shadow-[0_20px_44px_-16px_rgba(101,80,160,0.55)] active:translate-y-0 active:shadow-[0_10px_24px_-12px_rgba(101,80,160,0.4)]",
   secondary:
-    "border border-accent/25 bg-surface/85 text-foreground shadow-[0_10px_28px_-18px_rgba(34,24,48,0.32)] backdrop-blur-sm hover:-translate-y-0.5 hover:border-accent/40 hover:bg-surface hover:shadow-[0_16px_36px_-18px_rgba(101,80,160,0.28)] active:translate-y-0",
+    "border border-accent/30 bg-surface/85 text-accent shadow-[0_10px_28px_-18px_rgba(34,24,48,0.32)] backdrop-blur-sm hover:-translate-y-0.5 hover:border-accent/50 hover:bg-accent-soft hover:shadow-[0_16px_36px_-18px_rgba(101,80,160,0.28)] active:translate-y-0",
   outline:
-    "border border-accent/35 bg-surface/70 text-foreground shadow-[0_10px_28px_-18px_rgba(34,24,48,0.3)] backdrop-blur-sm hover:-translate-y-0.5 hover:border-accent/55 hover:bg-accent-soft hover:shadow-[0_16px_36px_-18px_rgba(101,80,160,0.3)] active:translate-y-0",
+    "border border-accent/45 bg-surface/75 text-accent shadow-[0_10px_28px_-18px_rgba(34,24,48,0.3)] backdrop-blur-sm hover:-translate-y-0.5 hover:border-accent/70 hover:bg-accent-soft hover:shadow-[0_16px_36px_-18px_rgba(101,80,160,0.3)] active:translate-y-0",
   ghost:
-    "border border-transparent bg-accent/[0.06] text-foreground shadow-[0_8px_24px_-20px_rgba(34,24,48,0.28)] hover:-translate-y-0.5 hover:bg-accent/[0.12] hover:shadow-[0_14px_32px_-18px_rgba(101,80,160,0.28)] active:translate-y-0",
+    "border border-transparent bg-accent/[0.08] text-accent shadow-[0_8px_24px_-20px_rgba(34,24,48,0.28)] hover:-translate-y-0.5 hover:bg-accent/[0.14] hover:shadow-[0_14px_32px_-18px_rgba(101,80,160,0.28)] active:translate-y-0",
 };
 
 const base =

@@ -48,7 +48,7 @@ export function SiteHeader() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="focus-ring type-meta-caps inline-flex min-h-10 items-center rounded-full px-2.5 text-muted transition-colors hover:bg-accent-soft hover:text-accent xl:px-3"
+                className="focus-ring type-meta-caps inline-flex min-h-10 items-center rounded-full px-2.5 text-accent/80 transition-colors hover:bg-accent-soft hover:text-accent xl:px-3"
               >
                 {item.label}
               </Link>
