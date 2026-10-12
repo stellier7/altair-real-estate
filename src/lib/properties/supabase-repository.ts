@@ -3,42 +3,9 @@ import {
   createSupabaseAdminClient,
 } from "@/lib/supabase/admin";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { matchesPropertyFilter } from "./matches-filter";
 import type { Property, PropertyFilter } from "./types";
 import { rowToProperty, type PropertyRow } from "./serialize";
-
-function matchesFilter(property: Property, filters: PropertyFilter): boolean {
-  if (filters.type && property.propertyType !== filters.type) {
-    return false;
-  }
-  if (filters.status && property.status !== filters.status) {
-    return false;
-  }
-  if (filters.listing) {
-    const tag = filters.listing === "sale" ? "venta" : "alquiler";
-    if (!property.tags?.includes(tag)) {
-      return false;
-    }
-  }
-  if (filters.query) {
-    const q = filters.query.toLowerCase();
-    const haystack = [
-      property.name,
-      property.title,
-      property.shortDescription,
-      property.location.label,
-      property.location.city,
-      property.location.region,
-      property.tags?.join(" "),
-    ]
-      .filter(Boolean)
-      .join(" ")
-      .toLowerCase();
-    if (!haystack.includes(q)) {
-      return false;
-    }
-  }
-  return true;
-}
 
 async function getReadClient() {
   if (canUseSupabaseAdmin()) {
@@ -116,7 +83,7 @@ export async function filterSupabaseProperties(
   options?: { includeUnpublished?: boolean },
 ): Promise<Property[]> {
   const all = await fetchAllProperties(options);
-  return all.filter((p) => matchesFilter(p, filters));
+  return all.filter((p) => matchesPropertyFilter(p, filters));
 }
 
 export function computeStatsFromProperties(properties: Property[]) {

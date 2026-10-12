@@ -32,7 +32,7 @@ export const propertyCopy = {
   catalogViewAll: "Ver todo el catálogo",
   catalogSkipToResults: "Saltar a los resultados",
   catalogFilterHint:
-    "Elija tipo y negocio, luego pulse «Aplicar filtros» para actualizar el listado.",
+    "Busque por ciudad, título, zona o código (ej. 6934898). Elija tipo y negocio, luego pulse «Aplicar filtros».",
   specLabels: {
     totalArea: "Área total",
     lotSize: "Terreno",

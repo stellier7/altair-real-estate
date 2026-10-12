@@ -1,42 +1,9 @@
 import { altairCatalog } from "./catalog";
 import { mapAltairCatalog } from "./map-altair";
+import { matchesPropertyFilter } from "./matches-filter";
 import type { Property, PropertyFilter } from "./types";
 
 const properties = mapAltairCatalog(altairCatalog);
-
-function matchesFilter(property: Property, filters: PropertyFilter): boolean {
-  if (filters.type && property.propertyType !== filters.type) {
-    return false;
-  }
-  if (filters.status && property.status !== filters.status) {
-    return false;
-  }
-  if (filters.listing) {
-    const tag = filters.listing === "sale" ? "venta" : "alquiler";
-    if (!property.tags?.includes(tag)) {
-      return false;
-    }
-  }
-  if (filters.query) {
-    const q = filters.query.toLowerCase();
-    const haystack = [
-      property.name,
-      property.title,
-      property.shortDescription,
-      property.location.label,
-      property.location.city,
-      property.location.region,
-      property.tags?.join(" "),
-    ]
-      .filter(Boolean)
-      .join(" ")
-      .toLowerCase();
-    if (!haystack.includes(q)) {
-      return false;
-    }
-  }
-  return true;
-}
 
 export const jsonPropertyRepository = {
   getAll(): Property[] {
@@ -54,7 +21,7 @@ export const jsonPropertyRepository = {
   filter(filters: PropertyFilter): Property[] {
     return jsonPropertyRepository
       .getAll()
-      .filter((p) => matchesFilter(p, filters));
+      .filter((p) => matchesPropertyFilter(p, filters));
   },
 
   stats() {

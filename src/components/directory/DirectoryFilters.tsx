@@ -37,7 +37,7 @@ export function DirectoryFilters({
           type="search"
           name="q"
           defaultValue={currentQuery ?? ""}
-          placeholder="Ciudad, título o zona"
+          placeholder="Ciudad, título, zona o código"
           className="input-soft focus-ring border border-accent/25 bg-background/50 px-4 py-2.5 text-foreground outline-none"
         />
       </label>
