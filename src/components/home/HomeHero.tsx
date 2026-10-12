@@ -8,9 +8,9 @@ import { Button } from "@/components/ui/Button";
 import { siteConfig } from "@/content/site/config";
 
 const heroCopy = {
-  headline: "Compra o alquila en Tegucigalpa",
+  supporting: "Compra o alquila en Tegucigalpa",
   lead:
-    "Casas, apartamentos, terrenos y locales comerciales en venta y alquiler, con asesoría local de Bienes Raíces Altair.",
+    "Casas, apartamentos, terrenos y locales comerciales en venta y alquiler en Honduras, con asesoría local y atención en español e inglés.",
   imageAlt:
     "Residencia contemporánea con vista al valle al atardecer, imagen principal del sitio",
 } as const;
@@ -31,9 +31,9 @@ export function HomeHero({ heroImage, stats }: HomeHeroProps) {
     >
       <Container className="hero-panel relative w-full">
         <RevealOnScroll>
-          <h1 className="type-display-hero max-w-4xl text-pretty">{heroCopy.headline}</h1>
+          <h1 className="type-display-hero max-w-4xl text-pretty">{siteConfig.name}</h1>
           <p className="type-meta mt-4 max-w-2xl text-pretty">
-            <span className="block font-medium text-foreground sm:inline">{siteConfig.name}</span>
+            <span className="block font-medium text-foreground sm:inline">{heroCopy.supporting}</span>
             <span aria-hidden="true" className="hidden sm:inline">
               {" "}
               ·{" "}
