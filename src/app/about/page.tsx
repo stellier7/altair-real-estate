@@ -43,7 +43,7 @@ export default function AboutPage() {
         <p className="type-meta-caps text-accent">English</p>
         <h2 className="mt-3 font-display text-3xl text-accent sm:text-4xl">About Altair</h2>
         <p className="prose-editorial mt-6 max-w-2xl">
-          Since 2014, we’ve helped families, businesses, diplomatic organizations, and investors
+          Since 2014, we've helped families, businesses, diplomatic organizations, and investors
           buy, sell, rent, and manage property across Honduras, with residential, commercial, and
           industrial expertise and full property management for owners. Bilingual service in English
           and Spanish.
