@@ -4,18 +4,21 @@ import { RevealOnScroll } from "@/components/motion/RevealOnScroll";
 import { Section } from "@/components/layout/Section";
 import { Button } from "@/components/ui/Button";
 import { siteConfig } from "@/content/site/config";
-import { catalogStats, propertyRepository } from "@/lib/properties/repository";
+import { getHomeFeaturedSlugs } from "@/lib/properties/featured";
+import { getCatalogStats, getPropertyBySlug } from "@/lib/properties/service";
 import type { Property } from "@/lib/properties/types";
 
-function getHomeFeaturedProperties(): Property[] {
-  return siteConfig.homeFeaturedPropertySlugs
-    .map((slug) => propertyRepository.getBySlug(slug))
-    .filter((property): property is Property => property !== undefined);
+async function getHomeFeaturedProperties(): Promise<Property[]> {
+  const slugs = await getHomeFeaturedSlugs();
+  const properties = await Promise.all(
+    slugs.map((slug) => getPropertyBySlug(slug)),
+  );
+  return properties.filter((property): property is Property => property !== undefined);
 }
 
-export default function HomePage() {
-  const featured = getHomeFeaturedProperties();
-  const stats = catalogStats();
+export default async function HomePage() {
+  const featured = await getHomeFeaturedProperties();
+  const stats = await getCatalogStats();
   const heroImage = siteConfig.heroImage;
 
   return (

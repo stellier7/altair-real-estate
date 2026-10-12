@@ -18,6 +18,11 @@ const nextConfig: NextConfig = {
         hostname: "images.wasi.co",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "**.supabase.co",
+        pathname: "/storage/v1/object/public/**",
+      },
     ],
   },
 };

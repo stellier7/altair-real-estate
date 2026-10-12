@@ -6,7 +6,7 @@ import { RevealOnScroll } from "@/components/motion/RevealOnScroll";
 import { Section } from "@/components/layout/Section";
 import { Button } from "@/components/ui/Button";
 import { propertyCopy } from "@/lib/i18n/property-copy";
-import { catalogStats, propertyRepository } from "@/lib/properties/repository";
+import { getCatalogStats, listProperties } from "@/lib/properties/service";
 import {
   paginateItems,
   parsePropertiesPage,
@@ -39,7 +39,7 @@ export default async function PropertiesPage({ searchParams }: PropertiesPagePro
   const requestedPage = parsePropertiesPage(params.page);
   const hasActiveFilters = Boolean(type || listing || query);
 
-  const results = propertyRepository.filter({
+  const results = await listProperties({
     type,
     listing,
     query,
@@ -52,7 +52,7 @@ export default async function PropertiesPage({ searchParams }: PropertiesPagePro
     q: query,
   };
 
-  const stats = catalogStats();
+  const stats = await getCatalogStats();
 
   return (
     <>

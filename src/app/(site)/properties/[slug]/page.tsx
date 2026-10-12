@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PropertyPageComposer } from "@/components/property/PropertyPageComposer";
-import { propertyRepository } from "@/lib/properties/repository";
+import {
+  getAllProperties,
+  getPropertyBySlug,
+} from "@/lib/properties/service";
 import {
   buildPropertyJsonLd,
   buildPropertyMetadata,
@@ -12,7 +15,8 @@ type PropertyPageProps = {
 };
 
 export async function generateStaticParams() {
-  return propertyRepository.getAll().map((property) => ({
+  const properties = await getAllProperties();
+  return properties.map((property) => ({
     slug: property.slug,
   }));
 }
@@ -21,7 +25,7 @@ export async function generateMetadata({
   params,
 }: PropertyPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const property = propertyRepository.getBySlug(slug);
+  const property = await getPropertyBySlug(slug);
   if (!property) {
     return {};
   }
@@ -30,7 +34,7 @@ export async function generateMetadata({
 
 export default async function PropertyPage({ params }: PropertyPageProps) {
   const { slug } = await params;
-  const property = propertyRepository.getBySlug(slug);
+  const property = await getPropertyBySlug(slug);
 
   if (!property) {
     notFound();
