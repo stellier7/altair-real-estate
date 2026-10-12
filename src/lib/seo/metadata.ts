@@ -28,13 +28,8 @@ export function buildSiteMetadata(overrides?: {
     description,
     metadataBase: new URL(baseUrl),
     alternates: { canonical: absoluteUrl(path) },
-    icons: {
-      icon: [
-        { url: "/favicon.ico", sizes: "any" },
-        { url: "/icon.png", type: "image/png", sizes: "512x512" },
-      ],
-      apple: [{ url: "/apple-icon.png", type: "image/png", sizes: "180x180" }],
-    },
+    // Icons come from app/favicon.ico, app/icon.png, and app/apple-icon.png
+    // (Next.js file conventions) so they always resolve on the deployment host.
     openGraph: {
       title,
       description,
