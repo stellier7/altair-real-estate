@@ -77,9 +77,22 @@ export function SiteFooter() {
         </div>
       </Container>
       <Container className="border-t border-line py-6">
-        <p className="type-meta text-center sm:text-left">
-          © {year} {siteConfig.name}. Todos los derechos reservados.
-        </p>
+        <div className="flex flex-col gap-3 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
+          <p className="type-meta">
+            © {year} {siteConfig.name}. Todos los derechos reservados.
+          </p>
+          <p className="type-meta">
+            Diseñado por{" "}
+            <a
+              href="https://www.iagodigital.com/"
+              className="focus-ring font-medium text-accent underline decoration-accent/35 underline-offset-4 transition-colors hover:decoration-accent"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Iago Digital
+            </a>
+          </p>
+        </div>
       </Container>
     </footer>
   );
