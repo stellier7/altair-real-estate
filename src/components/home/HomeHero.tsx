@@ -31,11 +31,9 @@ export function HomeHero({ heroImage, stats }: HomeHeroProps) {
     >
       <Container className="hero-panel relative w-full">
         <RevealOnScroll>
-          <h1 className="type-display-hero max-w-4xl text-pretty text-accent">
-            {heroCopy.headline}
-          </h1>
+          <h1 className="type-display-hero max-w-4xl text-pretty">{heroCopy.headline}</h1>
           <p className="type-meta mt-4 max-w-2xl text-pretty">
-            <span className="block font-medium text-accent sm:inline">{siteConfig.name}</span>
+            <span className="block font-medium text-foreground sm:inline">{siteConfig.name}</span>
             <span aria-hidden="true" className="hidden sm:inline">
               {" "}
               ·{" "}

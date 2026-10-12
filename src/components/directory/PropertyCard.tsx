@@ -35,11 +35,11 @@ export function PropertyCard({ property, priority }: PropertyCardProps) {
         </Link>
         <div className="flex flex-col gap-3 lg:py-1">
           <div className="flex flex-wrap items-center gap-2">
-            <p className="type-meta-caps">
+            <p className="type-meta-caps text-accent">
               {formatPropertyType(property.propertyType)} · {formatStatus(property.status)}
             </p>
             {listingTag ? (
-              <span className="type-meta-caps rounded-full border border-line/80 bg-background/60 px-3 py-1 shadow-[var(--shadow-soft)]">
+              <span className="type-meta-caps rounded-full border border-accent/35 bg-accent-soft px-3 py-1 text-accent shadow-[var(--shadow-soft)]">
                 {listingTag === "venta" ? "Venta" : "Alquiler"}
               </span>
             ) : null}
@@ -57,13 +57,13 @@ export function PropertyCard({ property, priority }: PropertyCardProps) {
             <p className="prose-editorial line-clamp-3">{property.shortDescription}</p>
           ) : null}
           {price ? (
-            <p className="type-meta-caps mt-1 inline-flex w-fit rounded-full border border-line/70 bg-surface/80 px-4 py-1.5 shadow-[var(--shadow-soft)]">
+            <p className="type-meta-caps mt-1 inline-flex w-fit rounded-full border border-accent/40 bg-accent-soft px-4 py-1.5 text-accent shadow-[var(--shadow-soft)]">
               {price}
             </p>
           ) : null}
           <Button
             href={`/properties/${property.slug}`}
-            variant="outline"
+            variant="primary"
             className="mt-3 w-fit"
           >
             {propertyCopy.viewProperty}

@@ -18,7 +18,7 @@ export function SiteFooter() {
         </div>
         <div className="grid gap-8 sm:grid-cols-2 sm:gap-6">
           <nav aria-labelledby="footer-nav-heading">
-            <h2 id="footer-nav-heading" className="type-meta-caps">
+            <h2 id="footer-nav-heading" className="type-meta-caps text-accent">
               Navegación
             </h2>
             <ul className="mt-4 space-y-2.5 text-sm">
@@ -35,13 +35,13 @@ export function SiteFooter() {
             </ul>
           </nav>
           <div aria-labelledby="footer-contact-heading">
-            <h2 id="footer-contact-heading" className="type-meta-caps">
+            <h2 id="footer-contact-heading" className="type-meta-caps text-accent">
               Contacto
             </h2>
             <ul className="mt-4 space-y-3 text-sm text-muted">
               <li>
                 <a
-                  className="focus-ring inline-flex min-h-11 items-center py-1 font-medium text-foreground transition-colors hover:text-accent"
+                  className="focus-ring inline-flex min-h-11 items-center py-1 font-medium text-accent transition-colors hover:text-accent-hover"
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -51,7 +51,7 @@ export function SiteFooter() {
               </li>
               <li>
                 <a
-                  className="focus-ring inline-flex min-h-11 items-center py-1 transition-colors hover:text-accent"
+                  className="focus-ring inline-flex min-h-11 items-center py-1 text-accent transition-colors hover:text-accent-hover"
                   href={phoneHref(siteConfig.phone)}
                 >
                   Tel. {siteConfig.phone}
@@ -59,7 +59,7 @@ export function SiteFooter() {
               </li>
               <li>
                 <a
-                  className="focus-ring inline-flex min-h-11 items-center py-1 break-all transition-colors hover:text-accent"
+                  className="focus-ring inline-flex min-h-11 items-center py-1 break-all text-accent transition-colors hover:text-accent-hover"
                   href={`mailto:${siteConfig.contactEmail}`}
                 >
                   {siteConfig.contactEmail}

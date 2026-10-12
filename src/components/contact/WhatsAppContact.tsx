@@ -22,7 +22,7 @@ export function WhatsAppContact({ heading, message }: WhatsAppContactProps) {
         Use el botón flotante de WhatsApp o{" "}
         <a
           href={url}
-          className="focus-ring font-medium text-foreground underline decoration-line underline-offset-4 transition-colors hover:decoration-foreground/50"
+          className="focus-ring font-medium text-accent underline decoration-accent/40 underline-offset-4 transition-colors hover:decoration-accent"
           target="_blank"
           rel="noopener noreferrer"
         >

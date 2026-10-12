@@ -90,7 +90,7 @@ export function PropertyPageComposer({ property }: PropertyPageComposerProps) {
           </RevealOnScroll>
           <RevealOnScroll delayMs={100} className="border-t border-line pt-6 lg:border-t-0 lg:pt-0">
             {price ? (
-              <p className="text-sm uppercase tracking-[0.18em]">{price}</p>
+              <p className="text-sm font-medium uppercase tracking-[0.18em] text-accent">{price}</p>
             ) : null}
             {property.shortDescription ? (
               <p className="prose-editorial mt-6">{property.shortDescription}</p>

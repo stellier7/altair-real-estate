@@ -44,7 +44,7 @@ export default function HomePage() {
             <p className="type-meta-caps text-accent">Catálogo</p>
             <h2 className="type-display-section mt-3 text-accent">Inmuebles destacados</h2>
           </div>
-          <Button href="/properties" variant="outline">
+          <Button href="/properties" variant="primary">
             Ver catálogo
           </Button>
         </RevealOnScroll>

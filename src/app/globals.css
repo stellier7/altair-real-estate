@@ -10,8 +10,8 @@
   --accent: #6550a0;
   --accent-hover: #52408a;
   --accent-soft: rgba(101, 80, 160, 0.16);
-  --whatsapp: #25d366;
-  --whatsapp-hover: #128c7e;
+  --whatsapp: var(--accent);
+  --whatsapp-hover: var(--accent-hover);
   --line: rgba(34, 24, 48, 0.12);
   --surface: #f4eff8;
   --max-width: 88rem;
