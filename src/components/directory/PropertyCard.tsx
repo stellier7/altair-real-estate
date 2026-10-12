@@ -1,5 +1,9 @@
 import Link from "next/link";
 import { PropertyListingImage } from "@/components/media/PropertyListingImage";
+import {
+  isUnavailableListing,
+  PropertyStatusOverlay,
+} from "@/components/property/PropertyStatusOverlay";
 import type { Property } from "@/lib/properties/types";
 import {
   formatPropertyType,
@@ -17,6 +21,7 @@ type PropertyCardProps = {
 export function PropertyCard({ property, priority }: PropertyCardProps) {
   const price = getDisplayPrice(property);
   const listingTag = property.tags?.find((tag) => tag === "venta" || tag === "alquiler");
+  const unavailable = isUnavailableListing(property.status);
 
   return (
     <article className="property-card group overflow-hidden">
@@ -30,8 +35,11 @@ export function PropertyCard({ property, priority }: PropertyCardProps) {
             alt={property.media.heroImage.alt}
             priority={priority}
             sizes="(max-width: 1024px) 100vw, 48vw"
-            className="transition-transform duration-700 ease-out group-hover:scale-[1.03] motion-reduce:transition-none"
+            className={`transition-[transform,filter] duration-700 ease-out group-hover:scale-[1.03] motion-reduce:transition-none ${
+              unavailable ? "brightness-[0.88] saturate-[0.75]" : ""
+            }`}
           />
+          <PropertyStatusOverlay status={property.status} />
         </Link>
         <div className="flex flex-col gap-3 lg:py-1">
           <div className="flex flex-wrap items-center gap-2">
@@ -41,6 +49,11 @@ export function PropertyCard({ property, priority }: PropertyCardProps) {
             {listingTag ? (
               <span className="type-meta-caps rounded-full border border-accent/35 bg-accent-soft px-3 py-1 text-accent shadow-[var(--shadow-soft)]">
                 {listingTag === "venta" ? "Venta" : "Alquiler"}
+              </span>
+            ) : null}
+            {property.status === "sold" ? (
+              <span className="type-meta-caps rounded-sm bg-foreground px-3 py-1 text-background">
+                Vendido
               </span>
             ) : null}
           </div>

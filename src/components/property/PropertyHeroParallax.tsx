@@ -27,9 +27,16 @@ export function PropertyHeroParallax({ property }: PropertyHeroParallaxProps) {
       <div className="absolute inset-x-0 bottom-0">
         <div className="mx-auto max-w-[var(--max-width)] px-5 pb-10 sm:px-8 lg:px-12 lg:pb-14">
           <RevealOnScroll>
-            <p className="text-xs uppercase tracking-[0.22em] text-foreground/80">
-              {formatPropertyType(property.propertyType)} · {formatStatus(property.status)}
-            </p>
+            <div className="flex flex-wrap items-center gap-3">
+              <p className="text-xs uppercase tracking-[0.22em] text-foreground/80">
+                {formatPropertyType(property.propertyType)} · {formatStatus(property.status)}
+              </p>
+              {property.status === "sold" ? (
+                <span className="rounded-sm bg-foreground px-3 py-1.5 font-display text-lg uppercase tracking-[0.18em] text-background">
+                  Vendido
+                </span>
+              ) : null}
+            </div>
           </RevealOnScroll>
           <RevealOnScroll delayMs={100}>
             <p className="mt-3 text-xs uppercase tracking-[0.2em] text-foreground/70">
