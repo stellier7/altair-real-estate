@@ -25,7 +25,8 @@ export default function HomePage() {
       <Section>
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
           <RevealOnScroll>
-            <h2 className="type-display-section">Quiénes somos</h2>
+            <p className="type-meta-caps text-accent">Altair</p>
+            <h2 className="type-display-section mt-3 text-accent">Quiénes somos</h2>
           </RevealOnScroll>
           <RevealOnScroll delayMs={100}>
             <p className="prose-editorial">
@@ -37,10 +38,13 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section id="featured">
+      <Section id="featured" className="bg-[color-mix(in_srgb,var(--accent-soft)_55%,transparent)]">
         <RevealOnScroll className="mb-12 flex flex-wrap items-end justify-between gap-6">
-          <h2 className="type-display-section">Inmuebles destacados</h2>
-          <Button href="/properties" variant="outline">
+          <div>
+            <p className="type-meta-caps text-accent">Catálogo</p>
+            <h2 className="type-display-section mt-3 text-accent">Inmuebles destacados</h2>
+          </div>
+          <Button href="/properties" variant="primary">
             Ver catálogo
           </Button>
         </RevealOnScroll>
@@ -56,12 +60,13 @@ export default function HomePage() {
       <Section className="bg-surface/80">
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
           <RevealOnScroll>
-            <h2 className="type-display-section">Servicios</h2>
+            <p className="type-meta-caps text-accent">Oferta</p>
+            <h2 className="type-display-section mt-3 text-accent">Servicios</h2>
             <p className="prose-editorial mt-6">
               Asesoría en compra y venta de casas, apartamentos, terrenos, locales, bodegas y
               oficinas en Tegucigalpa y otras ciudades de Honduras.
             </p>
-            <Button href="/services" variant="outline" className="mt-8">
+            <Button href="/services" variant="primary" className="mt-8">
               Conocer servicios
             </Button>
           </RevealOnScroll>
@@ -77,7 +82,7 @@ export default function HomePage() {
               ].map((item, i) => (
                 <li
                   key={item}
-                  className="service-line type-meta-caps border-t border-line pt-4"
+                  className="service-line type-meta-caps border-t border-accent/35 pt-4 text-accent"
                   style={{ animationDelay: `${i * 60}ms` }}
                 >
                   {item}

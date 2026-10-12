@@ -56,15 +56,15 @@ export function HomeHero({ heroImage, stats }: HomeHeroProps) {
             <dl className="hero-stat-grid sm:max-w-xl" aria-label="Resumen del catálogo">
               <div className="stat-pill hero-stat-pill">
                 <dt className="type-stat-label">En catálogo</dt>
-                <dd className="type-stat-value mt-1">{stats.total}</dd>
+                <dd className="type-stat-value mt-1 text-accent">{stats.total}</dd>
               </div>
               <div className="stat-pill hero-stat-pill">
                 <dt className="type-stat-label">En venta</dt>
-                <dd className="type-stat-value mt-1">{stats.forSale}</dd>
+                <dd className="type-stat-value mt-1 text-accent">{stats.forSale}</dd>
               </div>
               <div className="stat-pill hero-stat-pill">
                 <dt className="type-stat-label">En alquiler</dt>
-                <dd className="type-stat-value mt-1">{stats.forRent}</dd>
+                <dd className="type-stat-value mt-1 text-accent">{stats.forRent}</dd>
               </div>
             </dl>
           </RevealOnScroll>
@@ -91,7 +91,7 @@ export function HomeHero({ heroImage, stats }: HomeHeroProps) {
           </div>
           <Link
             href="/contact"
-            className="focus-ring type-meta inline-flex min-h-11 max-w-full items-center py-2 text-pretty transition-colors hover:text-accent"
+            className="focus-ring type-meta inline-flex min-h-11 max-w-full items-center py-2 text-pretty text-accent underline decoration-accent/35 underline-offset-4 transition-colors hover:decoration-accent"
           >
             <span className="sm:hidden">Formulario de contacto</span>
             <span className="hidden sm:inline">También puedes usar el formulario de contacto</span>

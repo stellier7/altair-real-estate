@@ -39,7 +39,7 @@ export function PropertyHeroParallax({ property }: PropertyHeroParallaxProps) {
               {property.name}
             </h1>
             {price ? (
-              <p className="mt-4 text-sm uppercase tracking-[0.18em] text-foreground/90">{price}</p>
+              <p className="mt-4 text-sm uppercase tracking-[0.18em] text-accent">{price}</p>
             ) : null}
           </RevealOnScroll>
         </div>

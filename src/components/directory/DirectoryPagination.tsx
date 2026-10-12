@@ -24,7 +24,7 @@ export function DirectoryPagination({
   const nextPage = currentPage < totalPages ? currentPage + 1 : null;
 
   const linkClass =
-    "focus-ring inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-line/80 bg-surface/80 px-4 text-xs font-medium uppercase tracking-[0.14em] text-foreground transition-colors hover:bg-surface disabled:pointer-events-none disabled:opacity-40";
+    "focus-ring inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-accent/40 bg-accent-soft px-4 text-xs font-medium uppercase tracking-[0.14em] text-accent transition-colors hover:border-accent/60 hover:bg-accent hover:text-background disabled:pointer-events-none disabled:opacity-40";
 
   return (
     <nav
