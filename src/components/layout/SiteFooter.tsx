@@ -89,7 +89,7 @@ export function SiteFooter() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Iago Digital
+              iAGO Digital
             </a>
           </p>
           <p className="type-meta sm:text-right">
