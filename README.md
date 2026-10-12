@@ -15,8 +15,14 @@ npm run dev
 | Archivo | Contenido |
 |---------|-----------|
 | `src/data/properties.json` | Agencia + 475 inmuebles (scrape Wasi) |
+| `backups/catalog-2026-10-12/` | Respaldo congelado antes del panel admin |
 | `src/content/site/config.ts` | Marca, contacto y navegación |
 | `src/lib/properties/map-altair.ts` | Mapeo JSON → modelo del template |
+
+## Panel de administración
+
+Ver `docs/ADMIN.md` y `docs/DATA-SAFETY.md`. El panel vive en `/admin` (requiere Supabase).
+El sitio público sigue leyendo JSON hasta `PROPERTIES_DATA_SOURCE=supabase`.
 
 ## Despliegue
 

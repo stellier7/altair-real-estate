@@ -1,5 +1,5 @@
 import type { Property } from "@/lib/properties/types";
-import { propertyRepository } from "@/lib/properties/repository";
+import { getAllProperties } from "@/lib/properties/service";
 import { getRelatedProperties } from "@/lib/properties/related";
 import {
   formatPropertyType,
@@ -25,15 +25,14 @@ type PropertyPageComposerProps = {
   property: Property;
 };
 
-export function PropertyPageComposer({ property }: PropertyPageComposerProps) {
+export async function PropertyPageComposer({
+  property,
+}: PropertyPageComposerProps) {
   const price = getDisplayPrice(property);
   const gallery = property.media.gallery ?? [];
   const allImages = [property.media.heroImage, ...gallery];
-  const related = getRelatedProperties(
-    property,
-    propertyRepository.getAll(),
-    3,
-  );
+  const allProperties = await getAllProperties();
+  const related = getRelatedProperties(property, allProperties, 3);
 
   const labels = propertyCopy.specLabels;
 

@@ -1,8 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, DM_Sans } from "next/font/google";
-import { SiteFooter } from "@/components/layout/SiteFooter";
-import { SiteHeader } from "@/components/layout/SiteHeader";
-import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
 import { buildSiteMetadata } from "@/lib/seo/metadata";
 import "./globals.css";
 
@@ -34,10 +31,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={`${cormorant.variable} ${dmSans.variable} antialiased`}>
-        <SiteHeader />
-        <main id="contenido-principal">{children}</main>
-        <SiteFooter />
-        <WhatsAppFloat />
+        {children}
       </body>
     </html>
   );
