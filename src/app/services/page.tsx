@@ -18,7 +18,7 @@ const services = [
   },
   {
     title: "Asesoría integral",
-    body: "Acompañamiento en visitas, negociación y documentación con nuestro equipo en Metropolis.",
+    body: "Acompañamiento en visitas, negociación y documentación con nuestro equipo en Torre Atlas.",
   },
 ];
 

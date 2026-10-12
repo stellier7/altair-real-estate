@@ -20,7 +20,8 @@ export default function ContactPage() {
         <div>
           <h1 className="font-display text-5xl sm:text-6xl">Contacto</h1>
           <p className="prose-editorial mt-6 max-w-xl">
-            Escríbanos por WhatsApp, llámenos o visite nuestra oficina en Condominios Metropolis.
+            Escríbanos por WhatsApp, llámenos o visite nuestra oficina en Torre Atlas, Bulevar
+            Morazán.
           </p>
           <div className="mt-10 space-y-6 text-sm text-muted">
             <p>
