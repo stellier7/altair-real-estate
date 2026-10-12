@@ -30,9 +30,9 @@ export default function HomePage() {
           </RevealOnScroll>
           <RevealOnScroll delayMs={100}>
             <p className="prose-editorial">
-              Somos una empresa de bienes raíces en Tegucigalpa especializada en ventas y rentas de
-              propiedades comerciales, residenciales e industriales. Ofrecemos experiencia,
-              profesionalismo y ética a nuestros clientes.
+              Desde 2014 ayudamos a familias, embajadas, organizaciones diplomáticas, empresas e
+              inversionistas a comprar, vender, rentar y administrar propiedades en toda Honduras.
+              Atención en español e inglés.
             </p>
           </RevealOnScroll>
         </div>
