@@ -7,7 +7,9 @@ export const siteConfig = {
   heroImage: "/images/site/hero-home.jpg",
   tagline: "Experiencia, profesionalismo y ética en bienes raíces",
   description: agency.description,
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"),
   defaultOgImage: "/images/site/logo-altair.png",
   logo: "/images/site/logo-mark.png",
   logoFull: "/images/site/logo-altair.png",
