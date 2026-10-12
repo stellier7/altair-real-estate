@@ -26,16 +26,24 @@ export function SiteHeader() {
         Saltar al contenido
       </a>
       <Container className="flex h-[var(--site-header-height)] items-center gap-2.5 sm:gap-3 md:h-[var(--site-header-height-md)]">
-        <Link href="/" className="focus-ring group flex shrink-0 items-center">
-          <span className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full border border-line/70 bg-surface shadow-[var(--shadow-soft)] transition-[border-color,box-shadow] duration-200 group-hover:border-line group-hover:shadow-[var(--shadow-card)] sm:h-10 sm:w-10">
+        <Link
+          href="/"
+          className="focus-ring group flex shrink-0 items-center gap-2.5 sm:gap-3"
+          aria-label={siteConfig.name}
+        >
+          <span className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border border-accent/25 bg-surface shadow-[var(--shadow-soft)] transition-[border-color,box-shadow] duration-200 group-hover:border-accent/45 group-hover:shadow-[var(--shadow-card)] sm:h-11 sm:w-11">
             <Image
               src={siteConfig.logo}
-              alt={siteConfig.name}
-              width={96}
-              height={96}
-              className="h-[88%] w-[88%] object-contain"
+              alt=""
+              width={176}
+              height={176}
+              className="h-[92%] w-[92%] object-contain"
               priority
+              sizes="44px"
             />
+          </span>
+          <span className="font-display text-[1.35rem] leading-none tracking-tight text-accent sm:text-[1.5rem]">
+            Altair
           </span>
         </Link>
 
