@@ -1,17 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  /* Altair brand — sampled from logo wordmark + blossom mark */
-  --background: #f3f0f7;
-  --foreground: #1a1524;
-  --muted: #6b6278;
-  --accent: #705080;
-  --accent-hover: #5e436c;
-  --accent-soft: rgba(112, 80, 128, 0.14);
+  /* Altair brand — purple-led palette from logo wordmark + blossom mark.
+     Accent carries CTAs; every neutral keeps a cool violet cast for a
+     cohesive, editorial feel without neon or dark-mode glow. */
+  --background: #ebe6f2;
+  --foreground: #221830;
+  --muted: #6d5f80;
+  --accent: #6550a0;
+  --accent-hover: #52408a;
+  --accent-soft: rgba(101, 80, 160, 0.16);
   --whatsapp: #25d366;
   --whatsapp-hover: #128c7e;
-  --line: rgba(26, 21, 36, 0.1);
-  --surface: #faf8fc;
+  --line: rgba(34, 24, 48, 0.12);
+  --surface: #f4eff8;
   --max-width: 88rem;
   --section-y: clamp(4rem, 8vw, 7rem);
   --motion-duration: 0.7s;
@@ -19,9 +21,9 @@
   --radius-md: 1.25rem;
   --radius-lg: 1.75rem;
   --radius-xl: 2.25rem;
-  --shadow-soft: 0 18px 48px -28px rgba(26, 21, 36, 0.35);
-  --shadow-card: 0 22px 50px -32px rgba(26, 21, 36, 0.42);
-  --shadow-header: 0 12px 40px -24px rgba(26, 21, 36, 0.28);
+  --shadow-soft: 0 18px 48px -28px rgba(34, 24, 48, 0.32);
+  --shadow-card: 0 22px 50px -32px rgba(34, 24, 48, 0.4);
+  --shadow-header: 0 12px 40px -24px rgba(34, 24, 48, 0.26);
   --site-header-height: 3.25rem;
   --site-header-height-md: 3.75rem;
   --type-measure: 65ch;
@@ -53,7 +55,10 @@
 }
 
 body {
-  background: var(--background);
+  background:
+    radial-gradient(120% 70% at 100% -10%, rgba(154, 130, 190, 0.22), transparent 55%),
+    radial-gradient(90% 55% at -5% 105%, rgba(101, 80, 160, 0.12), transparent 50%),
+    var(--background);
   color: var(--foreground);
   font-family: var(--font-dm-sans), system-ui, sans-serif;
   text-rendering: optimizeLegibility;
@@ -65,7 +70,7 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: 50;
-  opacity: 0.03;
+  opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -260,7 +265,7 @@ body::before {
   padding: 0.85rem 1.15rem;
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
-  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  background: color-mix(in srgb, var(--surface) 82%, var(--accent-soft));
   backdrop-filter: blur(10px);
   box-shadow: var(--shadow-soft);
 }
@@ -349,7 +354,7 @@ body::before {
 
 .group:hover .image-frame {
   transform: translateY(-3px);
-  box-shadow: 0 28px 56px -34px rgba(26, 21, 36, 0.48);
+  box-shadow: 0 28px 56px -34px rgba(34, 24, 48, 0.48);
 }
 
 .image-frame::after {
@@ -388,16 +393,17 @@ body::before {
 
 .surface-panel {
   border-radius: var(--radius-xl);
+  background: color-mix(in srgb, var(--surface) 92%, var(--accent-soft));
   box-shadow: var(--shadow-soft);
 }
 
 .property-card {
   border-radius: var(--radius-xl);
-  border: 1px solid color-mix(in srgb, var(--line) 90%, transparent);
+  border: 1px solid color-mix(in srgb, var(--line) 85%, var(--accent));
   background: linear-gradient(
     165deg,
-    color-mix(in srgb, var(--surface) 96%, white) 0%,
-    color-mix(in srgb, var(--background) 88%, var(--surface)) 100%
+    color-mix(in srgb, var(--surface) 94%, var(--accent-soft)) 0%,
+    color-mix(in srgb, var(--background) 86%, var(--surface)) 100%
   );
   box-shadow: var(--shadow-soft);
   transition:
@@ -408,17 +414,17 @@ body::before {
 
 .property-card:hover {
   transform: translateY(-4px);
-  border-color: color-mix(in srgb, var(--accent) 22%, var(--line));
-  box-shadow: 0 26px 54px -36px rgba(26, 21, 36, 0.45);
+  border-color: color-mix(in srgb, var(--accent) 28%, var(--line));
+  box-shadow: 0 26px 54px -36px rgba(34, 24, 48, 0.45);
 }
 
 .property-card .image-frame {
-  box-shadow: 0 14px 36px -28px rgba(26, 21, 36, 0.35);
+  box-shadow: 0 14px 36px -28px rgba(34, 24, 48, 0.35);
 }
 
 .property-card:hover .image-frame {
   transform: none;
-  box-shadow: 0 18px 40px -30px rgba(26, 21, 36, 0.42);
+  box-shadow: 0 18px 40px -30px rgba(34, 24, 48, 0.42);
 }
 
 .catalog-results {
@@ -435,8 +441,8 @@ body::before {
 }
 
 .input-soft:focus-visible {
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
-  box-shadow: 0 10px 28px -22px rgba(26, 21, 36, 0.35);
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--line));
+  box-shadow: 0 10px 28px -22px rgba(34, 24, 48, 0.35);
 }
 
 @media (prefers-reduced-motion: reduce) {

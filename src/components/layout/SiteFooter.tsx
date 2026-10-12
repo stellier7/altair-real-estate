@@ -13,7 +13,7 @@ export function SiteFooter() {
     <footer className="border-t border-line bg-surface" aria-label="Pie de página">
       <Container className="grid gap-10 py-14 md:grid-cols-[1.2fr_1fr] md:gap-16">
         <div>
-          <p className="font-display text-2xl tracking-tight">{siteConfig.name}</p>
+          <p className="font-display text-2xl tracking-tight text-accent">{siteConfig.name}</p>
           <p className="type-caption mt-4">{siteConfig.tagline}</p>
         </div>
         <div className="grid gap-8 sm:grid-cols-2 sm:gap-6">
