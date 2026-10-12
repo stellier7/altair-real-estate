@@ -9,6 +9,11 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  // Allow setup page to always pass through
+  if (pathname === "/admin/setup" || pathname.startsWith("/admin/setup/")) {
+    return NextResponse.next();
+  }
+
   if (pathname === "/admin/login" || pathname.startsWith("/admin/login/")) {
     if (!isSupabaseConfigured()) {
       return NextResponse.next();
