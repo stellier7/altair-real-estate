@@ -29,24 +29,24 @@ export function DirectoryFilters({
   return (
     <form
       method="get"
-      className="surface-panel mt-8 grid gap-4 border border-line/80 bg-surface/70 px-5 py-6 sm:grid-cols-[1fr_auto_auto] sm:items-end sm:px-6"
+      className="surface-panel mt-8 grid gap-4 border border-accent/25 bg-surface/70 px-5 py-6 sm:grid-cols-[1fr_auto_auto] sm:items-end sm:px-6"
     >
       <label className="grid gap-2 text-sm">
-        <span className="text-xs uppercase tracking-[0.2em] text-muted">Buscar</span>
+        <span className="text-xs uppercase tracking-[0.2em] text-accent">Buscar</span>
         <input
           type="search"
           name="q"
           defaultValue={currentQuery ?? ""}
           placeholder="Ciudad, título o zona"
-          className="input-soft focus-ring border border-line/80 bg-background/50 px-4 py-2.5 text-foreground outline-none"
+          className="input-soft focus-ring border border-accent/25 bg-background/50 px-4 py-2.5 text-foreground outline-none"
         />
       </label>
       <label className="grid gap-2 text-sm">
-        <span className="text-xs uppercase tracking-[0.2em] text-muted">Tipo</span>
+        <span className="text-xs uppercase tracking-[0.2em] text-accent">Tipo</span>
         <select
           name="type"
           defaultValue={currentType ?? ""}
-          className="input-soft focus-ring border border-line/80 bg-background/50 px-4 py-2.5 outline-none"
+          className="input-soft focus-ring border border-accent/25 bg-background/50 px-4 py-2.5 outline-none"
         >
           <option value="">Todos</option>
           {TYPES.map((type) => (
@@ -57,11 +57,11 @@ export function DirectoryFilters({
         </select>
       </label>
       <label className="grid gap-2 text-sm">
-        <span className="text-xs uppercase tracking-[0.2em] text-muted">Negocio</span>
+        <span className="text-xs uppercase tracking-[0.2em] text-accent">Negocio</span>
         <select
           name="listing"
           defaultValue={currentListing ?? ""}
-          className="input-soft focus-ring border border-line/80 bg-background/50 px-4 py-2.5 outline-none"
+          className="input-soft focus-ring border border-accent/25 bg-background/50 px-4 py-2.5 outline-none"
         >
           <option value="">Venta y alquiler</option>
           <option value="sale">Venta</option>
