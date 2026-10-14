@@ -267,24 +267,6 @@ export async function PropertyPageComposer({
         </Section>
       ) : null}
 
-      {related.length > 0 ? (
-        <Section>
-          <RevealOnScroll className="mb-10 flex flex-wrap items-end justify-between gap-6">
-            <h2 className="font-display text-3xl sm:text-4xl">{propertyCopy.related}</h2>
-            <Button href="/properties" variant="ghost">
-              {propertyCopy.viewAll}
-            </Button>
-          </RevealOnScroll>
-          <div className="grid gap-8 lg:gap-10">
-            {related.map((item, index) => (
-              <RevealOnScroll key={item.id} delayMs={index * 60}>
-                <PropertyCard property={item} />
-              </RevealOnScroll>
-            ))}
-          </div>
-        </Section>
-      ) : null}
-
       <Section className="border-t border-line">
         <RevealOnScroll className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
           <div>
@@ -308,6 +290,24 @@ export async function PropertyPageComposer({
           </div>
         </RevealOnScroll>
       </Section>
+
+      {related.length > 0 ? (
+        <Section>
+          <RevealOnScroll className="mb-10 flex flex-wrap items-end justify-between gap-6">
+            <h2 className="font-display text-3xl sm:text-4xl">{propertyCopy.related}</h2>
+            <Button href="/properties" variant="ghost">
+              {propertyCopy.viewAll}
+            </Button>
+          </RevealOnScroll>
+          <div className="grid gap-8 lg:gap-10">
+            {related.map((item, index) => (
+              <RevealOnScroll key={item.id} delayMs={index * 60}>
+                <PropertyCard property={item} />
+              </RevealOnScroll>
+            ))}
+          </div>
+        </Section>
+      ) : null}
     </>
   );
 }
