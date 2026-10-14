@@ -23,6 +23,9 @@ export const propertyCopy = {
   discussBody:
     "Cuéntenos qué busca y nuestro equipo le propondrá visitas y material de apoyo.",
   whatsapp: "WhatsApp",
+  share: "Compartir",
+  shareCopied: "Enlace copiado",
+  shareFailed: "No se pudo compartir",
   viewProperty: "Ver propiedad",
   enquireWhatsApp: "Consultar por WhatsApp",
   summaryHeading: "Resumen",

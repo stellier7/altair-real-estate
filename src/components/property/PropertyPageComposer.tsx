@@ -10,16 +10,19 @@ import {
   supportsLandSpecs,
   supportsResidentialSpecs,
 } from "@/lib/properties/specs";
+import { siteConfig } from "@/content/site/config";
 import { propertyCopy } from "@/lib/i18n/property-copy";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { RevealOnScroll } from "@/components/motion/RevealOnScroll";
 import { Button } from "@/components/ui/Button";
 import { buildPropertyWhatsAppUrl } from "@/lib/contact/whatsapp";
+import { absoluteUrl } from "@/lib/seo/metadata";
 import { PropertyCard } from "@/components/directory/PropertyCard";
 import { PropertyDescription } from "./PropertyDescription";
 import { PropertyGallery } from "./PropertyGallery";
 import { PropertyHero } from "./PropertyHero";
+import { PropertyShareButton } from "./PropertyShareButton";
 
 type PropertyPageComposerProps = {
   property: Property;
@@ -70,6 +73,12 @@ export async function PropertyPageComposer({
     : `https://www.openstreetmap.org/search?query=${encodeURIComponent(property.location.label)}`;
 
   const whatsappUrl = buildPropertyWhatsAppUrl(property.name);
+  const sharePath =
+    property.seo.canonicalPath ?? `/properties/${property.slug}`;
+  const shareTitle =
+    property.seo.title ?? property.title ?? property.name;
+  const shareText =
+    property.seo.description ?? property.shortDescription ?? shareTitle;
 
   return (
     <>
@@ -282,9 +291,21 @@ export async function PropertyPageComposer({
             <h2 className="font-display text-3xl sm:text-4xl">{propertyCopy.discuss}</h2>
             <p className="prose-editorial mt-4">{propertyCopy.discussBody}</p>
           </div>
-          <Button href={whatsappUrl} variant="primary" target="_blank" rel="noopener noreferrer">
-            {propertyCopy.whatsapp}
-          </Button>
+          <div className="flex flex-wrap gap-3">
+            <Button
+              href={whatsappUrl}
+              variant="primary"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {propertyCopy.whatsapp}
+            </Button>
+            <PropertyShareButton
+              url={absoluteUrl(sharePath)}
+              title={`${shareTitle} · ${siteConfig.name}`}
+              text={shareText}
+            />
+          </div>
         </RevealOnScroll>
       </Section>
     </>
