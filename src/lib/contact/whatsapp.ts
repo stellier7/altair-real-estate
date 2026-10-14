@@ -8,6 +8,6 @@ export function buildWhatsAppUrl(message?: string): string {
 
 export function buildPropertyWhatsAppUrl(propertyName: string): string {
   return buildWhatsAppUrl(
-    `Hello, I would like more information about ${propertyName}.`,
+    `Hola, me gustaría recibir más información sobre ${propertyName}.`,
   );
 }
