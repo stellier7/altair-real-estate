@@ -70,10 +70,56 @@ export function formatStatus(status: Property["status"]): string {
   return STATUS_LABELS[status] ?? status;
 }
 
+export type ListingMode = "sale" | "rent" | "both";
+
 export function formatListingTag(tag: string): string {
   if (tag === "venta") return "Venta";
   if (tag === "alquiler") return "Alquiler";
   return tag;
+}
+
+export function getListingMode(tags: string[] | undefined): ListingMode {
+  const hasSale = tags?.includes("venta") === true;
+  const hasRent = tags?.includes("alquiler") === true;
+  if (hasSale && hasRent) return "both";
+  if (hasRent) return "rent";
+  return "sale";
+}
+
+export function listingTagsFromMode(mode: ListingMode): string[] {
+  switch (mode) {
+    case "sale":
+      return ["venta"];
+    case "rent":
+      return ["alquiler"];
+    case "both":
+      return ["venta", "alquiler"];
+    default: {
+      const _exhaustive: never = mode;
+      return _exhaustive;
+    }
+  }
+}
+
+export function formatPropertyListing(tags: string[] | undefined): string {
+  const mode = getListingMode(tags);
+  switch (mode) {
+    case "sale":
+      return "Venta";
+    case "rent":
+      return "Alquiler";
+    case "both":
+      return "Venta y alquiler";
+    default: {
+      const _exhaustive: never = mode;
+      return _exhaustive;
+    }
+  }
+}
+
+export function parseListingMode(value: string | null | undefined): ListingMode {
+  if (value === "rent" || value === "both") return value;
+  return "sale";
 }
 
 const FILTER_PROPERTY_TYPES: PropertyType[] = [

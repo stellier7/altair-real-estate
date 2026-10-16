@@ -6,6 +6,7 @@ import {
   type PropertyFormState,
 } from "@/lib/admin/property-actions";
 import type { Property } from "@/lib/properties/types";
+import { getListingMode } from "@/lib/properties/specs";
 import { Button } from "@/components/ui/Button";
 import { ImageMediaFields } from "@/components/admin/ImageMediaFields";
 
@@ -94,7 +95,7 @@ export function PropertyEditorForm({
   published = true,
 }: PropertyEditorFormProps) {
   const [state, action, pending] = useActionState(savePropertyAction, initialState);
-  const listing = property?.tags?.includes("alquiler") ? "rent" : "sale";
+  const listing = getListingMode(property?.tags);
   const galleryUrls = (property?.media.gallery ?? [])
     .map((img) => img.src)
     .join("\n");
@@ -155,6 +156,7 @@ export function PropertyEditorForm({
           >
             <option value="sale">Venta</option>
             <option value="rent">Alquiler</option>
+            <option value="both">Venta y alquiler</option>
           </select>
         </div>
         <Field label="Etiquetas extra (coma)" name="tags" defaultValue={extraTags} />
