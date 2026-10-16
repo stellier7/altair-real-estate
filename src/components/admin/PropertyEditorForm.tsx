@@ -7,6 +7,7 @@ import {
 } from "@/lib/admin/property-actions";
 import type { Property } from "@/lib/properties/types";
 import { Button } from "@/components/ui/Button";
+import { ImageMediaFields } from "@/components/admin/ImageMediaFields";
 
 const PROPERTY_TYPES = [
   "residential",
@@ -94,7 +95,9 @@ export function PropertyEditorForm({
 }: PropertyEditorFormProps) {
   const [state, action, pending] = useActionState(savePropertyAction, initialState);
   const listing = property?.tags?.includes("alquiler") ? "rent" : "sale";
-  const galleryUrls = (property?.media.gallery ?? []).map((img) => img.src).join("\n");
+  const galleryUrls = (property?.media.gallery ?? [])
+    .map((img) => img.src)
+    .join("\n");
   const extraTags = (property?.tags ?? [])
     .filter((t) => t !== "venta" && t !== "alquiler")
     .join(", ");
@@ -223,26 +226,13 @@ export function PropertyEditorForm({
         <Field label="Año" name="yearBuilt" type="number" defaultValue={property?.residential?.yearBuilt} />
       </section>
 
-      <section className="grid gap-5">
-        <Field
-          label="Imagen principal (URL)"
-          name="heroImageSrc"
-          defaultValue={property?.media.heroImage.src}
-          required
-        />
-        <Field
-          label="Alt de imagen"
-          name="heroImageAlt"
-          defaultValue={property?.media.heroImage.alt ?? property?.name}
-        />
-        <Field
-          label="Galería (una URL por línea)"
-          name="galleryUrls"
-          defaultValue={galleryUrls}
-          as="textarea"
-          rows={5}
-        />
-      </section>
+      <ImageMediaFields
+        propertyId={property?.id}
+        initialHeroSrc={property?.media.heroImage.src}
+        initialHeroAlt={property?.media.heroImage.alt ?? property?.name}
+        initialGalleryUrls={galleryUrls}
+        fallbackAlt={property?.name}
+      />
 
       <section className="grid gap-5 sm:grid-cols-2">
         <Field label="SEO título" name="seoTitle" defaultValue={property?.seo.title} />
