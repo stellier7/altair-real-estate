@@ -6,6 +6,7 @@ import {
 } from "@/components/property/PropertyStatusOverlay";
 import type { Property } from "@/lib/properties/types";
 import {
+  formatPropertyListing,
   formatPropertyType,
   formatStatus,
   getDisplayPrice,
@@ -20,7 +21,10 @@ type PropertyCardProps = {
 
 export function PropertyCard({ property, priority }: PropertyCardProps) {
   const price = getDisplayPrice(property);
-  const listingTag = property.tags?.find((tag) => tag === "venta" || tag === "alquiler");
+  const listingLabel =
+    property.tags?.includes("venta") || property.tags?.includes("alquiler")
+      ? formatPropertyListing(property.tags)
+      : null;
   const unavailable = isUnavailableListing(property.status);
 
   return (
@@ -46,9 +50,9 @@ export function PropertyCard({ property, priority }: PropertyCardProps) {
             <p className="type-meta-caps text-accent">
               {formatPropertyType(property.propertyType)} · {formatStatus(property.status)}
             </p>
-            {listingTag ? (
+            {listingLabel ? (
               <span className="type-meta-caps rounded-full border border-accent/35 bg-accent-soft px-3 py-1 text-accent shadow-[var(--shadow-soft)]">
-                {listingTag === "venta" ? "Venta" : "Alquiler"}
+                {listingLabel}
               </span>
             ) : null}
             {property.status === "sold" ? (

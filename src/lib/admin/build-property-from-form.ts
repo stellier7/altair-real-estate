@@ -1,4 +1,8 @@
 import type { Property, PropertyStatus, PropertyType } from "@/lib/properties/types";
+import {
+  listingTagsFromMode,
+  parseListingMode,
+} from "@/lib/properties/specs";
 import { slugifyName } from "@/lib/properties/serialize";
 
 function parseOptionalNumber(value: FormDataEntryValue | null): number | undefined {
@@ -33,8 +37,8 @@ export function buildPropertyFromForm(
   const name = (formData.get("name") as string)?.trim() || "Sin título";
   const slugInput = (formData.get("slug") as string)?.trim();
   const slug = slugInput || existing?.slug || `${slugifyName(name)}-${id}`;
-  const listing = (formData.get("listing") as string) || "sale";
-  const listingTag = listing === "rent" ? "alquiler" : "venta";
+  const listing = parseListingMode(formData.get("listing") as string);
+  const listingTags = listingTagsFromMode(listing);
   const propertyType = (formData.get("propertyType") as PropertyType) || "house";
   const status = (formData.get("status") as PropertyStatus) || "available";
   const featured = formData.get("featured") === "on";
@@ -62,7 +66,7 @@ export function buildPropertyFromForm(
     (formData.get("heroImageAlt") as string)?.trim() || name;
   const galleryRaw = (formData.get("galleryUrls") as string) || "";
   const extraTags = parseTags((formData.get("tags") as string) || "");
-  const tags = Array.from(new Set([listingTag, ...extraTags]));
+  const tags = Array.from(new Set([...listingTags, ...extraTags]));
 
   const bedrooms = parseOptionalNumber(formData.get("bedrooms"));
   const bathrooms = parseOptionalNumber(formData.get("bathrooms"));
