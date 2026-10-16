@@ -63,11 +63,13 @@ NEXT_PUBLIC_SITE_URL=
 
 On the property create/edit form you can:
 
-1. **Paste a public URL** (Wasi CDN or any `https://…` link) into the hero or
-   gallery fields.
+1. **Paste a public URL** (Wasi CDN or any `https://…` link) into the hero
+   field, or use «Añadir URL» for gallery items.
 2. **Upload from the computer** with «Subir desde el equipo». Files go to the
    public Supabase Storage bucket `property-images`; the form fills in the
-   public HTTPS URL automatically. Gallery uploads append one URL per line.
+   public HTTPS URL automatically. Gallery uploads are appended to the list.
+3. **Reorder the gallery** with ↑ / ↓ / ⇈ / ⇊ (up, down, to start, to end) so
+   bathrooms, pools, patios, etc. can sit at the end. ✕ removes a photo.
 
 Do **not** paste local paths such as `C:\Users\…` — those are not reachable on
 the website and the form rejects them on save.
