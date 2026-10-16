@@ -61,5 +61,13 @@ NEXT_PUBLIC_SITE_URL=
 
 ## Image hosting
 
-Paste existing Wasi (or other) image URLs in v1. Optional: upload to the
-`property-images` Supabase Storage bucket (public) and paste the resulting URL.
+On the property create/edit form you can:
+
+1. **Paste a public URL** (Wasi CDN or any `https://…` link) into the hero or
+   gallery fields.
+2. **Upload from the computer** with «Subir desde el equipo». Files go to the
+   public Supabase Storage bucket `property-images`; the form fills in the
+   public HTTPS URL automatically. Gallery uploads append one URL per line.
+
+Do **not** paste local paths such as `C:\Users\…` — those are not reachable on
+the website and the form rejects them on save.

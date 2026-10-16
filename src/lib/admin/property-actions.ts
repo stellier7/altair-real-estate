@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireStaffProfile } from "@/lib/admin/auth";
 import { buildPropertyFromForm } from "@/lib/admin/build-property-from-form";
+import { validatePropertyImageUrls } from "@/lib/admin/image-url";
 import { canDeleteProperties } from "@/lib/admin/types";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import type { Property } from "@/lib/properties/types";
@@ -54,6 +55,16 @@ export async function savePropertyAction(
       .eq("id", existingId)
       .maybeSingle();
     existing = data?.data as Property | undefined;
+  }
+
+  const heroRaw = ((formData.get("heroImageSrc") as string) || "").trim();
+  const galleryRaw = ((formData.get("galleryUrls") as string) || "")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+  const imageError = validatePropertyImageUrls(heroRaw, galleryRaw);
+  if (imageError) {
+    return { error: imageError };
   }
 
   const property = buildPropertyFromForm(formData, existing);
