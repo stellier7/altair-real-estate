@@ -446,17 +446,11 @@ body::before {
   box-shadow: 0 10px 28px -22px rgba(34, 24, 48, 0.35);
 }
 
-@keyframes property-marquee-scroll {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
 .property-marquee-viewport {
   overflow: hidden;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
   mask-image: linear-gradient(
     to right,
     transparent,
@@ -466,12 +460,19 @@ body::before {
   );
 }
 
+.property-marquee-viewport--dragging {
+  cursor: grabbing;
+}
+
 .property-marquee-viewport--static {
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scroll-snap-type: x proximity;
   mask-image: none;
   padding-inline: 1.25rem;
+  cursor: auto;
+  user-select: auto;
+  touch-action: auto;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -492,24 +493,13 @@ body::before {
   width: max-content;
   gap: 1rem;
   padding-block: 0.25rem;
+  will-change: transform;
 }
 
 @media (min-width: 640px) {
   .property-marquee-track {
     gap: 1.25rem;
   }
-}
-
-.property-marquee-track--animate {
-  animation-name: property-marquee-scroll;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  will-change: transform;
-}
-
-.property-marquee-viewport:hover .property-marquee-track--animate,
-.property-marquee-viewport:focus-within .property-marquee-track--animate {
-  animation-play-state: paused;
 }
 
 .property-marquee-item {
@@ -596,10 +586,6 @@ body::before {
 
   .property-card:hover {
     transform: none;
-  }
-
-  .property-marquee-track--animate {
-    animation: none;
   }
 
   .property-marquee-caption {
