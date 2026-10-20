@@ -1,4 +1,5 @@
 import type { Property, PropertyStatus, PropertyType } from "@/lib/properties/types";
+import { parseGalleryLines } from "@/lib/admin/gallery-order";
 import {
   listingTagsFromMode,
   parseListingMode,
@@ -16,14 +17,6 @@ function parseTags(raw: string): string[] {
     .split(",")
     .map((t) => t.trim().toLowerCase())
     .filter(Boolean);
-}
-
-function parseGalleryUrls(raw: string): { src: string; alt: string }[] {
-  return raw
-    .split("\n")
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .map((src) => ({ src, alt: "Galería" }));
 }
 
 export function buildPropertyFromForm(
@@ -117,8 +110,8 @@ export function buildPropertyFromForm(
         width: 1200,
         height: 800,
       },
-      gallery: parseGalleryUrls(galleryRaw).map((img) => ({
-        ...img,
+      gallery: parseGalleryLines(galleryRaw).map((src) => ({
+        src,
         alt: heroAlt,
         width: 1200,
         height: 800,

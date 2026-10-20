@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireStaffProfile } from "@/lib/admin/auth";
 import { buildPropertyFromForm } from "@/lib/admin/build-property-from-form";
+import { parseGalleryLines } from "@/lib/admin/gallery-order";
 import { validatePropertyImageUrls } from "@/lib/admin/image-url";
 import { canDeleteProperties } from "@/lib/admin/types";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
@@ -58,10 +59,9 @@ export async function savePropertyAction(
   }
 
   const heroRaw = ((formData.get("heroImageSrc") as string) || "").trim();
-  const galleryRaw = ((formData.get("galleryUrls") as string) || "")
-    .split("\n")
-    .map((line) => line.trim())
-    .filter(Boolean);
+  const galleryRaw = parseGalleryLines(
+    (formData.get("galleryUrls") as string) || "",
+  );
   const imageError = validatePropertyImageUrls(heroRaw, galleryRaw);
   if (imageError) {
     return { error: imageError };
