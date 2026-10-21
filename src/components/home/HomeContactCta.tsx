@@ -7,7 +7,7 @@ export function HomeContactCta() {
   const whatsappUrl = buildWhatsAppUrl();
 
   return (
-    <Section id="contacto-home" className="bg-surface pb-10 sm:pb-12">
+    <Section id="contacto-home" className="bg-surface !pb-8 sm:!pb-10">
       <RevealOnScroll className="max-w-3xl">
         <p className="type-meta-caps text-accent">Contacto</p>
         <h2 className="type-display-section mt-3 text-accent">

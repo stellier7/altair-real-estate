@@ -10,7 +10,7 @@ export function SiteFooter() {
 
   return (
     <footer className="border-t border-line bg-surface" aria-label="Pie de página">
-      <Container className="flex flex-col gap-6 py-6 md:flex-row md:items-start md:justify-between md:gap-10 md:py-7">
+      <Container className="flex flex-col gap-5 py-5 md:flex-row md:items-start md:justify-between md:gap-8 md:py-6">
         <div className="max-w-md space-y-1 text-sm leading-snug text-muted">
           <p>
             <a
