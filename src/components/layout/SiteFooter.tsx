@@ -3,6 +3,8 @@ import { siteConfig } from "@/content/site/config";
 import { buildWhatsAppUrl } from "@/lib/contact/whatsapp";
 import { Container } from "./Container";
 
+const phoneHref = (display: string) => `tel:${display.replace(/\s/g, "")}`;
+
 export function SiteFooter() {
   const year = new Date().getFullYear();
   const whatsappUrl = buildWhatsAppUrl();
@@ -11,8 +13,8 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-line bg-surface" aria-label="Pie de página">
       <Container className="flex flex-col gap-5 py-5 md:flex-row md:items-start md:justify-between md:gap-8 md:py-6">
-        <div className="max-w-md space-y-1 text-sm leading-snug text-muted">
-          <p>
+        <div className="max-w-xl space-y-1 text-sm leading-snug text-muted">
+          <p className="flex flex-wrap items-center gap-x-4 gap-y-1">
             <a
               className="focus-ring inline-flex items-center py-0.5 font-medium text-accent transition-colors hover:text-accent-hover"
               href={whatsappUrl}
@@ -20,6 +22,12 @@ export function SiteFooter() {
               rel="noopener noreferrer"
             >
               WhatsApp · {siteConfig.whatsapp.display}
+            </a>
+            <a
+              className="focus-ring inline-flex items-center py-0.5 text-accent transition-colors hover:text-accent-hover"
+              href={phoneHref(siteConfig.phone)}
+            >
+              Tel. {siteConfig.phone}
             </a>
           </p>
           {office ? (
