@@ -10,7 +10,7 @@ export type CoverageCity = {
 
 /**
  * Altair coverage for the homepage Cobertura strip.
- * Featured four are shown as photo cards; the rest feed the secondary marquee.
+ * Featured four show by default; secondary cities appear via “Todas las zonas”.
  */
 export const coverageCities: CoverageCity[] = [
   {

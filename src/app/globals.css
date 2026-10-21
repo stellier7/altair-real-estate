@@ -633,102 +633,6 @@ body::before {
   animation: fade-up var(--motion-duration) cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@keyframes city-marquee-scroll {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
-.city-marquee-viewport {
-  overflow: hidden;
-  mask-image: linear-gradient(
-    to right,
-    transparent,
-    #000 6%,
-    #000 94%,
-    transparent
-  );
-}
-
-.city-marquee-viewport--static {
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x proximity;
-  mask-image: none;
-  -webkit-overflow-scrolling: touch;
-}
-
-.city-marquee-track {
-  display: flex;
-  width: max-content;
-  gap: 0.85rem;
-  padding-block: 0.15rem;
-}
-
-.city-marquee-track--animate {
-  animation-name: city-marquee-scroll;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  will-change: transform;
-}
-
-.city-marquee-viewport:hover .city-marquee-track--animate,
-.city-marquee-viewport:focus-within .city-marquee-track--animate {
-  animation-play-state: paused;
-}
-
-.city-marquee-item {
-  flex: 0 0 auto;
-  width: 9.5rem;
-  scroll-snap-align: start;
-}
-
-.city-marquee-link {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  border-radius: var(--radius-md);
-  color: inherit;
-  text-decoration: none;
-}
-
-.city-marquee-frame,
-.city-marquee-fallback {
-  position: relative;
-  display: block;
-  aspect-ratio: 5 / 4;
-  overflow: hidden;
-  background: color-mix(in srgb, var(--foreground) 8%, var(--surface));
-}
-
-.city-marquee-fallback {
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--accent) 18%, var(--surface)),
-    var(--surface)
-  );
-}
-
-.city-marquee-label {
-  position: absolute;
-  inset: auto 0 0;
-  padding: 0.65rem 0.7rem;
-  font-size: 0.62rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #fff;
-  background: linear-gradient(
-    to top,
-    rgba(34, 24, 48, 0.78) 0%,
-    rgba(34, 24, 48, 0.2) 70%,
-    transparent 100%
-  );
-}
-
 @media (prefers-reduced-motion: reduce) {
   .reveal,
   .reveal-on-scroll,
@@ -748,8 +652,7 @@ body::before {
     transform: none;
   }
 
-  .property-marquee-track--animate,
-  .city-marquee-track--animate {
+  .property-marquee-track--animate {
     animation: none;
   }
 

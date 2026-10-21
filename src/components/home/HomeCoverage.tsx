@@ -1,5 +1,7 @@
+"use client";
+
 import Link from "next/link";
-import { CityMarquee } from "@/components/home/CityMarquee";
+import { useId, useState } from "react";
 import { PropertyListingImage } from "@/components/media/PropertyListingImage";
 import { RevealOnScroll } from "@/components/motion/RevealOnScroll";
 import { Section } from "@/components/layout/Section";
@@ -10,13 +12,43 @@ type HomeCoverageProps = {
   secondary: CoverageCityCard[];
 };
 
+function CoverageCityLink({
+  city,
+  priority = false,
+}: {
+  city: CoverageCityCard;
+  priority?: boolean;
+}) {
+  return (
+    <Link
+      href={city.href}
+      className="coverage-card focus-ring group block"
+      aria-label={`Ver propiedades en ${city.label}`}
+    >
+      <span className="coverage-card-media">
+        {city.image ? (
+          <PropertyListingImage
+            src={city.image.src}
+            alt={city.image.alt}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            className="transition-transform duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none"
+            priority={priority}
+          />
+        ) : (
+          <span className="coverage-card-fallback" aria-hidden />
+        )}
+        <span className="coverage-card-scrim" aria-hidden />
+        <span className="coverage-card-label">{city.label}</span>
+      </span>
+    </Link>
+  );
+}
+
 export function HomeCoverage({ featured, secondary }: HomeCoverageProps) {
-  const marqueeItems = secondary.map((city) => ({
-    id: city.slug,
-    label: city.label,
-    href: city.href,
-    image: city.image,
-  }));
+  const [showAll, setShowAll] = useState(false);
+  const panelId = useId();
+  const cities = showAll ? [...featured, ...secondary] : featured;
+  const canExpand = secondary.length > 0;
 
   return (
     <Section id="cobertura" className="bg-surface/70">
@@ -29,58 +61,36 @@ export function HomeCoverage({ featured, secondary }: HomeCoverageProps) {
         </p>
       </RevealOnScroll>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
-        {featured.map((city, index) => (
-          <RevealOnScroll key={city.slug} delayMs={index * 70}>
-            <Link
-              href={city.href}
-              className="coverage-card focus-ring group block"
-              aria-label={`Ver propiedades en ${city.label}`}
-            >
-              <span className="coverage-card-media">
-                {city.image ? (
-                  <PropertyListingImage
-                    src={city.image.src}
-                    alt={city.image.alt}
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    className="transition-transform duration-700 ease-out group-hover:scale-[1.04] motion-reduce:transition-none"
-                    priority={index < 2}
-                  />
-                ) : (
-                  <span className="coverage-card-fallback" aria-hidden />
-                )}
-                <span className="coverage-card-scrim" aria-hidden />
-                <span className="coverage-card-label">{city.label}</span>
-              </span>
-            </Link>
+      <div
+        id={panelId}
+        className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5"
+      >
+        {cities.map((city, index) => (
+          <RevealOnScroll key={city.slug} delayMs={Math.min(index, 5) * 60}>
+            <CoverageCityLink city={city} priority={!showAll && index < 2} />
           </RevealOnScroll>
         ))}
       </div>
 
-      {marqueeItems.length > 0 ? (
-        <div className="mt-12 grid items-center gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-10">
-          <RevealOnScroll delayMs={80} className="min-w-0">
-            <CityMarquee items={marqueeItems} />
-          </RevealOnScroll>
-          <RevealOnScroll delayMs={120} className="lg:justify-self-end">
-            <Link
-              href="/properties"
-              className="focus-ring type-meta-caps inline-flex min-h-11 items-center text-accent underline decoration-accent/35 underline-offset-4 transition-colors hover:decoration-accent"
-            >
-              Más en catálogo →
-            </Link>
-          </RevealOnScroll>
-        </div>
-      ) : (
-        <div className="mt-10">
-          <Link
-            href="/properties"
+      <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
+        {canExpand ? (
+          <button
+            type="button"
             className="focus-ring type-meta-caps inline-flex min-h-11 items-center text-accent underline decoration-accent/35 underline-offset-4 transition-colors hover:decoration-accent"
+            aria-expanded={showAll}
+            aria-controls={panelId}
+            onClick={() => setShowAll((open) => !open)}
           >
-            Más en catálogo →
-          </Link>
-        </div>
-      )}
+            {showAll ? "Ver menos ←" : "Todas las zonas →"}
+          </button>
+        ) : null}
+        <Link
+          href="/properties"
+          className="focus-ring type-meta-caps inline-flex min-h-11 items-center text-accent/80 underline decoration-accent/25 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
+        >
+          Más en catálogo →
+        </Link>
+      </div>
     </Section>
   );
 }
