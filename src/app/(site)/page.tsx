@@ -1,4 +1,5 @@
 import { HomeHero } from "@/components/home/HomeHero";
+import { HomeCategoryNav } from "@/components/home/HomeCategoryNav";
 import { HomeCoverage } from "@/components/home/HomeCoverage";
 import { HomeContactCta } from "@/components/home/HomeContactCta";
 import { HomeServicesLinks } from "@/components/home/HomeServicesLinks";
@@ -69,6 +70,8 @@ export default async function HomePage() {
           </RevealOnScroll>
         </div>
       </Section>
+
+      <HomeCategoryNav />
 
       <Section id="featured" className="bg-[color-mix(in_srgb,var(--accent-soft)_55%,transparent)]">
         <RevealOnScroll className="mb-12 flex flex-wrap items-end justify-between gap-6">
