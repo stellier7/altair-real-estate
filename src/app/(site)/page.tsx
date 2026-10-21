@@ -1,4 +1,7 @@
 import { HomeHero } from "@/components/home/HomeHero";
+import { HomeCoverage } from "@/components/home/HomeCoverage";
+import { HomeContactCta } from "@/components/home/HomeContactCta";
+import { HomeServicesLinks } from "@/components/home/HomeServicesLinks";
 import { PropertyMarquee } from "@/components/home/PropertyMarquee";
 import { PropertyCard } from "@/components/directory/PropertyCard";
 import { RevealOnScroll } from "@/components/motion/RevealOnScroll";
@@ -6,6 +9,7 @@ import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { Button } from "@/components/ui/Button";
 import { siteConfig } from "@/content/site/config";
+import { buildCoverageCityCards } from "@/lib/properties/coverage-media";
 import { getHomeFeaturedSlugs } from "@/lib/properties/featured";
 import { selectMarqueeProperties } from "@/lib/properties/marquee";
 import { getDisplayPrice } from "@/lib/properties/specs";
@@ -44,6 +48,7 @@ export default async function HomePage() {
   }));
   const stats = await getCatalogStats();
   const heroImage = siteConfig.heroImage;
+  const coverage = buildCoverageCityCards(allProperties);
 
   return (
     <>
@@ -106,41 +111,9 @@ export default async function HomePage() {
         </Section>
       ) : null}
 
-      <Section className="bg-surface/80">
-        <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
-          <RevealOnScroll>
-            <p className="type-meta-caps text-accent">Oferta</p>
-            <h2 className="type-display-section mt-3 text-accent">Servicios</h2>
-            <p className="prose-editorial mt-6">
-              Asesoría en compra y venta de casas, apartamentos, terrenos, locales, bodegas y
-              oficinas en Tegucigalpa y otras ciudades de Honduras.
-            </p>
-            <Button href="/services" variant="primary" className="mt-8">
-              Conocer servicios
-            </Button>
-          </RevealOnScroll>
-          <RevealOnScroll delayMs={120}>
-            <ul className="grid gap-4 sm:grid-cols-2">
-              {[
-                "Venta residencial",
-                "Alquileres",
-                "Propiedad comercial",
-                "Terrenos y fincas",
-                "Oficinas y locales",
-                "Asesoría personalizada",
-              ].map((item, i) => (
-                <li
-                  key={item}
-                  className="service-line type-meta-caps border-t border-accent/35 pt-4 text-accent"
-                  style={{ animationDelay: `${i * 60}ms` }}
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </RevealOnScroll>
-        </div>
-      </Section>
+      <HomeCoverage featured={coverage.featured} secondary={coverage.secondary} />
+      <HomeServicesLinks />
+      <HomeContactCta />
     </>
   );
 }

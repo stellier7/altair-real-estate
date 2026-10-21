@@ -127,4 +127,6 @@ export type PropertyFilter = {
   status?: PropertyStatus;
   listing?: "sale" | "rent";
   query?: string;
+  /** Coverage slug from `/properties?city=` (e.g. tegucigalpa) */
+  city?: string;
 };

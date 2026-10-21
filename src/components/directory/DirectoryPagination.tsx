@@ -8,6 +8,7 @@ type DirectoryPaginationProps = {
     type?: string;
     listing?: string;
     q?: string;
+    city?: string;
   };
 };
 

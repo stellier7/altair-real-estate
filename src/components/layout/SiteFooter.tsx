@@ -8,78 +8,55 @@ const phoneHref = (display: string) => `tel:${display.replace(/\s/g, "")}`;
 export function SiteFooter() {
   const year = new Date().getFullYear();
   const whatsappUrl = buildWhatsAppUrl();
+  const office = siteConfig.offices[0];
 
   return (
     <footer className="border-t border-line bg-surface" aria-label="Pie de página">
-      <Container className="grid gap-10 py-14 md:grid-cols-[1.2fr_1fr] md:gap-16">
-        <div>
-          <p className="font-display text-2xl tracking-tight text-accent">{siteConfig.name}</p>
-          <p className="type-caption mt-4">{siteConfig.tagline}</p>
+      <Container className="flex flex-col gap-5 py-5 md:flex-row md:items-start md:justify-between md:gap-8 md:py-6">
+        <div className="max-w-xl space-y-1 text-sm leading-snug text-muted">
+          <p className="flex flex-wrap items-center gap-x-4 gap-y-1">
+            <a
+              className="focus-ring inline-flex items-center py-0.5 font-medium text-accent transition-colors hover:text-accent-hover"
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              WhatsApp · {siteConfig.whatsapp.display}
+            </a>
+            <a
+              className="focus-ring inline-flex items-center py-0.5 text-accent transition-colors hover:text-accent-hover"
+              href={phoneHref(siteConfig.phone)}
+            >
+              Tel. {siteConfig.phone}
+            </a>
+          </p>
+          {office ? (
+            <p className="leading-snug">
+              <span className="font-medium text-foreground">{office.city}</span>
+              {" — "}
+              {office.address}
+            </p>
+          ) : null}
         </div>
-        <div className="grid gap-8 sm:grid-cols-2 sm:gap-6">
-          <nav aria-labelledby="footer-nav-heading">
-            <h2 id="footer-nav-heading" className="type-meta-caps text-accent">
-              Navegación
-            </h2>
-            <ul className="mt-4 space-y-2.5 text-sm">
-              {siteConfig.nav.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="focus-ring inline-block min-h-11 py-1 leading-snug transition-colors hover:text-accent"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <div aria-labelledby="footer-contact-heading">
-            <h2 id="footer-contact-heading" className="type-meta-caps text-accent">
-              Contacto
-            </h2>
-            <ul className="mt-4 space-y-3 text-sm text-muted">
-              <li>
-                <a
-                  className="focus-ring inline-flex min-h-11 items-center py-1 font-medium text-accent transition-colors hover:text-accent-hover"
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+        <nav aria-label="Navegación del pie" className="md:text-right">
+          <ul className="flex flex-wrap gap-x-5 gap-y-1 text-sm md:justify-end">
+            {siteConfig.nav.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className="focus-ring inline-flex items-center py-0.5 transition-colors hover:text-accent"
                 >
-                  WhatsApp · {siteConfig.whatsapp.display}
-                </a>
+                  {item.label}
+                </Link>
               </li>
-              <li>
-                <a
-                  className="focus-ring inline-flex min-h-11 items-center py-1 text-accent transition-colors hover:text-accent-hover"
-                  href={phoneHref(siteConfig.phone)}
-                >
-                  Tel. {siteConfig.phone}
-                </a>
-              </li>
-              <li>
-                <a
-                  className="focus-ring inline-flex min-h-11 items-center py-1 break-all text-accent transition-colors hover:text-accent-hover"
-                  href={`mailto:${siteConfig.contactEmail}`}
-                >
-                  {siteConfig.contactEmail}
-                </a>
-              </li>
-              {siteConfig.offices.map((office) => (
-                <li key={office.city} className="pt-1 leading-relaxed">
-                  <span className="font-medium text-foreground">{office.city}</span>
-                  <br />
-                  {office.address}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+            ))}
+          </ul>
+        </nav>
       </Container>
-      <Container className="border-t border-line py-6">
-        <div className="grid gap-3 text-center sm:grid-cols-3 sm:items-center sm:gap-4">
+      <Container className="border-t border-line py-4">
+        <div className="grid gap-2 text-center sm:grid-cols-3 sm:items-center sm:gap-3">
           <p className="type-meta sm:text-left">
-            © {year} {siteConfig.name}. Todos los derechos reservados.
+            © {year} {siteConfig.name}.
           </p>
           <p className="type-meta sm:text-center">
             Diseñado por{" "}
@@ -92,16 +69,7 @@ export function SiteFooter() {
               iAGO Digital
             </a>
           </p>
-          <p className="type-meta sm:text-right">
-            <a
-              href={whatsappUrl}
-              className="focus-ring font-medium text-accent underline decoration-accent/35 underline-offset-4 transition-colors hover:decoration-accent"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              WhatsApp · {siteConfig.whatsapp.display}
-            </a>
-          </p>
+          <p className="type-meta sm:text-right">Todos los derechos reservados.</p>
         </div>
       </Container>
     </footer>
