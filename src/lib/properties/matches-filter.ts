@@ -1,3 +1,7 @@
+import {
+  cityMatchesCoverage,
+  findCoverageCityBySlug,
+} from "@/content/site/coverage";
 import type { Property, PropertyFilter } from "./types";
 
 export function matchesPropertyFilter(
@@ -14,6 +18,23 @@ export function matchesPropertyFilter(
     const tag = filters.listing === "sale" ? "venta" : "alquiler";
     if (!property.tags?.includes(tag)) {
       return false;
+    }
+  }
+  if (filters.city) {
+    const propertyCity = property.location.city;
+    if (!propertyCity) {
+      return false;
+    }
+    const coverage = findCoverageCityBySlug(filters.city);
+    if (coverage) {
+      if (!cityMatchesCoverage(propertyCity, coverage)) {
+        return false;
+      }
+    } else {
+      const q = filters.city.toLowerCase().trim();
+      if (!propertyCity.toLowerCase().includes(q)) {
+        return false;
+      }
     }
   }
   if (filters.query) {

@@ -44,6 +44,7 @@ export function buildPropertiesQueryString(params: {
   type?: string;
   listing?: string;
   q?: string;
+  city?: string;
   page?: number;
 }): string {
   const search = new URLSearchParams();
@@ -55,6 +56,9 @@ export function buildPropertiesQueryString(params: {
   }
   if (params.listing === "sale" || params.listing === "rent") {
     search.set("listing", params.listing);
+  }
+  if (params.city?.trim()) {
+    search.set("city", params.city.trim());
   }
   if (params.page !== undefined && params.page > 1) {
     search.set("page", String(params.page));

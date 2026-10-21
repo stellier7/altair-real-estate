@@ -26,6 +26,7 @@ type PropertiesPageProps = {
     type?: string;
     listing?: string;
     q?: string;
+    city?: string;
     page?: string;
   }>;
 };
@@ -36,13 +37,15 @@ export default async function PropertiesPage({ searchParams }: PropertiesPagePro
   const listing =
     params.listing === "sale" || params.listing === "rent" ? params.listing : undefined;
   const query = params.q?.trim() || undefined;
+  const city = params.city?.trim() || undefined;
   const requestedPage = parsePropertiesPage(params.page);
-  const hasActiveFilters = Boolean(type || listing || query);
+  const hasActiveFilters = Boolean(type || listing || query || city);
 
   const results = await listProperties({
     type,
     listing,
     query,
+    city,
   });
 
   const pagination = paginateItems(results, requestedPage);
@@ -50,6 +53,7 @@ export default async function PropertiesPage({ searchParams }: PropertiesPagePro
     type: type,
     listing: params.listing,
     q: query,
+    city,
   };
 
   const stats = await getCatalogStats();
@@ -69,6 +73,7 @@ export default async function PropertiesPage({ searchParams }: PropertiesPagePro
           currentType={type}
           currentListing={params.listing}
           currentQuery={query}
+          currentCity={city}
         />
       </Section>
 
