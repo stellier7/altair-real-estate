@@ -3,8 +3,6 @@ import { siteConfig } from "@/content/site/config";
 import { buildWhatsAppUrl } from "@/lib/contact/whatsapp";
 import { Container } from "./Container";
 
-const phoneHref = (display: string) => `tel:${display.replace(/\s/g, "")}`;
-
 export function SiteFooter() {
   const year = new Date().getFullYear();
   const whatsappUrl = buildWhatsAppUrl();
@@ -12,8 +10,8 @@ export function SiteFooter() {
 
   return (
     <footer className="border-t border-line bg-surface" aria-label="Pie de página">
-      <Container className="flex flex-col gap-8 py-8 md:flex-row md:items-start md:justify-between md:gap-12 md:py-10">
-        <div className="max-w-md space-y-1.5 text-sm leading-snug text-muted">
+      <Container className="flex flex-col gap-6 py-6 md:flex-row md:items-start md:justify-between md:gap-10 md:py-7">
+        <div className="max-w-md space-y-1 text-sm leading-snug text-muted">
           <p>
             <a
               className="focus-ring inline-flex items-center py-0.5 font-medium text-accent transition-colors hover:text-accent-hover"
@@ -24,16 +22,8 @@ export function SiteFooter() {
               WhatsApp · {siteConfig.whatsapp.display}
             </a>
           </p>
-          <p>
-            <a
-              className="focus-ring inline-flex items-center py-0.5 text-accent transition-colors hover:text-accent-hover"
-              href={phoneHref(siteConfig.phone)}
-            >
-              Tel. {siteConfig.phone}
-            </a>
-          </p>
           {office ? (
-            <p className="pt-0.5 leading-snug">
+            <p className="leading-snug">
               <span className="font-medium text-foreground">{office.city}</span>
               {" — "}
               {office.address}
