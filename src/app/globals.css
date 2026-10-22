@@ -10,6 +10,9 @@
   --accent: #6550a0;
   --accent-hover: #52408a;
   --accent-soft: rgba(101, 80, 160, 0.16);
+  /* Hero copy sits on a bright photograph. Near-black ink, not the violet
+     neutrals, so the headline and supporting lines stay readable on mobile. */
+  --hero-ink: #141216;
   --whatsapp: var(--accent);
   --whatsapp-hover: var(--accent-hover);
   --line: rgba(34, 24, 48, 0.12);
@@ -43,6 +46,7 @@
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-accent-soft: var(--accent-soft);
+  --color-hero-ink: var(--hero-ink);
   --color-line: var(--line);
   --color-surface: var(--surface);
   --font-sans: var(--font-dm-sans);
@@ -211,6 +215,48 @@ body::before {
   .hero-shell-min {
     min-height: 88vh;
   }
+}
+
+.hero-scrim {
+  background: linear-gradient(
+    to top,
+    var(--background) 0%,
+    color-mix(in srgb, var(--background) 94%, transparent) 42%,
+    color-mix(in srgb, var(--background) 62%, transparent) 70%,
+    color-mix(in srgb, var(--background) 22%, transparent) 100%
+  );
+}
+
+@media (max-width: 639px) {
+  .hero-scrim {
+    background: linear-gradient(
+      to top,
+      var(--background) 0%,
+      color-mix(in srgb, var(--background) 97%, transparent) 58%,
+      color-mix(in srgb, var(--background) 82%, transparent) 78%,
+      color-mix(in srgb, var(--background) 36%, transparent) 100%
+    );
+  }
+}
+
+.hero-copy,
+.hero-copy .type-meta,
+.hero-copy .prose-editorial,
+.hero-copy .type-stat-label,
+.hero-copy .type-stat-value,
+.hero-copy .text-foreground,
+.hero-copy .text-muted,
+.hero-copy .text-accent,
+.hero-copy .hero-ink-link {
+  color: var(--hero-ink);
+}
+
+.hero-copy .hero-ink-link {
+  text-decoration-color: color-mix(in srgb, var(--hero-ink) 42%, transparent);
+}
+
+.hero-copy .hero-ink-link:hover {
+  text-decoration-color: var(--hero-ink);
 }
 
 .hero-panel {
