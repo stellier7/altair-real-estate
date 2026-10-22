@@ -28,7 +28,6 @@ export function HomeHero({ heroImage, stats }: HomeHeroProps) {
       priority
       minHeightClass="hero-shell-min"
       imageClassName="hero-bg-image"
-      overlayClassName="hero-scrim"
     >
       <Container className="hero-panel hero-copy relative w-full">
         <RevealOnScroll>
