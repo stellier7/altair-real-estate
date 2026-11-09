@@ -41,10 +41,10 @@ export default async function HomePage() {
     slug: property.slug,
     name: property.name,
     price: getDisplayPrice(property),
-    city: property.location.city,
+    city: property.location?.city,
     image: {
-      src: property.media.heroImage.src,
-      alt: property.media.heroImage.alt || property.name,
+      src: property.media?.heroImage?.src ?? "",
+      alt: property.media?.heroImage?.alt || property.name,
     },
   }));
   const stats = await getCatalogStats();

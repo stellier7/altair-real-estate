@@ -21,22 +21,43 @@ type PropertyCardProps = {
 
 export function PropertyCard({ property, priority }: PropertyCardProps) {
   const price = getDisplayPrice(property);
+  const tags = Array.isArray(property.tags) ? property.tags : [];
   const listingLabel =
-    property.tags?.includes("venta") || property.tags?.includes("alquiler")
-      ? formatPropertyListing(property.tags)
+    tags.includes("venta") || tags.includes("alquiler")
+      ? formatPropertyListing(tags)
       : null;
   const unavailable = isUnavailableListing(property.status);
+  const name =
+    typeof property.name === "string" && property.name.trim()
+      ? property.name
+      : "Propiedad";
+  const heroSrc =
+    typeof property.media?.heroImage?.src === "string"
+      ? property.media.heroImage.src.trim()
+      : "";
+  const heroAlt =
+    (typeof property.media?.heroImage?.alt === "string" &&
+      property.media.heroImage.alt.trim()) ||
+    name;
+  const slug =
+    typeof property.slug === "string" && property.slug.trim()
+      ? property.slug
+      : property.id;
+  const summary =
+    typeof property.shortDescription === "string"
+      ? property.shortDescription.trim()
+      : "";
 
   return (
     <article className="property-card group overflow-hidden">
       <div className="grid gap-6 p-5 sm:p-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-8 lg:p-8">
         <Link
-          href={`/properties/${property.slug}`}
+          href={`/properties/${slug}`}
           className="focus-ring image-frame relative block aspect-[4/3] overflow-hidden bg-foreground/10 lg:aspect-[16/11] rounded-[var(--radius-lg)]"
         >
           <PropertyListingImage
-            src={property.media.heroImage.src}
-            alt={property.media.heroImage.alt}
+            src={heroSrc}
+            alt={heroAlt}
             priority={priority}
             sizes="(max-width: 1024px) 100vw, 48vw"
             className={`transition-[transform,filter] duration-700 ease-out group-hover:scale-[1.03] motion-reduce:transition-none ${
@@ -48,7 +69,7 @@ export function PropertyCard({ property, priority }: PropertyCardProps) {
         <div className="flex flex-col gap-3 lg:py-1">
           <div className="flex flex-wrap items-center gap-2">
             <p className="type-meta-caps text-accent">
-              {formatPropertyType(property.propertyType)} · {formatStatus(property.status)}
+              {`${formatPropertyType(property.propertyType)} · ${formatStatus(property.status)}`}
             </p>
             {listingLabel ? (
               <span className="type-meta-caps rounded-full border border-accent/35 bg-accent-soft px-3 py-1 text-accent shadow-[var(--shadow-soft)]">
@@ -63,15 +84,15 @@ export function PropertyCard({ property, priority }: PropertyCardProps) {
           </div>
           <h2 className="type-display-card">
             <Link
-              href={`/properties/${property.slug}`}
+              href={`/properties/${slug}`}
               className="focus-ring rounded-sm transition-colors hover:text-accent"
             >
-              {property.name}
+              {name}
             </Link>
           </h2>
-          <p className="type-meta">{property.location.label}</p>
-          {property.shortDescription ? (
-            <p className="prose-editorial line-clamp-3">{property.shortDescription}</p>
+          <p className="type-meta">{property.location?.label ?? ""}</p>
+          {summary ? (
+            <p className="prose-editorial line-clamp-3">{summary}</p>
           ) : null}
           {price ? (
             <p className="type-meta-caps mt-1 inline-flex w-fit rounded-full border border-accent/40 bg-accent-soft px-4 py-1.5 text-accent shadow-[var(--shadow-soft)]">
@@ -79,7 +100,7 @@ export function PropertyCard({ property, priority }: PropertyCardProps) {
             </p>
           ) : null}
           <Button
-            href={`/properties/${property.slug}`}
+            href={`/properties/${slug}`}
             variant="primary"
             className="mt-3 w-fit"
           >

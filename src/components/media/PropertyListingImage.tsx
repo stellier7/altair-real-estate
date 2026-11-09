@@ -17,8 +17,13 @@ export function PropertyListingImage({
   sizes,
   className = "",
 }: PropertyListingImageProps) {
-  const normalizedSrc = normalizeWasiImageUrl(src);
-  const zoom = getImageZoomScale(src);
+  if (typeof src !== "string" || !src.trim()) {
+    return <div className="absolute inset-0 bg-foreground/10" aria-hidden="true" />;
+  }
+
+  const source = src.trim();
+  const normalizedSrc = normalizeWasiImageUrl(source);
+  const zoom = getImageZoomScale(source);
   const needsZoom = zoom > 1.02;
 
   return (

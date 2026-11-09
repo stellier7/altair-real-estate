@@ -22,7 +22,7 @@ export function selectMarqueeProperties(
     (property) =>
       !exclude.has(property.slug) &&
       property.status === "available" &&
-      Boolean(property.media.heroImage?.src),
+      Boolean(property.media?.heroImage?.src),
   );
 
   if (eligible.length <= limit) {

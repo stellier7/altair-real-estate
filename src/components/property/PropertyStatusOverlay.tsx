@@ -1,18 +1,17 @@
-import type { PropertyStatus } from "@/lib/properties/types";
-import { formatStatus } from "@/lib/properties/specs";
+import { formatStatus, isPropertyStatus } from "@/lib/properties/specs";
 
 type PropertyStatusOverlayProps = {
-  status: PropertyStatus;
+  status: unknown;
 };
 
-function assertNever(value: never): never {
-  throw new Error(`Unhandled status: ${String(value)}`);
-}
-
-function overlayForStatus(status: PropertyStatus): {
+function overlayForStatus(status: unknown): {
   label: string;
   tone: "sold" | "reserved" | "muted";
 } | null {
+  if (!isPropertyStatus(status)) {
+    return null;
+  }
+
   switch (status) {
     case "sold":
       return { label: formatStatus(status), tone: "sold" };
@@ -24,8 +23,10 @@ function overlayForStatus(status: PropertyStatus): {
     case "under_development":
     case "coming_soon":
       return null;
-    default:
-      return assertNever(status);
+    default: {
+      const _exhaustive: never = status;
+      return _exhaustive;
+    }
   }
 }
 
@@ -54,7 +55,11 @@ export function PropertyStatusOverlay({ status }: PropertyStatusOverlayProps) {
   );
 }
 
-export function isUnavailableListing(status: PropertyStatus): boolean {
+export function isUnavailableListing(status: unknown): boolean {
+  if (!isPropertyStatus(status)) {
+    return false;
+  }
+
   switch (status) {
     case "sold":
     case "reserved":
@@ -64,7 +69,9 @@ export function isUnavailableListing(status: PropertyStatus): boolean {
     case "under_development":
     case "coming_soon":
       return false;
-    default:
-      return assertNever(status);
+    default: {
+      const _exhaustive: never = status;
+      return _exhaustive;
+    }
   }
 }

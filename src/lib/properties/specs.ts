@@ -1,4 +1,4 @@
-import type { Property, PropertyType } from "./types";
+import type { Property, PropertyStatus, PropertyType } from "./types";
 
 const RESIDENTIAL_TYPES: PropertyType[] = [
   "residential",
@@ -62,12 +62,28 @@ export function supportsInvestmentBlock(property: Property): boolean {
   );
 }
 
-export function formatPropertyType(type: PropertyType): string {
-  return TYPE_LABELS[type] ?? type;
+export function formatPropertyType(type: unknown): string {
+  if (typeof type !== "string" || !type.trim()) {
+    return "Inmueble";
+  }
+  return TYPE_LABELS[type as PropertyType] ?? type;
 }
 
-export function formatStatus(status: Property["status"]): string {
-  return STATUS_LABELS[status] ?? status;
+export function isPropertyStatus(value: unknown): value is PropertyStatus {
+  return (
+    typeof value === "string" &&
+    Object.prototype.hasOwnProperty.call(STATUS_LABELS, value)
+  );
+}
+
+export function formatStatus(status: unknown): string {
+  if (isPropertyStatus(status)) {
+    return STATUS_LABELS[status];
+  }
+  if (typeof status === "string" && status.trim()) {
+    return status.trim();
+  }
+  return "Disponible";
 }
 
 export type ListingMode = "sale" | "rent" | "both";
@@ -144,21 +160,37 @@ export function parsePropertyFilterType(value: string | undefined): PropertyType
 }
 
 export function getDisplayPrice(property: Property): string | null {
-  if (property.pricing?.display) {
-    return property.pricing.display;
+  const display = property.pricing?.display;
+  if (typeof display === "string" && display.trim()) {
+    return display.trim();
   }
   if (property.pricing?.priceOnRequest) {
     return "Consultar precio";
   }
-  if (
-    property.pricing?.amount !== undefined &&
-    property.pricing.currency
-  ) {
+
+  const rawAmount = property.pricing?.amount;
+  const amount =
+    typeof rawAmount === "number"
+      ? rawAmount
+      : typeof rawAmount === "string"
+        ? Number(rawAmount)
+        : undefined;
+  const currency =
+    typeof property.pricing?.currency === "string"
+      ? property.pricing.currency.trim()
+      : "";
+
+  if (amount === undefined || !Number.isFinite(amount) || !currency) {
+    return null;
+  }
+
+  try {
     return new Intl.NumberFormat("es-HN", {
       style: "currency",
-      currency: property.pricing.currency,
+      currency,
       maximumFractionDigits: 0,
-    }).format(property.pricing.amount);
+    }).format(amount);
+  } catch {
+    return `${currency} ${amount}`;
   }
-  return null;
 }
