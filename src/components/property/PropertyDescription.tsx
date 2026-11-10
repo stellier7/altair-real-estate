@@ -30,11 +30,13 @@ export function PropertyDescription({ description }: PropertyDescriptionProps) {
             {lead}
           </p>
           <ul
-            className="grid gap-3 sm:grid-cols-2 lg:col-span-7 lg:border-l lg:border-line lg:pl-10 xl:pl-12"
+            className="grid list-none gap-3 lg:col-span-7 lg:border-l lg:border-line lg:pl-10 xl:pl-12"
             aria-label={propertyCopy.descriptionDetailsLabel}
           >
-            {rest.map((item) => (
-              <li key={item} className="text-muted leading-relaxed">{item}</li>
+            {rest.map((item, index) => (
+              <li key={`${index}-${item}`} className="text-muted leading-relaxed">
+                {item}
+              </li>
             ))}
           </ul>
         </div>
@@ -44,8 +46,8 @@ export function PropertyDescription({ description }: PropertyDescriptionProps) {
             {lead}
           </p>
           <div className="prose-editorial max-w-none lg:col-span-7 lg:border-l lg:border-line lg:pl-10 xl:pl-12">
-            {rest.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
+            {rest.map((paragraph, index) => (
+              <p key={`${index}-${paragraph}`}>{paragraph}</p>
             ))}
           </div>
         </div>
