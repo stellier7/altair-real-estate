@@ -14,7 +14,9 @@ from pathlib import Path
 from typing import Any
 
 BASE = "https://bienesraicesaltair.com"
-OUT = Path(__file__).resolve().parent.parent / "src" / "data" / "properties.json"
+ROOT = Path(__file__).resolve().parent.parent
+OUT = ROOT / "src" / "data" / "properties.json"
+MANUAL = ROOT / "src" / "data" / "manual-properties.json"
 
 LISTING_SEEDS: list[tuple[str, str]] = [
     ("for_sale", "apartamento/ventas?id_property_type=2&business_type%5B0%5D=for_sale"),
@@ -165,6 +167,17 @@ def parse_detail(url: str, pid: str) -> dict[str, Any]:
     }
 
 
+def merge_manual(properties: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Keep hand-added listings ahead of a fresh scrape, without duplicating ids."""
+    if not MANUAL.exists():
+        return properties
+    manual = json.loads(MANUAL.read_text(encoding="utf-8"))
+    extras = manual.get("properties", [])
+    seen = {item["id"] for item in properties}
+    prefix = [item for item in extras if item.get("id") not in seen]
+    return prefix + properties
+
+
 def main() -> None:
     print("Collecting listing URLs…")
     urls = collect_listing_urls()
@@ -179,6 +192,8 @@ def main() -> None:
         except Exception as exc:
             print(f"  WARN {pid}: {exc}")
         time.sleep(0.12)
+
+    properties = merge_manual(properties)
 
     agency = {
         "name": "Bienes Raices Altair",
