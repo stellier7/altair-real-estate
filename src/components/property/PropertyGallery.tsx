@@ -39,6 +39,8 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
     null,
   );
   const thumbRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const stripRef = useRef<HTMLDivElement | null>(null);
+  const skipInitialThumbScroll = useRef(true);
 
   const count = images.length;
   const hasMultiple = count > 1;
@@ -50,10 +52,20 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
   );
 
   useEffect(() => {
-    thumbRefs.current[active]?.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-      inline: "center",
+    if (skipInitialThumbScroll.current) {
+      skipInitialThumbScroll.current = false;
+      return;
+    }
+
+    const strip = stripRef.current;
+    const thumb = thumbRefs.current[active];
+    if (!strip || !thumb) return;
+
+    const left = thumb.offsetLeft - (strip.clientWidth - thumb.offsetWidth) / 2;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    strip.scrollTo({
+      left: Math.max(0, left),
+      behavior: reduceMotion ? "auto" : "smooth",
     });
   }, [active]);
 
@@ -194,7 +206,12 @@ export function PropertyGallery({ images }: PropertyGalleryProps) {
         ) : null}
       </div>
       {hasMultiple ? (
-        <div className="flex gap-3 overflow-x-auto pb-2" role="tablist" aria-label="Galería de fotos">
+        <div
+          ref={stripRef}
+          className="flex gap-3 overflow-x-auto pb-2"
+          role="tablist"
+          aria-label="Galería de fotos"
+        >
           {images.map((image, index) => (
             <button
               key={`${image.src}-${index}`}

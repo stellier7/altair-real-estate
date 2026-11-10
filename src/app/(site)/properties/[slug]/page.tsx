@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
 import { PropertyPageComposer } from "@/components/property/PropertyPageComposer";
+import { PropertyScrollReset } from "@/components/property/PropertyScrollReset";
 import {
   getAllProperties,
   resolveRequestedProperty,
@@ -54,7 +55,9 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <PropertyPageComposer property={property} />
+      <PropertyScrollReset slug={property.slug}>
+        <PropertyPageComposer property={property} />
+      </PropertyScrollReset>
     </>
   );
 }
