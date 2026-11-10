@@ -42,6 +42,12 @@ export type AltairRawProperty = {
   code: string;
   coverImage: string;
   coverAlt?: string;
+  /** Stable public URL slug. When set, the id is not appended. */
+  publicSlug?: string;
+  /** Extra slugs that should resolve to this listing. */
+  aliases?: string[];
+  /** Visible location line when it should differ from city, region, country. */
+  locationLabel?: string;
   /** How many non-hero images to keep. Scraped listings stay at 8. */
   galleryLimit?: number;
   highlights?: string[];
@@ -139,6 +145,8 @@ function extractPricing(raw: AltairRawProperty): PropertyPricing | undefined {
 }
 
 function uniqueSlug(raw: AltairRawProperty): string {
+  const explicit = raw.publicSlug?.trim();
+  if (explicit) return explicit;
   return `${raw.slug}-${raw.id}`;
 }
 
@@ -173,7 +181,9 @@ export function mapAltairProperty(
         ? "alquiler"
         : "listado";
 
-  const locationLabel = [raw.city, raw.region, raw.country].filter(Boolean).join(", ");
+  const locationLabel =
+    raw.locationLabel?.trim() ||
+    [raw.city, raw.region, raw.country].filter(Boolean).join(", ");
 
   const residential =
     parseNumber(raw.bedrooms) ||
