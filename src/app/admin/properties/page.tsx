@@ -6,6 +6,7 @@ import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { DeletePropertyButton } from "@/components/admin/DeletePropertyButton";
 import { Button } from "@/components/ui/Button";
+import { propertySearchOrFilter } from "@/lib/admin/property-search";
 import { rowToProperty, type PropertyRow } from "@/lib/properties/serialize";
 
 type SearchParams = Promise<{ q?: string }>;
@@ -26,13 +27,10 @@ export default async function AdminPropertiesPage({
   let query = supabase
     .from("properties")
     .select("*")
-    .order("updated_at", { ascending: false })
-    .limit(200);
+    .order("updated_at", { ascending: false });
 
   if (q?.trim()) {
-    query = query.or(
-      `name.ilike.%${q.trim()}%,slug.ilike.%${q.trim()}%,id.eq.${q.trim()}`,
-    );
+    query = query.or(propertySearchOrFilter(q));
   }
 
   const { data, error } = await query;
@@ -53,7 +51,7 @@ export default async function AdminPropertiesPage({
         <div>
           <h1 className="font-display text-4xl text-accent">Inmuebles</h1>
           <p className="mt-2 text-sm text-muted">
-            {rows.length} resultados{q ? ` para “${q}”` : ""} (máx. 200 por página de búsqueda)
+            {rows.length} resultados{q ? ` para “${q}”` : ""}
           </p>
         </div>
         <Button href="/admin/properties/new">Nuevo</Button>

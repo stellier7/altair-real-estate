@@ -6,6 +6,7 @@ import {
   type PropertyFormState,
 } from "@/lib/admin/property-actions";
 import type { Property } from "@/lib/properties/types";
+import { normalizeDescriptionText } from "@/lib/properties/description-paragraphs";
 import { getListingMode } from "@/lib/properties/specs";
 import { Button } from "@/components/ui/Button";
 import { ImageMediaFields } from "@/components/admin/ImageMediaFields";
@@ -81,6 +82,7 @@ function Field({
           id={name}
           name={name}
           type={type}
+          step={type === "number" ? "any" : undefined}
           defaultValue={defaultValue ?? ""}
           required={required}
           className={className}
@@ -166,14 +168,22 @@ export function PropertyEditorForm({
         <Field
           label="Descripción corta"
           name="shortDescription"
-          defaultValue={property?.shortDescription}
+          defaultValue={
+            property?.shortDescription
+              ? normalizeDescriptionText(property.shortDescription)
+              : undefined
+          }
           as="textarea"
           rows={2}
         />
         <Field
           label="Descripción"
           name="description"
-          defaultValue={property?.description}
+          defaultValue={
+            property?.description
+              ? normalizeDescriptionText(property.description)
+              : undefined
+          }
           as="textarea"
           rows={8}
         />

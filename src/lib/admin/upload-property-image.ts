@@ -1,6 +1,7 @@
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import {
   MAX_PROPERTY_IMAGE_BYTES,
+  resolvePropertyImageContentType,
   validatePropertyImageFile,
 } from "@/lib/admin/image-file";
 
@@ -29,6 +30,7 @@ export async function uploadPropertyImage(
   if (validationError) {
     throw new Error(validationError);
   }
+  const contentType = resolvePropertyImageContentType(file) ?? file.type;
 
   const safeFolder =
     folder
@@ -44,7 +46,7 @@ export async function uploadPropertyImage(
     .upload(objectPath, file, {
       cacheControl: "3600",
       upsert: false,
-      contentType: file.type,
+      contentType,
     });
 
   if (error) {

@@ -1,4 +1,5 @@
 import type { Property, PropertyStatus, PropertyType } from "@/lib/properties/types";
+import { normalizeDescriptionText } from "@/lib/properties/description-paragraphs";
 import {
   listingTagsFromMode,
   parseListingMode,
@@ -18,12 +19,23 @@ function parseTags(raw: string): string[] {
     .filter(Boolean);
 }
 
-function parseGalleryUrls(raw: string): { src: string; alt: string }[] {
-  return raw
-    .split("\n")
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .map((src) => ({ src, alt: "Galería" }));
+function uniqueUrls(lines: string[]): string[] {
+  const seen = new Set<string>();
+  const urls: string[] = [];
+  for (const line of lines) {
+    const src = line.trim();
+    if (!src || seen.has(src)) continue;
+    seen.add(src);
+    urls.push(src);
+  }
+  return urls;
+}
+
+function parseGalleryUrls(raw: string, draft: string): { src: string; alt: string }[] {
+  return uniqueUrls([...raw.split("\n"), draft]).map((src) => ({
+    src,
+    alt: "Galería",
+  }));
 }
 
 export function buildPropertyFromForm(
@@ -43,8 +55,11 @@ export function buildPropertyFromForm(
   const status = (formData.get("status") as PropertyStatus) || "available";
   const featured = formData.get("featured") === "on";
   const shortDescription =
-    (formData.get("shortDescription") as string)?.trim() || undefined;
-  const description = (formData.get("description") as string)?.trim() || undefined;
+    normalizeDescriptionText((formData.get("shortDescription") as string) || "") ||
+    undefined;
+  const description =
+    normalizeDescriptionText((formData.get("description") as string) || "") ||
+    undefined;
   const city = (formData.get("city") as string)?.trim() || undefined;
   const region = (formData.get("region") as string)?.trim() || undefined;
   const country =
@@ -65,6 +80,7 @@ export function buildPropertyFromForm(
   const heroAlt =
     (formData.get("heroImageAlt") as string)?.trim() || name;
   const galleryRaw = (formData.get("galleryUrls") as string) || "";
+  const galleryDraft = (formData.get("galleryUrlDraft") as string) || "";
   const extraTags = parseTags((formData.get("tags") as string) || "");
   const tags = Array.from(new Set([...listingTags, ...extraTags]));
 
@@ -117,7 +133,7 @@ export function buildPropertyFromForm(
         width: 1200,
         height: 800,
       },
-      gallery: parseGalleryUrls(galleryRaw).map((img) => ({
+      gallery: parseGalleryUrls(galleryRaw, galleryDraft).map((img) => ({
         ...img,
         alt: heroAlt,
         width: 1200,

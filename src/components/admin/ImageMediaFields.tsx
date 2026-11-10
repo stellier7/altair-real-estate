@@ -169,16 +169,17 @@ export function ImageMediaFields({
         <input
           id="heroImageSrc"
           name="heroImageSrc"
-          type="url"
-          required
+          type="text"
+          inputMode="url"
           value={heroSrc}
           onChange={(e) => setHeroSrc(e.target.value)}
-          placeholder="https://…"
+          placeholder="https://… (puede dejarla vacía y subir la foto después)"
           className={fieldClassName}
         />
         <p className={helpClassName}>
           Pegue un enlace de Wasi u otra URL pública, o use el botón para subir
-          desde su computadora. No pegue rutas como{" "}
+          desde su computadora. Puede guardar la ficha sin foto y añadirla
+          después. No pegue rutas como{" "}
           <span className="font-medium text-foreground">C:\Users\…</span>.
         </p>
         <div className="mt-3 flex flex-wrap items-center gap-3">
@@ -362,7 +363,9 @@ export function ImageMediaFields({
             </label>
             <input
               id="galleryUrlDraft"
-              type="url"
+              name="galleryUrlDraft"
+              type="text"
+              inputMode="url"
               value={galleryUrlDraft}
               onChange={(e) => setGalleryUrlDraft(e.target.value)}
               placeholder="https://…"

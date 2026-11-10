@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { requireStaffProfile } from "@/lib/admin/auth";
 import { buildPropertyFromForm } from "@/lib/admin/build-property-from-form";
 import { validatePropertyImageUrls } from "@/lib/admin/image-url";
+import { explainPropertySaveError } from "@/lib/admin/save-error";
 import { canDeleteProperties } from "@/lib/admin/types";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import type { Property } from "@/lib/properties/types";
@@ -39,54 +40,79 @@ function revalidatePropertyPaths(slug: string) {
   revalidatePath("/admin/properties");
 }
 
+function isNextRedirect(error: unknown): boolean {
+  if (typeof error !== "object" || error === null || !("digest" in error)) {
+    return false;
+  }
+  const digest = (error as { digest?: unknown }).digest;
+  return typeof digest === "string" && digest.startsWith("NEXT_REDIRECT");
+}
+
+function galleryLinesFromForm(formData: FormData): string[] {
+  const saved = ((formData.get("galleryUrls") as string) || "")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+  const draft = ((formData.get("galleryUrlDraft") as string) || "").trim();
+  if (!draft || saved.includes(draft)) {
+    return saved;
+  }
+  return [...saved, draft];
+}
+
 export async function savePropertyAction(
   _prev: PropertyFormState,
   formData: FormData,
 ): Promise<PropertyFormState> {
-  const profile = await requireStaffProfile();
-  const existingId = (formData.get("id") as string)?.trim();
-  const supabase = await createSupabaseServerClient();
+  try {
+    const profile = await requireStaffProfile();
+    const existingId = (formData.get("id") as string)?.trim();
+    const supabase = await createSupabaseServerClient();
 
-  let existing: Property | undefined;
-  if (existingId) {
-    const { data } = await supabase
-      .from("properties")
-      .select("data")
-      .eq("id", existingId)
-      .maybeSingle();
-    existing = data?.data as Property | undefined;
+    let existing: Property | undefined;
+    if (existingId) {
+      const { data } = await supabase
+        .from("properties")
+        .select("data")
+        .eq("id", existingId)
+        .maybeSingle();
+      existing = data?.data as Property | undefined;
+    }
+
+    const heroRaw = ((formData.get("heroImageSrc") as string) || "").trim();
+    const galleryRaw = galleryLinesFromForm(formData);
+    const imageError = validatePropertyImageUrls(heroRaw, galleryRaw);
+    if (imageError) {
+      return { error: imageError };
+    }
+
+    const property = buildPropertyFromForm(formData, existing);
+    const published = formData.get("published") === "on";
+    const row = {
+      ...propertyToRow(property, { published }),
+      updated_by: profile.id,
+    };
+
+    const { error } = await supabase.from("properties").upsert(row, {
+      onConflict: "id",
+    });
+
+    if (error) {
+      return { error: explainPropertySaveError(error.message) };
+    }
+
+    await writeAudit(existingId ? "update" : "create", property.id, {
+      slug: property.slug,
+    });
+    revalidatePropertyPaths(property.slug);
+    redirect(`/admin/properties/${property.id}`);
+  } catch (error) {
+    if (isNextRedirect(error)) {
+      throw error;
+    }
+    const message = error instanceof Error ? error.message : "No se pudo guardar el inmueble.";
+    return { error: explainPropertySaveError(message) };
   }
-
-  const heroRaw = ((formData.get("heroImageSrc") as string) || "").trim();
-  const galleryRaw = ((formData.get("galleryUrls") as string) || "")
-    .split("\n")
-    .map((line) => line.trim())
-    .filter(Boolean);
-  const imageError = validatePropertyImageUrls(heroRaw, galleryRaw);
-  if (imageError) {
-    return { error: imageError };
-  }
-
-  const property = buildPropertyFromForm(formData, existing);
-  const published = formData.get("published") === "on";
-  const row = {
-    ...propertyToRow(property, { published }),
-    updated_by: profile.id,
-  };
-
-  const { error } = await supabase.from("properties").upsert(row, {
-    onConflict: "id",
-  });
-
-  if (error) {
-    return { error: error.message };
-  }
-
-  await writeAudit(existingId ? "update" : "create", property.id, {
-    slug: property.slug,
-  });
-  revalidatePropertyPaths(property.slug);
-  redirect(`/admin/properties/${property.id}`);
 }
 
 export async function deletePropertyAction(formData: FormData): Promise<void> {
