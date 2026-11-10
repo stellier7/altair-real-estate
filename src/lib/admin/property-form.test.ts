@@ -75,6 +75,41 @@ test("saving other fields does not delete gallery photos", () => {
   );
 });
 
+test("correcting the Lomas house keeps its photos and drops the edificio fields", () => {
+  const property = buildPropertyFromForm(
+    form({
+      id: "p-1794256301039",
+      name: "Se Renta Casa en Lomas del Guijarro",
+      slug: "renta-casa-lomas-del-guijarro",
+      description:
+        "Se Renta Casa en Lomas del Guijarro\r\nPrecio $3,000\r\n\r\nConsta de:\r\n- 4 dormitorios\r\n- 4 baños",
+      city: "Tegucigalpa",
+      region: "Francisco Morazán",
+      country: "Honduras",
+      locationLabel: "Lomas del Guijarro, Tegucigalpa",
+      priceAmount: "3000",
+      currency: "USD",
+      seoTitle: "Se Renta Casa en Lomas del Guijarro",
+      heroImageSrc: "https://example.com/fachada.jpg",
+      galleryUrls: "",
+      listing: "rent",
+      propertyType: "house",
+      status: "available",
+    }),
+    casaWithPhotos(),
+  );
+
+  assert.equal(property.location.label, "Lomas del Guijarro, Tegucigalpa");
+  assert.equal(property.pricing?.amount, 3000);
+  assert.equal(property.seo.title, "Se Renta Casa en Lomas del Guijarro");
+  assert.deepEqual(property.media.gallery?.map((image) => image.src), [
+    "https://example.com/sala.jpg",
+    "https://example.com/cocina.jpg",
+  ]);
+  assert.ok(property.description?.includes("- 4 dormitorios"));
+  assert.ok(property.description?.includes("\n\n- 4 baños"));
+});
+
 test("clearing the gallery on purpose removes the stored photos", () => {
   const property = buildPropertyFromForm(
     form({
