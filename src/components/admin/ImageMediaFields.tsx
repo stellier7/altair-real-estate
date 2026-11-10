@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useRef, useState, type ChangeEvent } from "react";
+import { useEffect, useId, useRef, useState, type ChangeEvent } from "react";
 import { parseGalleryLines } from "@/lib/admin/gallery-order";
 import { uploadPropertyImage } from "@/lib/admin/upload-property-image";
 import { Button } from "@/components/ui/Button";
@@ -11,6 +11,7 @@ type ImageMediaFieldsProps = {
   initialHeroAlt?: string;
   initialGalleryUrls?: string;
   fallbackAlt?: string;
+  onBusyChange?: (busy: boolean) => void;
 };
 
 type UploadStatus = {
@@ -45,6 +46,7 @@ export function ImageMediaFields({
   initialHeroAlt = "",
   initialGalleryUrls = "",
   fallbackAlt = "",
+  onBusyChange,
 }: ImageMediaFieldsProps) {
   const heroFileId = useId();
   const galleryFileId = useId();
@@ -57,6 +59,7 @@ export function ImageMediaFields({
     parseGalleryLines(initialGalleryUrls).map(createGalleryEntry),
   );
   const [galleryUrlDraft, setGalleryUrlDraft] = useState("");
+  const [galleryEdited, setGalleryEdited] = useState(false);
   const [heroStatus, setHeroStatus] = useState<UploadStatus>({ pending: false });
   const [galleryStatus, setGalleryStatus] = useState<UploadStatus>({
     pending: false,
@@ -64,6 +67,18 @@ export function ImageMediaFields({
 
   const uploadFolder = propertyId?.trim() || "draft";
   const galleryUrlsValue = galleryItems.map((item) => item.src).join("\n");
+  const uploadsBusy = heroStatus.pending || galleryStatus.pending;
+
+  useEffect(() => {
+    setHeroSrc(initialHeroSrc);
+    setGalleryItems(parseGalleryLines(initialGalleryUrls).map(createGalleryEntry));
+    setGalleryUrlDraft("");
+    setGalleryEdited(false);
+  }, [propertyId, initialHeroSrc, initialGalleryUrls]);
+
+  useEffect(() => {
+    onBusyChange?.(uploadsBusy);
+  }, [onBusyChange, uploadsBusy]);
 
   async function handleHeroFileChange(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
@@ -103,6 +118,7 @@ export function ImageMediaFields({
     }
 
     if (uploaded.length > 0) {
+      setGalleryEdited(true);
       setGalleryItems((prev) => [
         ...prev,
         ...uploaded.map(createGalleryEntry),
@@ -135,6 +151,7 @@ export function ImageMediaFields({
   function addGalleryUrlFromDraft() {
     const url = galleryUrlDraft.trim();
     if (!url) return;
+    setGalleryEdited(true);
     setGalleryItems((prev) => [...prev, createGalleryEntry(url)]);
     setGalleryUrlDraft("");
     setGalleryStatus({
@@ -144,10 +161,12 @@ export function ImageMediaFields({
   }
 
   function removeGalleryItem(id: string) {
+    setGalleryEdited(true);
     setGalleryItems((prev) => prev.filter((item) => item.id !== id));
   }
 
   function reorderById(id: string, toIndex: number) {
+    setGalleryEdited(true);
     setGalleryItems((prev) => {
       const fromIndex = prev.findIndex((item) => item.id === id);
       if (fromIndex < 0 || toIndex < 0 || toIndex >= prev.length) {
@@ -172,6 +191,10 @@ export function ImageMediaFields({
           type="text"
           inputMode="url"
           autoComplete="off"
+          readOnly
+          onFocus={(event) => {
+            event.currentTarget.readOnly = false;
+          }}
           value={heroSrc}
           onChange={(e) => setHeroSrc(e.target.value)}
           placeholder="https://… (puede dejarla vacía y subir la foto después)"
@@ -257,6 +280,7 @@ export function ImageMediaFields({
         </p>
 
         <input type="hidden" name="galleryUrls" value={galleryUrlsValue} />
+        <input type="hidden" name="galleryTouched" value={galleryEdited ? "1" : "0"} />
 
         {galleryItems.length > 0 ? (
           <ul
@@ -369,6 +393,10 @@ export function ImageMediaFields({
               type="text"
               inputMode="url"
               autoComplete="off"
+              readOnly
+              onFocus={(event) => {
+                event.currentTarget.readOnly = false;
+              }}
               value={galleryUrlDraft}
               onChange={(e) => setGalleryUrlDraft(e.target.value)}
               placeholder="https://…"

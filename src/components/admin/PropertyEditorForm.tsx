@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { useActionState, useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { shouldOpenSavedProperty } from "@/lib/admin/editor-navigation";
 import {
@@ -78,6 +78,10 @@ function Field({
           autoComplete="off"
           defaultValue={defaultValue ?? ""}
           required={required}
+          readOnly
+          onFocus={(event) => {
+            event.currentTarget.readOnly = false;
+          }}
           className={className}
         />
       ) : (
@@ -86,6 +90,10 @@ function Field({
           name={name}
           type={type}
           autoComplete="off"
+          readOnly
+          onFocus={(event) => {
+            event.currentTarget.readOnly = false;
+          }}
           step={type === "number" ? "any" : undefined}
           defaultValue={defaultValue ?? ""}
           required={required}
@@ -101,6 +109,10 @@ export function PropertyEditorForm({
   published = true,
 }: PropertyEditorFormProps) {
   const router = useRouter();
+  const [uploadsBusy, setUploadsBusy] = useState(false);
+  const handleUploadsBusy = useCallback((busy: boolean) => {
+    setUploadsBusy(busy);
+  }, []);
   const [state, action, pending] = useActionState(savePropertyAction, initialState);
   const savedTo = state.savedTo;
 
@@ -120,7 +132,14 @@ export function PropertyEditorForm({
     .join(", ");
 
   return (
-    <form action={action} autoComplete="off" className="space-y-8">
+    <form
+      action={action}
+      autoComplete="off"
+      className="space-y-8"
+      onSubmit={(event) => {
+        if (uploadsBusy) event.preventDefault();
+      }}
+    >
       {property ? <input type="hidden" name="id" value={property.id} /> : null}
 
       <section className="grid gap-5 sm:grid-cols-2">
@@ -261,6 +280,7 @@ export function PropertyEditorForm({
         initialHeroAlt={property?.media?.heroImage?.alt ?? property?.name}
         initialGalleryUrls={galleryUrls}
         fallbackAlt={property?.name}
+        onBusyChange={handleUploadsBusy}
       />
 
       <section className="grid gap-5 sm:grid-cols-2">
@@ -311,8 +331,8 @@ export function PropertyEditorForm({
         </p>
       ) : null}
 
-      <Button type="submit" disabled={pending}>
-        {pending ? "Guardando…" : property ? "Guardar cambios" : "Crear inmueble"}
+      <Button type="submit" disabled={pending || uploadsBusy}>
+        {pending ? "Guardando…" : uploadsBusy ? "Subiendo fotos…" : property ? "Guardar cambios" : "Crear inmueble"}
       </Button>
     </form>
   );

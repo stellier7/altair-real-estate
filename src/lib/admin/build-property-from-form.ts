@@ -81,6 +81,7 @@ export function buildPropertyFromForm(
     (formData.get("heroImageAlt") as string)?.trim() || name;
   const galleryRaw = (formData.get("galleryUrls") as string) || "";
   const galleryDraft = (formData.get("galleryUrlDraft") as string) || "";
+  const galleryTouched = formData.get("galleryTouched") === "1";
   const extraTags = parseTags((formData.get("tags") as string) || "");
   const tags = Array.from(new Set([...listingTags, ...extraTags]));
 
@@ -95,6 +96,20 @@ export function buildPropertyFromForm(
     bedrooms || bathrooms || parking || totalArea || lotSize || yearBuilt
       ? { bedrooms, bathrooms, parking, totalArea, lotSize, yearBuilt }
       : undefined;
+
+  const submittedGallery = parseGalleryUrls(galleryRaw, galleryDraft);
+  const keepStoredGallery =
+    submittedGallery.length === 0 &&
+    !galleryTouched &&
+    (existing?.media.gallery?.length ?? 0) > 0;
+  const galleryImages = keepStoredGallery
+    ? existing?.media.gallery ?? []
+    : submittedGallery.map((img) => ({
+        ...img,
+        alt: heroAlt,
+        width: 1200,
+        height: 800,
+      }));
 
   const seoTitle = (formData.get("seoTitle") as string)?.trim() || name;
   const seoDescription =
@@ -133,12 +148,7 @@ export function buildPropertyFromForm(
         width: 1200,
         height: 800,
       },
-      gallery: parseGalleryUrls(galleryRaw, galleryDraft).map((img) => ({
-        ...img,
-        alt: heroAlt,
-        width: 1200,
-        height: 800,
-      })),
+      gallery: galleryImages,
     },
     residential,
     features: existing?.features,
