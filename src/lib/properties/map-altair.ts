@@ -41,9 +41,34 @@ export type AltairRawProperty = {
   garage?: string | null;
   code: string;
   coverImage: string;
-  images: string[];
+  coverAlt?: string;
+  /** How many non-hero images to keep. Scraped listings stay at 8. */
+  galleryLimit?: number;
+  highlights?: string[];
+  images: AltairImage[];
   attributes: Record<string, string | undefined>;
 };
+
+export type AltairImage =
+  | string
+  | {
+      src: string;
+      alt?: string;
+      width?: number;
+      height?: number;
+    };
+
+function imageFields(image: AltairImage): {
+  src: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+} {
+  if (typeof image === "string") {
+    return { src: image };
+  }
+  return image;
+}
 
 function mapPropertyType(label: string): PropertyType {
   const key = label.toLowerCase();
@@ -67,7 +92,18 @@ function parseNumber(value: string | null | undefined): number | undefined {
 
 function extractPricing(raw: AltairRawProperty): PropertyPricing | undefined {
   if (raw.priceLabel?.trim()) {
-    return { display: raw.priceLabel.trim() };
+    const label = raw.priceLabel.trim();
+    const usd = label.match(/^\$\s*([\d][\d,]*)/);
+    if (usd) {
+      const amount = Number.parseInt(usd[1].replace(/,/g, ""), 10);
+      return { amount, currency: "USD", display: label };
+    }
+    const hnl = label.match(/^L\.?\s*([\d][\d,]*)/i);
+    if (hnl) {
+      const amount = Number.parseInt(hnl[1].replace(/,/g, ""), 10);
+      return { amount, currency: "HNL", display: label };
+    }
+    return { display: label };
   }
   const text = raw.description;
   const hnl = text.match(/L\s*([\d][\d,]*)/i);
@@ -117,12 +153,18 @@ export function mapAltairProperty(
   scrapedAt?: string,
 ): Property {
   const propertyType = mapPropertyType(raw.propertyType || "");
-  const heroRaw = raw.coverImage || raw.images[0] || "";
+  const listedImages = raw.images.map(imageFields);
+  const heroSource = listedImages.find((image) => image.src === raw.coverImage);
+  const heroRaw = raw.coverImage || listedImages[0]?.src || "";
   const hero = heroRaw ? normalizeWasiImageUrl(heroRaw) : "";
-  const gallery = raw.images
-    .filter((src) => src && src !== heroRaw)
-    .slice(0, 8)
-    .map((src) => normalizeWasiImageUrl(src));
+  const galleryLimit = raw.galleryLimit ?? 8;
+  const gallery = listedImages
+    .map((image) => ({
+      ...image,
+      src: image.src ? normalizeWasiImageUrl(image.src) : "",
+    }))
+    .filter((image) => image.src && image.src !== hero)
+    .slice(0, galleryLimit);
 
   const listingTag =
     raw.listingType === "sale"
@@ -143,6 +185,11 @@ export function mapAltairProperty(
           parking: parseNumber(raw.garage),
         }
       : undefined;
+
+  const features = [
+    ...(raw.condition ? [`Estado: ${raw.condition}`] : []),
+    ...(raw.highlights ?? []),
+  ].filter((feature) => feature.trim().length > 0);
 
   return {
     id: raw.id,
@@ -165,19 +212,19 @@ export function mapAltairProperty(
     media: {
       heroImage: {
         src: hero || "https://images.wasi.co/empresas/b20190828112855.png",
-        alt: raw.title,
-        width: 1200,
-        height: 800,
+        alt: raw.coverAlt?.trim() || heroSource?.alt?.trim() || raw.title,
+        width: heroSource?.width ?? 1200,
+        height: heroSource?.height ?? 800,
       },
-      gallery: gallery.map((src) => ({
-        src,
-        alt: raw.title,
-        width: 1200,
-        height: 800,
+      gallery: gallery.map((image) => ({
+        src: image.src,
+        alt: image.alt?.trim() || raw.title,
+        width: image.width ?? 1200,
+        height: image.height ?? 800,
       })),
     },
     residential,
-    features: raw.condition ? [`Estado: ${raw.condition}`] : undefined,
+    features: features.length > 0 ? features : undefined,
     seo: {
       title: raw.title.trim(),
       description: shortDescription(raw.description),

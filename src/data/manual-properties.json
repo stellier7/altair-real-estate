@@ -1,0 +1,205 @@
+{
+  "properties": [
+    {
+      "id": "190000001",
+      "slug": "casa-alquiler-lomas-del-guijarro",
+      "url": "",
+      "title": "Se renta casa en Lomas del Guijarro",
+      "description": "Casa en alquiler en Lomas del Guijarro, Tegucigalpa, con 4 dormitorios, 4 baños, 4 estacionamientos, dos salas y jardín.\n\nSe renta casa en Lomas del Guijarro\n\nPrecio $3,000\n\nConsta de:\n- 4 dormitorios\n- 4 baños\n- 4 estacionamientos\n- Cocina con amplia alacena\n- Comedor\n- 2 salas\n- 2 terrazas\n- Jardín frontal y posterior\n- Recibidor\n- Área de lavandería\n- Dormitorio para empleada\n\nMás información:\n9593-0261\ncilbia@bienesraicesaltair.com",
+      "listingType": "rent",
+      "propertyType": "Casa",
+      "priceLabel": "",
+      "country": "Honduras",
+      "region": "Francisco Morazán",
+      "city": "Lomas del Guijarro, Tegucigalpa",
+      "condition": "",
+      "bedrooms": "4",
+      "bathrooms": "4",
+      "garage": "4",
+      "code": "190000001",
+      "coverImage": "/images/properties/casa-lomas-del-guijarro/01-portico.jpg",
+      "coverAlt": "Pórtico de la casa en Lomas del Guijarro, con arco de entrada, ventana de medio punto y jardín al atardecer.",
+      "galleryLimit": 40,
+      "highlights": [
+        "Cocina con amplia alacena",
+        "Comedor",
+        "2 salas",
+        "2 terrazas",
+        "Jardín frontal y posterior",
+        "Recibidor",
+        "Área de lavandería",
+        "Dormitorio para empleada"
+      ],
+      "images": [
+        {
+          "src": "/images/properties/casa-lomas-del-guijarro/01-portico.jpg",
+          "alt": "Pórtico de la casa en Lomas del Guijarro, con arco de entrada, ventana de medio punto y jardín al atardecer.",
+          "width": 1600,
+          "height": 1200
+        },
+        {
+          "src": "/images/properties/casa-lomas-del-guijarro/02-fachada.jpg",
+          "alt": "Fachada desde la calle, con portón blanco, muro perimetral y pino frente a la casa.",
+          "width": 1600,
+          "height": 1200
+        },
+        {
+          "src": "/images/properties/casa-lomas-del-guijarro/03-acceso.jpg",
+          "alt": "Acceso vehicular de adoquín hacia el garaje techado y la fachada.",
+          "width": 1600,
+          "height": 1200
+        },
+        {
+          "src": "/images/properties/casa-lomas-del-guijarro/04-garaje.jpg",
+          "alt": "Garaje techado con espacio para varios vehículos y árbol junto al muro.",
+          "width": 1600,
+          "height": 1200
+        },
+        {
+          "src": "/images/properties/casa-lomas-del-guijarro/05-fachada-posterior.jpg",
+          "alt": "Fachada posterior de la casa de dos niveles, con ventanas enmarcadas y jardín.",
+          "width": 1600,
+          "height": 1200
+        },
+        {
+          "src": "/images/properties/casa-lomas-del-guijarro/06-jardin-lateral.jpg",
+          "alt": "Jardín lateral con el muro de la casa y arbustos en flor.",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/properties/casa-lomas-del-guijarro/07-sendero.jpg",
+          "alt": "Sendero de piedra entre arbustos hacia el costado de la casa.",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/properties/casa-lomas-del-guijarro/08-jardin-pino.jpg",
+          "alt": "Jardín con pino, yucas y pasos de piedra junto a la casa.",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/properties/casa-lomas-del-guijarro/09-jardin-posterior.jpg",
+          "alt": "Jardín posterior con césped, muro y árbol grande.",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/properties/casa-lomas-del-guijarro/10-jardin-flores.jpg",
+          "alt": "Jardín posterior con buganvilias y vista hacia las casas vecinas.",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/properties/casa-lomas-del-guijarro/11-recibidor.jpg",
+          "alt": "Recibidor de doble altura con puerta principal, vitral y escalera.",
+          "width": 1600,
+          "height": 1200
+        },
+        {
+          "src": "/images/properties/casa-lomas-del-guijarro/12-escalera-arco.jpg",
+          "alt": "Escalera de baldosa blanca con barandal de hierro y ventana de arco.",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/properties/casa-lomas-del-guijarro/13-planta-alta.jpg",
+          "alt": "Pasillo de la planta alta con barandal de hierro y ventanas de arco.",
+          "width": 1600,
+          "height": 1200
+        },
+        {
+          "src": "/images/properties/casa-lomas-del-guijarro/14-escalera.jpg",
+          "alt": "Escalera principal vista desde abajo, con muro verde y barandal negro.",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/properties/casa-lomas-del-guijarro/15-pasillo-alto.jpg",
+          "alt": "Distribuidor de la planta alta con puerta hacia la terraza.",
+          "width": 1600,
+          "height": 1200
+        },
+        {
+          "src": "/images/properties/casa-lomas-del-guijarro/16-mezzanine.jpg",
+          "alt": "Vista desde el recibidor hacia la sala y el mezzanine.",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/properties/casa-lomas-del-guijarro/17-escalera-sala.jpg",
+          "alt": "Escalera que baja hacia la sala y el mezzanine.",
+          "width": 1600,
+          "height": 1200
+        },
+        {
+          "src": "/images/properties/casa-lomas-del-guijarro/18-sala.jpg",
+          "alt": "Sala principal con sofás, piso de baldosa y ventanales con cortinas.",
+          "width": 1600,
+          "height": 1200
+        },
+        {
+          "src": "/images/properties/casa-lomas-del-guijarro/19-sala-tv.jpg",
+          "alt": "Segunda sala con televisión, mueble de madera y puertas hacia la terraza.",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/properties/casa-lomas-del-guijarro/20-sala-tv-detalle.jpg",
+          "alt": "Otra vista de la sala de televisión, con sillas de mimbre y puertas corredizas.",
+          "width": 1600,
+          "height": 1200
+        },
+        {
+          "src": "/images/properties/casa-lomas-del-guijarro/21-comedor.jpg",
+          "alt": "Comedor con mesa para seis personas y ventana con cortinas.",
+          "width": 1600,
+          "height": 1200
+        },
+        {
+          "src": "/images/properties/casa-lomas-del-guijarro/22-bano-azul.jpg",
+          "alt": "Baño con azulejo azul, lavamanos y ducha.",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/properties/casa-lomas-del-guijarro/23-bano-rosa.jpg",
+          "alt": "Baño con azulejo rosa, lavamanos y bañera.",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/properties/casa-lomas-del-guijarro/24-bano-principal.jpg",
+          "alt": "Baño principal con doble lavamanos, gabinetes y ducha.",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/properties/casa-lomas-del-guijarro/25-vestidor.jpg",
+          "alt": "Vestidor con estantes, cajones y barra para ropa.",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/properties/casa-lomas-del-guijarro/26-alacena.jpg",
+          "alt": "Pasillo de alacena con estantería blanca junto a la cocina.",
+          "width": 1200,
+          "height": 1600
+        }
+      ],
+      "attributes": {
+        "país": "Honduras",
+        "estado / departamento": "Francisco Morazán",
+        "ciudad": "Tegucigalpa",
+        "zona": "Lomas del Guijarro",
+        "código": "190000001",
+        "alcobas": "4",
+        "baños": "4",
+        "garaje": "4",
+        "tipo de inmueble": "Casa",
+        "tipo de negocio": "Alquiler"
+      }
+    }
+  ]
+}
