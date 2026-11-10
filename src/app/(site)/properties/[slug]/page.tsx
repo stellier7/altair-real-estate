@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { PropertyPageComposer } from "@/components/property/PropertyPageComposer";
 import {
   getAllProperties,
@@ -38,6 +38,10 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
 
   if (!property) {
     notFound();
+  }
+
+  if (property.slug !== slug) {
+    redirect(`/properties/${property.slug}`);
   }
 
   const jsonLd = buildPropertyJsonLd(property);
