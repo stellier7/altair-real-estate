@@ -1,5 +1,8 @@
 import { getPropertiesDataSource } from "@/lib/supabase/env";
+import { findManualListing, listManualListings } from "./catalog";
 import { jsonPropertyRepository } from "./json-repository";
+import { matchesPropertyFilter } from "./matches-filter";
+import { overlayManualProperties } from "./manual-overlay";
 import { resolvePropertyRequest } from "./resolve-request";
 import {
   computeStatsFromProperties,
@@ -10,25 +13,42 @@ import {
 } from "./supabase-repository";
 import type { Property, PropertyFilter } from "./types";
 
+function manualProperties(): Property[] {
+  return listManualListings().map((entry) => entry.property);
+}
+
+function withManualProperties(properties: Property[]): Property[] {
+  return overlayManualProperties(properties, manualProperties());
+}
+
 export async function listProperties(
   filters: PropertyFilter = {},
 ): Promise<Property[]> {
   if (getPropertiesDataSource() === "supabase") {
-    return filterSupabaseProperties(filters);
+    const remote = await filterSupabaseProperties(filters);
+    return withManualProperties(remote).filter((property) =>
+      matchesPropertyFilter(property, filters),
+    );
   }
-  return jsonPropertyRepository.filter(filters);
+  return withManualProperties(jsonPropertyRepository.filter(filters)).filter(
+    (property) => matchesPropertyFilter(property, filters),
+  );
 }
 
 export async function getAllProperties(): Promise<Property[]> {
   if (getPropertiesDataSource() === "supabase") {
-    return fetchAllProperties();
+    return withManualProperties(await fetchAllProperties());
   }
-  return jsonPropertyRepository.getAll();
+  return withManualProperties(jsonPropertyRepository.getAll());
 }
 
 export async function getPropertyBySlug(
   slug: string,
 ): Promise<Property | undefined> {
+  const manual = findManualListing(slug);
+  if (manual) {
+    return manual.property;
+  }
   if (getPropertiesDataSource() === "supabase") {
     return fetchPropertyBySlug(slug);
   }
@@ -38,6 +58,10 @@ export async function getPropertyBySlug(
 export async function getPropertyById(
   id: string,
 ): Promise<Property | undefined> {
+  const manual = manualProperties().find((property) => property.id === id);
+  if (manual) {
+    return manual;
+  }
   if (getPropertiesDataSource() === "supabase") {
     return fetchPropertyById(id);
   }
@@ -52,10 +76,9 @@ export async function resolveRequestedProperty(requested: string) {
 
 export async function getCatalogStats() {
   if (getPropertiesDataSource() === "supabase") {
-    const properties = await fetchAllProperties();
-    return computeStatsFromProperties(properties);
+    return computeStatsFromProperties(await getAllProperties());
   }
-  return jsonPropertyRepository.stats();
+  return computeStatsFromProperties(withManualProperties(jsonPropertyRepository.getAll()));
 }
 
 export function getCatalogAgency() {

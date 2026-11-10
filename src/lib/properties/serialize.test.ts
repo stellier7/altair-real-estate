@@ -45,4 +45,12 @@ test("an id in the public URL resolves to the listing slug", async () => {
       ?.redirectTo,
     undefined,
   );
+  assert.equal(
+    resolvePropertyRequest(
+      "casa-alquiler-lomas-del-guijarro-190000001",
+      property,
+      undefined,
+    )?.redirectTo,
+    "/properties/renta-casa-lomas-del-guijarro",
+  );
 });

@@ -12,6 +12,12 @@ export function resolvePropertyRequest(
   byId: Property | undefined,
 ): ResolvedPropertyRequest | undefined {
   if (bySlug) {
+    if (bySlug.slug && bySlug.slug !== requested) {
+      return {
+        property: bySlug,
+        redirectTo: `/properties/${bySlug.slug}`,
+      };
+    }
     return { property: bySlug };
   }
   if (!byId) {
