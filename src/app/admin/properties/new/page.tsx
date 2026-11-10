@@ -17,7 +17,7 @@ export default async function AdminNewPropertyPage() {
           Complete los datos. Puede dejar el slug vacío para generarlo automáticamente.
         </p>
       </div>
-      <PropertyEditorForm />
+      <PropertyEditorForm key="new" />
     </div>
   );
 }

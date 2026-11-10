@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { PropertyPageComposer } from "@/components/property/PropertyPageComposer";
 import {
   getAllProperties,
-  getPropertyBySlug,
+  resolveRequestedProperty,
 } from "@/lib/properties/service";
 import {
   buildPropertyJsonLd,
@@ -25,20 +25,26 @@ export async function generateMetadata({
   params,
 }: PropertyPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const property = await getPropertyBySlug(slug);
-  if (!property) {
+  const resolved = await resolveRequestedProperty(slug);
+  if (!resolved) {
     return {};
   }
-  return buildPropertyMetadata(property);
+  return buildPropertyMetadata(resolved.property);
 }
 
 export default async function PropertyPage({ params }: PropertyPageProps) {
   const { slug } = await params;
-  const property = await getPropertyBySlug(slug);
+  const resolved = await resolveRequestedProperty(slug);
 
-  if (!property) {
+  if (!resolved) {
     notFound();
   }
+
+  if (resolved.redirectTo) {
+    permanentRedirect(resolved.redirectTo);
+  }
+
+  const property = resolved.property;
 
   const jsonLd = buildPropertyJsonLd(property);
 

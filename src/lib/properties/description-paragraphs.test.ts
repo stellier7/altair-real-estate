@@ -45,6 +45,23 @@ test("a dangling article stays with the next word, including Jacuzzi", () => {
   ]);
 });
 
+test("Windows line breaks between bullets stay separate facts", () => {
+  const blocks = splitDescriptionParagraphs(
+    "Se Renta Casa en Lomas del Guijarro\r\nPrecio $3,000\r\n\r\nConsta de:\r\n- 4 dormitorios\r\n- 4 baños\r\n- 4 estacionamientos\r\n\r\nMas Información:\r\n9593-0261\r\ncilbia@bienesraicesaltair.com",
+  );
+
+  assert.deepEqual(blocks, [
+    "Se Renta Casa en Lomas del Guijarro",
+    "Precio $3,000",
+    "Consta de:",
+    "- 4 dormitorios",
+    "- 4 baños",
+    "- 4 estacionamientos",
+    "Mas Información:",
+    "9593-0261 cilbia@bienesraicesaltair.com",
+  ]);
+});
+
 test("floor headings stay on their own line and are not merged into the previous bullet", () => {
   const blocks = splitDescriptionParagraphs(
     [

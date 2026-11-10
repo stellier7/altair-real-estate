@@ -1,6 +1,8 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { shouldOpenSavedProperty } from "@/lib/admin/editor-navigation";
 import {
   savePropertyAction,
   type PropertyFormState,
@@ -73,6 +75,7 @@ function Field({
           id={name}
           name={name}
           rows={rows ?? 4}
+          autoComplete="off"
           defaultValue={defaultValue ?? ""}
           required={required}
           className={className}
@@ -82,6 +85,7 @@ function Field({
           id={name}
           name={name}
           type={type}
+          autoComplete="off"
           step={type === "number" ? "any" : undefined}
           defaultValue={defaultValue ?? ""}
           required={required}
@@ -96,9 +100,19 @@ export function PropertyEditorForm({
   property,
   published = true,
 }: PropertyEditorFormProps) {
+  const router = useRouter();
   const [state, action, pending] = useActionState(savePropertyAction, initialState);
+  const savedTo = state.savedTo;
+
+  useEffect(() => {
+    if (!shouldOpenSavedProperty(window.location.pathname, savedTo)) {
+      return;
+    }
+    router.push(savedTo);
+  }, [router, savedTo]);
+
   const listing = getListingMode(property?.tags);
-  const galleryUrls = (property?.media.gallery ?? [])
+  const galleryUrls = (property?.media?.gallery ?? [])
     .map((img) => img.src)
     .join("\n");
   const extraTags = (property?.tags ?? [])
@@ -106,7 +120,7 @@ export function PropertyEditorForm({
     .join(", ");
 
   return (
-    <form action={action} className="space-y-8">
+    <form action={action} autoComplete="off" className="space-y-8">
       {property ? <input type="hidden" name="id" value={property.id} /> : null}
 
       <section className="grid gap-5 sm:grid-cols-2">
@@ -119,6 +133,7 @@ export function PropertyEditorForm({
           <select
             id="propertyType"
             name="propertyType"
+            autoComplete="off"
             defaultValue={property?.propertyType ?? "house"}
             className="mt-2 w-full rounded-[var(--radius-sm)] border border-line bg-background px-3 py-2.5 text-sm outline-none focus:border-accent"
           >
@@ -136,6 +151,7 @@ export function PropertyEditorForm({
           <select
             id="status"
             name="status"
+            autoComplete="off"
             defaultValue={property?.status ?? "available"}
             className="mt-2 w-full rounded-[var(--radius-sm)] border border-line bg-background px-3 py-2.5 text-sm outline-none focus:border-accent"
           >
@@ -153,6 +169,7 @@ export function PropertyEditorForm({
           <select
             id="listing"
             name="listing"
+            autoComplete="off"
             defaultValue={listing}
             className="mt-2 w-full rounded-[var(--radius-sm)] border border-line bg-background px-3 py-2.5 text-sm outline-none focus:border-accent"
           >
@@ -190,14 +207,14 @@ export function PropertyEditorForm({
       </section>
 
       <section className="grid gap-5 sm:grid-cols-2">
-        <Field label="Ciudad" name="city" defaultValue={property?.location.city} />
-        <Field label="Departamento / región" name="region" defaultValue={property?.location.region} />
-        <Field label="País" name="country" defaultValue={property?.location.country ?? "Honduras"} />
-        <Field label="Dirección" name="address" defaultValue={property?.location.address} />
+        <Field label="Ciudad" name="city" defaultValue={property?.location?.city} />
+        <Field label="Departamento / región" name="region" defaultValue={property?.location?.region} />
+        <Field label="País" name="country" defaultValue={property?.location?.country ?? "Honduras"} />
+        <Field label="Dirección" name="address" defaultValue={property?.location?.address} />
         <Field
           label="Etiqueta de ubicación"
           name="locationLabel"
-          defaultValue={property?.location.label}
+          defaultValue={property?.location?.label}
         />
       </section>
 
@@ -240,18 +257,18 @@ export function PropertyEditorForm({
 
       <ImageMediaFields
         propertyId={property?.id}
-        initialHeroSrc={property?.media.heroImage.src}
-        initialHeroAlt={property?.media.heroImage.alt ?? property?.name}
+        initialHeroSrc={property?.media?.heroImage?.src}
+        initialHeroAlt={property?.media?.heroImage?.alt ?? property?.name}
         initialGalleryUrls={galleryUrls}
         fallbackAlt={property?.name}
       />
 
       <section className="grid gap-5 sm:grid-cols-2">
-        <Field label="SEO título" name="seoTitle" defaultValue={property?.seo.title} />
+        <Field label="SEO título" name="seoTitle" defaultValue={property?.seo?.title} />
         <Field
           label="SEO descripción"
           name="seoDescription"
-          defaultValue={property?.seo.description}
+          defaultValue={property?.seo?.description}
           as="textarea"
           rows={2}
         />
@@ -281,7 +298,7 @@ export function PropertyEditorForm({
           <input
             type="checkbox"
             name="noIndex"
-            defaultChecked={property?.seo.noIndex}
+            defaultChecked={property?.seo?.noIndex}
             className="size-4 accent-[var(--accent)]"
           />
           No indexar (SEO)

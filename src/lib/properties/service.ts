@@ -1,5 +1,6 @@
 import { getPropertiesDataSource } from "@/lib/supabase/env";
 import { jsonPropertyRepository } from "./json-repository";
+import { resolvePropertyRequest } from "./resolve-request";
 import {
   computeStatsFromProperties,
   fetchAllProperties,
@@ -41,6 +42,12 @@ export async function getPropertyById(
     return fetchPropertyById(id);
   }
   return jsonPropertyRepository.getById(id);
+}
+
+export async function resolveRequestedProperty(requested: string) {
+  const bySlug = await getPropertyBySlug(requested);
+  const byId = bySlug ? undefined : await getPropertyById(requested);
+  return resolvePropertyRequest(requested, bySlug, byId);
 }
 
 export async function getCatalogStats() {

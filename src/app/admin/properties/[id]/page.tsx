@@ -58,7 +58,11 @@ export default async function AdminEditPropertyPage({ params }: PageProps) {
           />
         ) : null}
       </div>
-      <PropertyEditorForm property={property} published={row.published} />
+      <PropertyEditorForm
+        key={property.id}
+        property={property}
+        published={row.published}
+      />
     </div>
   );
 }

@@ -29,17 +29,38 @@ export function propertyToRow(
   };
 }
 
+const FALLBACK_HERO_SRC = "https://images.wasi.co/empresas/b20190828112855.png";
+
 export function rowToProperty(row: PropertyRow): Property {
-  const data = row.data;
+  const data = (row.data ?? {}) as Partial<Property>;
+  const name = row.name || data.name || "Sin título";
+  const hero = data.media?.heroImage;
+
   return {
     ...data,
     id: row.id,
     slug: row.slug,
-    name: row.name,
-    status: data.status ?? (row.status as Property["status"]),
+    name,
+    title: data.title || name,
+    status: data.status ?? (row.status as Property["status"]) ?? "available",
     propertyType:
-      data.propertyType ?? (row.property_type as Property["propertyType"]),
-    featured: row.featured,
+      data.propertyType ??
+      (row.property_type as Property["propertyType"]) ??
+      "house",
+    featured: Boolean(row.featured),
+    location: data.location ?? { label: name, country: "Honduras" },
+    media: {
+      gallery: data.media?.gallery ?? [],
+      video: data.media?.video,
+      virtualTour: data.media?.virtualTour,
+      heroImage: {
+        src: hero?.src?.trim() || FALLBACK_HERO_SRC,
+        alt: hero?.alt?.trim() || name,
+        width: hero?.width,
+        height: hero?.height,
+      },
+    },
+    seo: data.seo ?? { title: name },
   };
 }
 

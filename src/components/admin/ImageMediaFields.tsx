@@ -171,6 +171,7 @@ export function ImageMediaFields({
           name="heroImageSrc"
           type="text"
           inputMode="url"
+          autoComplete="off"
           value={heroSrc}
           onChange={(e) => setHeroSrc(e.target.value)}
           placeholder="https://… (puede dejarla vacía y subir la foto después)"
@@ -232,6 +233,7 @@ export function ImageMediaFields({
           id="heroImageAlt"
           name="heroImageAlt"
           type="text"
+          autoComplete="off"
           defaultValue={initialHeroAlt || fallbackAlt}
           className={fieldClassName}
         />
@@ -366,6 +368,7 @@ export function ImageMediaFields({
               name="galleryUrlDraft"
               type="text"
               inputMode="url"
+              autoComplete="off"
               value={galleryUrlDraft}
               onChange={(e) => setGalleryUrlDraft(e.target.value)}
               placeholder="https://…"

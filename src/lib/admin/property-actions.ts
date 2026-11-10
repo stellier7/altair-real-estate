@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { requireStaffProfile } from "@/lib/admin/auth";
 import { buildPropertyFromForm } from "@/lib/admin/build-property-from-form";
 import { validatePropertyImageUrls } from "@/lib/admin/image-url";
+import { propertyEditorPath } from "@/lib/admin/editor-navigation";
 import { explainPropertySaveError } from "@/lib/admin/save-error";
 import { canDeleteProperties } from "@/lib/admin/types";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
@@ -14,6 +15,7 @@ import { propertyToRow } from "@/lib/properties/serialize";
 export type PropertyFormState = {
   error?: string;
   success?: string;
+  savedTo?: string;
 };
 
 async function writeAudit(
@@ -105,7 +107,7 @@ export async function savePropertyAction(
       slug: property.slug,
     });
     revalidatePropertyPaths(property.slug);
-    redirect(`/admin/properties/${property.id}`);
+    return { savedTo: propertyEditorPath(property.id) };
   } catch (error) {
     if (isNextRedirect(error)) {
       throw error;

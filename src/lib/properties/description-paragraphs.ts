@@ -5,10 +5,6 @@ const CONTINUATION_START_RE = /^[a-záéíóúüñ]/;
 const DANGLING_WORD_RE =
   /(?:^|[\s(])(?:y|e|o|u|de|del|al|el|la|los|las|en|con|por|para|más|mas|un|una|su|sus|que|a)\s*$/i;
 
-function collapseBlock(block: string): string {
-  return block.replace(/\n/g, " ").replace(/\s+/g, " ").trim();
-}
-
 function isNewItem(line: string): boolean {
   return NEW_ITEM_RE.test(line) || HEADING_RE.test(line);
 }
@@ -27,11 +23,13 @@ function shouldJoinWrappedLine(previous: string, next: string): boolean {
   return DANGLING_WORD_RE.test(previous);
 }
 
-/** Split long property copy into blocks (Wasi exports use blank lines between facts). */
+/** Split long property copy into blocks. Wasi uses blank lines; the panel uses one break per fact. */
 export function splitDescriptionParagraphs(text: string): string[] {
   const lines = text
-    .split(/\n\s*\n/)
-    .map(collapseBlock)
+    .replace(/\r\n/g, "\n")
+    .replace(/\r/g, "\n")
+    .split("\n")
+    .map((line) => line.replace(/\s+/g, " ").trim())
     .filter(Boolean);
 
   const merged: string[] = [];
