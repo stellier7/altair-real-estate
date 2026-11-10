@@ -45,22 +45,6 @@ export function HomeHero({ heroImage, stats }: HomeHeroProps) {
         </RevealOnScroll>
         <RevealOnScroll delayMs={100}>
           <p className="prose-editorial mt-5 max-w-2xl sm:mt-6">{heroCopy.lead}</p>
-          <form className="hero-search" action="/properties" method="get" role="search">
-            <label className="sr-only" htmlFor="hero-property-search">
-              Buscar propiedades por título, zona o código
-            </label>
-            <input
-              id="hero-property-search"
-              type="search"
-              name="q"
-              placeholder="Título, zona o código"
-              autoComplete="off"
-              enterKeyHint="search"
-            />
-            <Button type="submit" variant="primary" className="hero-search-submit">
-              Buscar
-            </Button>
-          </form>
         </RevealOnScroll>
 
         {stats.total > 0 ? (
@@ -105,9 +89,25 @@ export function HomeHero({ heroImage, stats }: HomeHeroProps) {
               <span className="hidden sm:inline">Propiedades en alquiler</span>
             </Button>
           </div>
+          <form className="hero-search" action="/properties" method="get" role="search">
+            <label className="sr-only" htmlFor="hero-property-search">
+              Buscar propiedades por título, zona o código
+            </label>
+            <input
+              id="hero-property-search"
+              type="search"
+              name="q"
+              placeholder="Título, zona o código"
+              autoComplete="off"
+              enterKeyHint="search"
+            />
+            <Button type="submit" variant="primary" className="hero-search-submit">
+              Buscar
+            </Button>
+          </form>
           <Link
             href="/contact"
-            className="focus-ring hero-ink-link type-meta inline-flex min-h-11 max-w-full items-center py-2 text-pretty underline underline-offset-4 transition-colors"
+            className="focus-ring hero-ink-link type-meta inline-flex min-h-11 max-w-full items-center self-start py-2 text-pretty underline underline-offset-4 transition-colors"
           >
             <span className="sm:hidden">Formulario de contacto</span>
             <span className="hidden sm:inline">También puedes usar el formulario de contacto</span>

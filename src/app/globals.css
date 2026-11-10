@@ -243,25 +243,19 @@ body::before {
   flex-direction: column;
   justify-content: flex-end;
   padding-top: clamp(4.75rem, 11vh, 7rem);
-  padding-bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
+  padding-bottom: 5.75rem;
 }
 
 @media (min-width: 640px) {
   .hero-panel {
-    padding-bottom: max(2.5rem, env(safe-area-inset-bottom, 0px));
+    padding-bottom: 2.5rem;
   }
 }
 
 .hero-stat-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.5rem;
-}
-
-@media (min-width: 30rem) {
-  .hero-stat-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
 }
 
 @media (min-width: 640px) {
@@ -312,7 +306,6 @@ body::before {
   gap: 0.5rem;
   width: 100%;
   max-width: 36rem;
-  margin-top: 1.5rem;
 }
 
 .hero-search input {
@@ -370,6 +363,17 @@ body::before {
   margin-top: 2rem;
   padding-top: 1.5rem;
   border-top: 1px solid color-mix(in srgb, var(--line) 85%, transparent);
+}
+
+@media (max-width: 639px) {
+  .hero-stat-band {
+    margin-top: 1.25rem;
+    padding-top: 0.85rem;
+  }
+
+  .hero-actions {
+    margin-top: 1.25rem;
+  }
 }
 
 .hero-stat-pill {
