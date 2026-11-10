@@ -45,6 +45,22 @@ export function HomeHero({ heroImage, stats }: HomeHeroProps) {
         </RevealOnScroll>
         <RevealOnScroll delayMs={100}>
           <p className="prose-editorial mt-5 max-w-2xl sm:mt-6">{heroCopy.lead}</p>
+          <form className="hero-search" action="/properties" method="get" role="search">
+            <label className="sr-only" htmlFor="hero-property-search">
+              Buscar propiedades por título, zona o código
+            </label>
+            <input
+              id="hero-property-search"
+              type="search"
+              name="q"
+              placeholder="Título, zona o código"
+              autoComplete="off"
+              enterKeyHint="search"
+            />
+            <Button type="submit" variant="primary" className="hero-search-submit">
+              Buscar
+            </Button>
+          </form>
         </RevealOnScroll>
 
         {stats.total > 0 ? (
