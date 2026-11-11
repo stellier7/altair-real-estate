@@ -1,18 +1,14 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import {
-  propertyEditorPath,
-  shouldOpenSavedProperty,
-} from "./editor-navigation";
+import { propertyEditorPath } from "./editor-navigation";
 
-test("saving a new property opens its editor without reloading the same page", () => {
-  const savedTo = propertyEditorPath("p-1794256301039");
-
-  assert.equal(savedTo, "/admin/properties/p-1794256301039");
+test("a saved property links back to its panel page", () => {
   assert.equal(
-    shouldOpenSavedProperty("/admin/properties/new", savedTo),
-    true,
+    propertyEditorPath("p-1794256301039"),
+    "/admin/properties/p-1794256301039",
   );
-  assert.equal(shouldOpenSavedProperty(savedTo, savedTo), false);
-  assert.equal(shouldOpenSavedProperty(`${savedTo}/`, savedTo), false);
+  assert.equal(
+    propertyEditorPath("id with spaces"),
+    "/admin/properties/id%20with%20spaces",
+  );
 });

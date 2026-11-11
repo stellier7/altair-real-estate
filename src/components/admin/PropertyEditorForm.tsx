@@ -1,8 +1,7 @@
 "use client";
 
-import { useActionState, useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { shouldOpenSavedProperty } from "@/lib/admin/editor-navigation";
+import { useActionState, useCallback, useEffect, useRef, useState } from "react";
+import { explainUnknownSaveFailure } from "@/lib/admin/save-error";
 import {
   savePropertyAction,
   type PropertyFormState,
@@ -12,6 +11,7 @@ import { normalizeDescriptionText } from "@/lib/properties/description-paragraph
 import { getListingMode } from "@/lib/properties/specs";
 import { Button } from "@/components/ui/Button";
 import { ImageMediaFields } from "@/components/admin/ImageMediaFields";
+import { SaveResultNotice } from "@/components/admin/SaveResultNotice";
 
 const PROPERTY_TYPES = [
   "residential",
@@ -45,6 +45,17 @@ type PropertyEditorFormProps = {
 };
 
 const initialState: PropertyFormState = {};
+
+async function submitPropertyForm(
+  prev: PropertyFormState,
+  formData: FormData,
+): Promise<PropertyFormState> {
+  try {
+    return await savePropertyAction(prev, formData);
+  } catch (error) {
+    return { error: explainUnknownSaveFailure(error) };
+  }
+}
 
 function Field({
   label,
@@ -108,20 +119,19 @@ export function PropertyEditorForm({
   property,
   published = true,
 }: PropertyEditorFormProps) {
-  const router = useRouter();
+  const noticeRef = useRef<HTMLDivElement>(null);
   const [uploadsBusy, setUploadsBusy] = useState(false);
   const handleUploadsBusy = useCallback((busy: boolean) => {
     setUploadsBusy(busy);
   }, []);
-  const [state, action, pending] = useActionState(savePropertyAction, initialState);
-  const savedTo = state.savedTo;
+  const [state, action, pending] = useActionState(submitPropertyForm, initialState);
 
   useEffect(() => {
-    if (!shouldOpenSavedProperty(window.location.pathname, savedTo)) {
+    if (!state.error && !state.savedTo) {
       return;
     }
-    router.push(savedTo);
-  }, [router, savedTo]);
+    noticeRef.current?.scrollIntoView({ block: "nearest" });
+  }, [state.error, state.savedTo]);
 
   const listing = getListingMode(property?.tags);
   const galleryUrls = (property?.media?.gallery ?? [])
@@ -141,6 +151,10 @@ export function PropertyEditorForm({
       }}
     >
       {property ? <input type="hidden" name="id" value={property.id} /> : null}
+
+      <div ref={noticeRef}>
+        <SaveResultNotice state={state} />
+      </div>
 
       <section className="grid gap-5 sm:grid-cols-2">
         <Field label="Nombre / título" name="name" defaultValue={property?.name} required />
@@ -324,12 +338,6 @@ export function PropertyEditorForm({
           No indexar (SEO)
         </label>
       </section>
-
-      {state.error ? (
-        <p className="rounded-[var(--radius-sm)] border border-red-300/60 bg-red-50 px-3 py-2 text-sm text-red-800">
-          {state.error}
-        </p>
-      ) : null}
 
       <Button type="submit" disabled={pending || uploadsBusy}>
         {pending ? "Guardando…" : uploadsBusy ? "Subiendo fotos…" : property ? "Guardar cambios" : "Crear inmueble"}

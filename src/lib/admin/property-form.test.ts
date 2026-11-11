@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { buildPropertyFromForm } from "./build-property-from-form";
 import type { Property } from "@/lib/properties/types";
-import { explainPropertySaveError } from "./save-error";
+import { explainPropertySaveError, explainUnknownSaveFailure } from "./save-error";
 import { validatePropertyImageFile } from "./image-file";
 import { propertySearchOrFilter } from "./property-search";
 
@@ -149,6 +149,29 @@ test("duplicate slug errors are explained in Spanish", () => {
   );
   assert.match(message, /slug/i);
   assert.match(message, /Ya existe/);
+});
+
+test("a lost server response explains the blank browser page", () => {
+  const message = explainUnknownSaveFailure(
+    Object.assign(new Error("Failed to fetch"), { digest: "abc123" }),
+  );
+  assert.match(message, /página en blanco/);
+  assert.match(message, /abc123/);
+});
+
+test("an outdated panel explains that the page must be reloaded", () => {
+  const message = explainPropertySaveError(
+    'Failed to find Server Action "abc". This request might be from an older or newer deployment.',
+  );
+  assert.match(message, /desactualizada/);
+});
+
+test("a redirect during save tells her to sign in again", () => {
+  const message = explainUnknownSaveFailure({
+    message: "NEXT_REDIRECT",
+    digest: "NEXT_REDIRECT;replace;/admin/login",
+  });
+  assert.match(message, /sesión expiró/i);
 });
 
 test("iPhone HEIC uploads explain how to continue", () => {

@@ -122,3 +122,36 @@ test("the Lomas house editor keeps its photos and locks the fields Edge was refi
   assert.equal(fieldIsReadOnly(html, "priceAmount"), true);
   assert.equal(html.includes("Guardar cambios"), true);
 });
+
+test("a failed save stays on the form and explains the blank page", async () => {
+  const { SaveResultNotice } = await import("./SaveResultNotice");
+  const html = renderToStaticMarkup(
+    React.createElement(SaveResultNotice, {
+      state: {
+        error:
+          "El navegador no recibió respuesta del servidor. Por eso puede mostrar una página en blanco. Recargue el panel e intente de nuevo.",
+      },
+    }),
+  );
+
+  assert.match(html, /No se pudo guardar el inmueble/);
+  assert.match(html, /página en blanco/);
+  assert.match(html, /role="alert"/);
+});
+
+test("a failed admin page shows the cause and a way back", async () => {
+  const { AdminProblem } = await import("./AdminProblem");
+  const html = renderToStaticMarkup(
+    React.createElement(AdminProblem, {
+      title: "No se pudo completar la acción",
+      detail: "La sesión expiró. Vuelva a entrar en el panel y guarde otra vez.",
+      code: "digest-123",
+    }),
+  );
+
+  assert.match(html, /No se pudo completar la acción/);
+  assert.match(html, /sesión expiró/);
+  assert.match(html, /digest-123/);
+  assert.match(html, /href="\/admin\/properties"/);
+  assert.match(html, /href="\/admin\/login"/);
+});
