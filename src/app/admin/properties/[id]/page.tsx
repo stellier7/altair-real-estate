@@ -4,8 +4,10 @@ import { requireStaffProfile } from "@/lib/admin/auth";
 import { canDeleteProperties } from "@/lib/admin/types";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { AdminProblem } from "@/components/admin/AdminProblem";
 import { PropertyEditorForm } from "@/components/admin/PropertyEditorForm";
 import { DeletePropertyButton } from "@/components/admin/DeletePropertyButton";
+import { explainPropertySaveError } from "@/lib/admin/save-error";
 import { rowToProperty, type PropertyRow } from "@/lib/properties/serialize";
 
 type PageProps = {
@@ -26,7 +28,16 @@ export default async function AdminEditPropertyPage({ params }: PageProps) {
     .eq("id", id)
     .maybeSingle();
 
-  if (error || !data) {
+  if (error) {
+    return (
+      <AdminProblem
+        title="No se pudo abrir el inmueble"
+        detail={explainPropertySaveError(error.message)}
+      />
+    );
+  }
+
+  if (!data) {
     notFound();
   }
 

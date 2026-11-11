@@ -2,11 +2,15 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { requireStaffProfile } from "@/lib/admin/auth";
+import { getOptionalStaffProfile, requireStaffProfile } from "@/lib/admin/auth";
 import { buildPropertyFromForm } from "@/lib/admin/build-property-from-form";
 import { validatePropertyImageUrls } from "@/lib/admin/image-url";
 import { propertyEditorPath } from "@/lib/admin/editor-navigation";
-import { explainPropertySaveError } from "@/lib/admin/save-error";
+import {
+  SESSION_EXPIRED_MESSAGE,
+  explainPropertySaveError,
+  explainUnknownSaveFailure,
+} from "@/lib/admin/save-error";
 import { canDeleteProperties } from "@/lib/admin/types";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import type { Property } from "@/lib/properties/types";
@@ -16,22 +20,28 @@ export type PropertyFormState = {
   error?: string;
   success?: string;
   savedTo?: string;
+  publicPath?: string;
+  savedName?: string;
 };
 
 async function writeAudit(
+  actorId: string,
   action: string,
   entityId: string,
   detail?: Record<string, unknown>,
 ) {
-  const profile = await requireStaffProfile();
-  const supabase = await createSupabaseServerClient();
-  await supabase.from("audit_log").insert({
-    actor_id: profile.id,
-    action,
-    entity_type: "property",
-    entity_id: entityId,
-    detail: detail ?? null,
-  });
+  try {
+    const supabase = await createSupabaseServerClient();
+    await supabase.from("audit_log").insert({
+      actor_id: actorId,
+      action,
+      entity_type: "property",
+      entity_id: entityId,
+      detail: detail ?? null,
+    });
+  } catch {
+    // The listing is already stored. An audit failure must not replace the form with a blank browser page.
+  }
 }
 
 function revalidatePropertyPaths(slug: string) {
@@ -67,7 +77,10 @@ export async function savePropertyAction(
   formData: FormData,
 ): Promise<PropertyFormState> {
   try {
-    const profile = await requireStaffProfile();
+    const profile = await getOptionalStaffProfile();
+    if (!profile) {
+      return { error: SESSION_EXPIRED_MESSAGE };
+    }
     const existingId = (formData.get("id") as string)?.trim();
     const supabase = await createSupabaseServerClient();
 
@@ -103,17 +116,20 @@ export async function savePropertyAction(
       return { error: explainPropertySaveError(error.message) };
     }
 
-    await writeAudit(existingId ? "update" : "create", property.id, {
+    await writeAudit(profile.id, existingId ? "update" : "create", property.id, {
       slug: property.slug,
     });
     revalidatePropertyPaths(property.slug);
-    return { savedTo: propertyEditorPath(property.id) };
+    return {
+      savedTo: propertyEditorPath(property.id),
+      publicPath: `/properties/${encodeURIComponent(property.slug)}`,
+      savedName: property.name,
+    };
   } catch (error) {
     if (isNextRedirect(error)) {
-      throw error;
+      return { error: SESSION_EXPIRED_MESSAGE };
     }
-    const message = error instanceof Error ? error.message : "No se pudo guardar el inmueble.";
-    return { error: explainPropertySaveError(message) };
+    return { error: explainUnknownSaveFailure(error) };
   }
 }
 
@@ -135,7 +151,7 @@ export async function deletePropertyAction(formData: FormData): Promise<void> {
     throw new Error(error.message);
   }
 
-  await writeAudit("delete", id, { slug });
+  await writeAudit(profile.id, "delete", id, { slug });
   revalidatePropertyPaths(slug);
   redirect("/admin/properties");
 }
@@ -173,7 +189,7 @@ export async function saveFeaturedSlugsAction(formData: FormData): Promise<void>
     }
   }
 
-  await writeAudit("update_featured", "site_settings", { slugs });
+  await writeAudit(profile.id, "update_featured", "site_settings", { slugs });
   revalidatePath("/");
   revalidatePath("/admin");
   redirect("/admin?saved=featured");
