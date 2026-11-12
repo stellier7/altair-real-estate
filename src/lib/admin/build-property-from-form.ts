@@ -4,6 +4,7 @@ import {
   listingTagsFromMode,
   parseListingMode,
 } from "@/lib/properties/specs";
+import { pricingFromParts } from "@/lib/properties/pricing";
 import { slugifyName } from "@/lib/properties/serialize";
 
 function parseOptionalNumber(value: FormDataEntryValue | null): number | undefined {
@@ -72,6 +73,10 @@ export function buildPropertyFromForm(
   const priceDisplay = (formData.get("priceDisplay") as string)?.trim();
   const priceAmount = parseOptionalNumber(formData.get("priceAmount"));
   const currency = (formData.get("currency") as string)?.trim() || "USD";
+  const saleAmount = parseOptionalNumber(formData.get("saleAmount"));
+  const rentAmount = parseOptionalNumber(formData.get("rentAmount"));
+  const saleCurrency = (formData.get("saleCurrency") as string)?.trim() || "USD";
+  const rentCurrency = (formData.get("rentCurrency") as string)?.trim() || "USD";
   const priceOnRequest = formData.get("priceOnRequest") === "on";
   const heroSrc =
     (formData.get("heroImageSrc") as string)?.trim() ||
@@ -133,14 +138,14 @@ export function buildPropertyFromForm(
       city,
       address,
     },
-    pricing: priceOnRequest
-      ? { priceOnRequest: true, display: "Consultar precio" }
-      : {
-          amount: priceAmount,
-          currency,
-          display: priceDisplay || undefined,
-          priceOnRequest: false,
-        },
+    pricing: pricingFromParts({
+      sale: saleAmount !== undefined ? { amount: saleAmount, currency: saleCurrency } : undefined,
+      rent: rentAmount !== undefined ? { amount: rentAmount, currency: rentCurrency } : undefined,
+      legacyAmount: priceAmount,
+      legacyCurrency: currency,
+      priceDisplay,
+      priceOnRequest,
+    }),
     media: {
       heroImage: {
         src: heroSrc || "https://images.wasi.co/empresas/b20190828112855.png",

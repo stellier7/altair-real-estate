@@ -218,9 +218,10 @@ test("the Torre Atlas form keeps both prices and the requested photo order", () 
       region: "Francisco Morazán",
       country: "Honduras",
       locationLabel: "Torre Atlas, Tegucigalpa",
-      priceDisplay: "L.5,200,000 venta · $1,400 renta",
-      priceAmount: "5200000",
-      currency: "HNL",
+      saleAmount: "5200000",
+      saleCurrency: "HNL",
+      rentAmount: "1400",
+      rentCurrency: "USD",
       totalArea: "57.2",
       bedrooms: "2",
       bathrooms: "2",
@@ -248,7 +249,12 @@ test("the Torre Atlas form keeps both prices and the requested photo order", () 
     property.tags?.filter((tag) => tag === "venta" || tag === "alquiler"),
     ["venta", "alquiler"],
   );
-  assert.equal(property.pricing?.display, "L.5,200,000 venta · $1,400 renta");
+  assert.equal(property.pricing?.sale?.amount, 5200000);
+  assert.equal(property.pricing?.sale?.currency, "HNL");
+  assert.equal(property.pricing?.rent?.amount, 1400);
+  assert.equal(property.pricing?.rent?.currency, "USD");
+  assert.equal(property.pricing?.amount, 5200000);
+  assert.equal(property.pricing?.display, "Venta L.5,200,000 · Renta $1,400");
   assert.equal(property.residential?.totalArea, 57.2);
   assert.equal(property.residential?.bedrooms, 2);
   assert.equal(property.residential?.bathrooms, 2);

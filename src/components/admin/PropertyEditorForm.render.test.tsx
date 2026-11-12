@@ -96,11 +96,13 @@ test("a new house form does not arrive filled with another listing", async () =>
   assert.equal(valueOf(html, "name"), "");
   assert.equal(valueOf(html, "seoTitle"), "");
   assert.equal(valueOf(html, "locationLabel"), "");
-  assert.equal(valueOf(html, "priceAmount"), "");
+  assert.equal(valueOf(html, "saleAmount"), "");
+  assert.equal(valueOf(html, "rentAmount"), "");
   assert.equal(valueOf(html, "galleryUrls"), "");
   assert.equal(fieldIsReadOnly(html, "seoTitle"), true);
   assert.equal(fieldIsReadOnly(html, "locationLabel"), true);
-  assert.equal(fieldIsReadOnly(html, "priceAmount"), true);
+  assert.equal(fieldIsReadOnly(html, "saleAmount"), true);
+  assert.equal(fieldIsReadOnly(html, "rentAmount"), true);
   assert.equal(html.includes("Crear inmueble"), true);
   assert.match(html, /autocomplete="off"/i);
 });
@@ -119,7 +121,9 @@ test("the Lomas house editor keeps its photos and locks the fields Edge was refi
   assert.equal(valueOf(html, "heroImageSrc"), "https://example.com/fachada.jpg");
   assert.equal(fieldIsReadOnly(html, "seoTitle"), true);
   assert.equal(fieldIsReadOnly(html, "locationLabel"), true);
-  assert.equal(fieldIsReadOnly(html, "priceAmount"), true);
+  assert.equal(valueOf(html, "saleAmount"), "");
+  assert.equal(valueOf(html, "rentAmount"), "550000");
+  assert.equal(fieldIsReadOnly(html, "rentAmount"), true);
   assert.equal(html.includes("Guardar cambios"), true);
 });
 

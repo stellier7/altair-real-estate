@@ -1,5 +1,5 @@
 import { normalizeWasiImageUrl } from "@/lib/images/wasi-url";
-import type { Property, PropertyPricing, PropertyType } from "./types";
+import type { ListedPrice, Property, PropertyPricing, PropertyType } from "./types";
 
 export type AltairCatalog = {
   agency: {
@@ -114,9 +114,36 @@ function listingTags(raw: AltairRawProperty): string[] {
   return ["listado", kind];
 }
 
+function dualListingPrice(label: string): PropertyPricing | undefined {
+  const pairs = [...label.matchAll(/(L\.?|\$)\s*([\d][\d,]*)\s*(venta|renta|alquiler)/gi)];
+  let sale: ListedPrice | undefined;
+  let rent: ListedPrice | undefined;
+  for (const pair of pairs) {
+    const amount = Number.parseInt(pair[2].replace(/,/g, ""), 10);
+    if (!Number.isFinite(amount)) continue;
+    const price = { amount, currency: pair[1].includes("$") ? "USD" : "HNL" };
+    const role = pair[3].toLowerCase();
+    if (role === "venta") {
+      sale = price;
+    } else if (role === "renta" || role === "alquiler") {
+      rent = price;
+    }
+  }
+  if (sale?.amount === undefined || rent?.amount === undefined) return undefined;
+  return {
+    amount: sale.amount,
+    currency: sale.currency,
+    display: label,
+    sale,
+    rent,
+  };
+}
+
 function extractPricing(raw: AltairRawProperty): PropertyPricing | undefined {
   if (raw.priceLabel?.trim()) {
     const label = raw.priceLabel.trim();
+    const both = dualListingPrice(label);
+    if (both) return both;
     const usd = label.match(/^\$\s*([\d][\d,]*)/);
     if (usd) {
       const amount = Number.parseInt(usd[1].replace(/,/g, ""), 10);

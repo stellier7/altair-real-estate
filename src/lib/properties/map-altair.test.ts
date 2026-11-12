@@ -16,6 +16,10 @@ test("the Torre Atlas apartment is sale and rent, with the visit order", () => {
   assert.equal(property.pricing?.display, "L.5,200,000 venta · $1,400 renta");
   assert.equal(property.pricing?.amount, 5200000);
   assert.equal(property.pricing?.currency, "HNL");
+  assert.equal(property.pricing?.sale?.amount, 5200000);
+  assert.equal(property.pricing?.sale?.currency, "HNL");
+  assert.equal(property.pricing?.rent?.amount, 1400);
+  assert.equal(property.pricing?.rent?.currency, "USD");
   assert.equal(property.residential?.totalArea, 57.2);
   assert.equal(property.residential?.bedrooms, 2);
   assert.equal(property.residential?.bathrooms, 2);

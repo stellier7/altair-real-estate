@@ -45,11 +45,18 @@ export type PropertyLocation = {
   coordinates?: { lat: number; lng: number };
 };
 
+export type ListedPrice = {
+  amount?: number;
+  currency?: string;
+};
+
 export type PropertyPricing = {
   amount?: number;
   currency?: string;
   display?: string;
   priceOnRequest?: boolean;
+  sale?: ListedPrice;
+  rent?: ListedPrice;
 };
 
 export type PropertyMedia = {

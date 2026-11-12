@@ -8,6 +8,7 @@ import {
 } from "@/lib/admin/property-actions";
 import type { Property } from "@/lib/properties/types";
 import { normalizeDescriptionText } from "@/lib/properties/description-paragraphs";
+import { editorPriceFields } from "@/lib/properties/pricing";
 import { getListingMode } from "@/lib/properties/specs";
 import { Button } from "@/components/ui/Button";
 import { ImageMediaFields } from "@/components/admin/ImageMediaFields";
@@ -55,6 +56,42 @@ async function submitPropertyForm(
   } catch (error) {
     return { error: explainUnknownSaveFailure(error) };
   }
+}
+
+const CURRENCIES = ["USD", "HNL"] as const;
+
+function CurrencyField({
+  label,
+  name,
+  defaultValue,
+}: {
+  label: string;
+  name: string;
+  defaultValue: string;
+}) {
+  const current = defaultValue.trim().toUpperCase() || "USD";
+  const known = current === "USD" || current === "HNL";
+  const options = known ? [...CURRENCIES] : [current, ...CURRENCIES];
+  return (
+    <div>
+      <label htmlFor={name} className="type-meta-caps text-muted">
+        {label}
+      </label>
+      <select
+        id={name}
+        name={name}
+        autoComplete="off"
+        defaultValue={current}
+        className="mt-2 w-full rounded-[var(--radius-sm)] border border-line bg-background px-3 py-2.5 text-sm outline-none focus:border-accent"
+      >
+        {options.map((currency) => (
+          <option key={currency} value={currency}>
+            {currency === "USD" ? "Dólares (USD)" : currency === "HNL" ? "Lempiras (HNL)" : currency}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
 }
 
 function Field({
@@ -134,6 +171,9 @@ export function PropertyEditorForm({
   }, [state.error, state.savedTo]);
 
   const listing = getListingMode(property?.tags);
+  const prices = editorPriceFields(property);
+  const hasPriceBox =
+    prices.saleAmount !== undefined || prices.rentAmount !== undefined;
   const galleryUrls = (property?.media?.gallery ?? [])
     .map((img) => img.src)
     .join("\n");
@@ -251,24 +291,40 @@ export function PropertyEditorForm({
         />
       </section>
 
-      <section className="grid gap-5 sm:grid-cols-2">
+      <section className="space-y-5">
+        <p className="text-sm text-muted">
+          Si el inmueble es solo venta o solo renta, llene esa casilla y deje la otra vacía.
+        </p>
+        <div className="grid gap-5 sm:grid-cols-2">
+          <Field
+            label="Precio de venta"
+            name="saleAmount"
+            type="number"
+            defaultValue={prices.saleAmount}
+          />
+          <CurrencyField
+            label="Moneda de venta"
+            name="saleCurrency"
+            defaultValue={prices.saleCurrency}
+          />
+          <Field
+            label="Precio de renta"
+            name="rentAmount"
+            type="number"
+            defaultValue={prices.rentAmount}
+          />
+          <CurrencyField
+            label="Moneda de renta"
+            name="rentCurrency"
+            defaultValue={prices.rentCurrency}
+          />
+        </div>
         <Field
-          label="Precio (texto)"
+          label="Texto del precio (solo si las casillas quedan vacías)"
           name="priceDisplay"
-          defaultValue={property?.pricing?.display}
+          defaultValue={hasPriceBox ? undefined : property?.pricing?.display}
         />
-        <Field
-          label="Monto numérico"
-          name="priceAmount"
-          type="number"
-          defaultValue={property?.pricing?.amount}
-        />
-        <Field
-          label="Moneda"
-          name="currency"
-          defaultValue={property?.pricing?.currency ?? "USD"}
-        />
-        <label className="flex items-end gap-2 pb-3 text-sm">
+        <label className="flex items-center gap-2 text-sm">
           <input
             type="checkbox"
             name="priceOnRequest"

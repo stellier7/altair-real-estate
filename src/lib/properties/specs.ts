@@ -1,3 +1,4 @@
+import { composePriceDisplay } from "./pricing";
 import type { Property, PropertyStatus, PropertyType } from "./types";
 
 const RESIDENTIAL_TYPES: PropertyType[] = [
@@ -160,6 +161,10 @@ export function parsePropertyFilterType(value: string | undefined): PropertyType
 }
 
 export function getDisplayPrice(property: Property): string | null {
+  const composed = composePriceDisplay(property.pricing?.sale, property.pricing?.rent);
+  if (composed) {
+    return composed;
+  }
   const display = property.pricing?.display;
   if (typeof display === "string" && display.trim()) {
     return display.trim();
