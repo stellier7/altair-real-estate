@@ -189,6 +189,78 @@ test("admin search keeps commas inside the filter value", () => {
   assert.match(filter, /id\.eq\."Lomas, ""Guijarro"""/);
 });
 
+test("the Torre Atlas form keeps both prices and the requested photo order", () => {
+  const photos = [
+    "01-entrada.jpg",
+    "02-recibidor.jpg",
+    "03-sala.jpg",
+    "04-sala-sofa.jpg",
+    "05-cocina-comedor.jpg",
+    "06-comedor.jpg",
+    "07-comedor-puerta.jpg",
+    "08-habitacion-principal.jpg",
+    "09-habitacion-principal-ventana.jpg",
+    "10-habitacion-principal-estantes.jpg",
+    "11-habitacion-principal-clima.jpg",
+    "12-habitacion.jpg",
+    "13-habitacion-puerta.jpg",
+    "14-bano.jpg",
+  ].map((name) => `/images/properties/apartamento-torre-atlas/${name}`);
+
+  const property = buildPropertyFromForm(
+    form({
+      name: "Se vende o se renta apartamento amueblado en Torre Atlas",
+      slug: "apartamento-amueblado-torre-atlas",
+      propertyType: "apartment",
+      status: "available",
+      listing: "both",
+      city: "Tegucigalpa",
+      region: "Francisco Morazán",
+      country: "Honduras",
+      locationLabel: "Torre Atlas, Tegucigalpa",
+      priceDisplay: "L.5,200,000 venta · $1,400 renta",
+      priceAmount: "5200000",
+      currency: "HNL",
+      totalArea: "57.2",
+      bedrooms: "2",
+      bathrooms: "2",
+      seoTitle: "Se vende o se renta apartamento amueblado en Torre Atlas",
+      heroImageSrc: photos[0],
+      galleryUrls: photos.slice(1).join("\n"),
+      galleryTouched: "1",
+      description: [
+        "Precio de venta: L.5,200,000",
+        "Precio de renta: $1,400",
+        "Mide 57.2 m²",
+        "2 habitaciones amplias con closet",
+        "2 baños",
+        "Sala",
+        "Comedor",
+        "Cocina",
+        "Más información: 9593-0263",
+        "cilbia@bienesraicesaltair.com",
+      ].join("\n"),
+    }),
+  );
+
+  assert.equal(property.propertyType, "apartment");
+  assert.deepEqual(
+    property.tags?.filter((tag) => tag === "venta" || tag === "alquiler"),
+    ["venta", "alquiler"],
+  );
+  assert.equal(property.pricing?.display, "L.5,200,000 venta · $1,400 renta");
+  assert.equal(property.residential?.totalArea, 57.2);
+  assert.equal(property.residential?.bedrooms, 2);
+  assert.equal(property.residential?.bathrooms, 2);
+  assert.equal(property.media.heroImage.src, photos[0]);
+  assert.deepEqual(
+    property.media.gallery?.map((image) => image.src),
+    photos.slice(1),
+  );
+  assert.match(property.description ?? "", /L\.5,200,000/);
+  assert.match(property.description ?? "", /\$1,400/);
+});
+
 test("a jpg with an empty browser mime type is accepted", () => {
   assert.equal(
     validatePropertyImageFile({
