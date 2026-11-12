@@ -14,7 +14,9 @@
       "city": "Tegucigalpa",
       "locationLabel": "Lomas del Guijarro, Tegucigalpa, Francisco Morazán, Honduras",
       "publicSlug": "renta-casa-lomas-del-guijarro",
-      "aliases": ["casa-alquiler-lomas-del-guijarro-190000001"],
+      "aliases": [
+        "casa-alquiler-lomas-del-guijarro-190000001"
+      ],
       "condition": "",
       "bedrooms": "4",
       "bathrooms": "4",
@@ -202,6 +204,140 @@
         "garaje": "4",
         "tipo de inmueble": "Casa",
         "tipo de negocio": "Alquiler"
+      }
+    },
+    {
+      "id": "190000002",
+      "slug": "apartamento-torre-atlas",
+      "url": "",
+      "title": "Se vende o se renta apartamento amueblado en Torre Atlas",
+      "description": "Apartamento amueblado en Torre Atlas, Tegucigalpa, en venta o en renta.\n\nPrecio de venta: L.5,200,000\n\nPrecio de renta: $1,400\n\nMide 57.2 m²\n\n2 habitaciones amplias con closet\n\n2 baños\n\nSala\n\nComedor\n\nCocina\n\nTerraza con vista panorámica\n\nÁreas sociales amplias\n\nControl de acceso electrónico\n\nComercio y más.\n\nMás información: 9593-0263\n\nCorreo: cilbia@bienesraicesaltair.com",
+      "listingType": "both",
+      "propertyType": "Apartamento",
+      "priceLabel": "L.5,200,000 venta · $1,400 renta",
+      "country": "Honduras",
+      "region": "Francisco Morazán",
+      "city": "Tegucigalpa",
+      "locationLabel": "Torre Atlas, Tegucigalpa, Francisco Morazán, Honduras",
+      "publicSlug": "apartamento-amueblado-torre-atlas",
+      "aliases": [
+        "apartamento-torre-atlas-190000002"
+      ],
+      "condition": "Amueblado",
+      "bedrooms": "2",
+      "bathrooms": "2",
+      "area": "57.2",
+      "code": "190000002",
+      "coverImage": "/images/properties/apartamento-torre-atlas/01-entrada.jpg",
+      "coverAlt": "Entrada del apartamento en Torre Atlas, con espejo ovalado iluminado, banca y planta.",
+      "galleryLimit": 40,
+      "highlights": [
+        "2 habitaciones amplias con closet",
+        "2 baños",
+        "Sala",
+        "Comedor",
+        "Cocina",
+        "Terraza con vista panorámica",
+        "Áreas sociales amplias",
+        "Control de acceso electrónico"
+      ],
+      "images": [
+        {
+          "src": "/images/properties/apartamento-torre-atlas/01-entrada.jpg",
+          "alt": "Entrada del apartamento en Torre Atlas, con espejo ovalado iluminado, banca y planta.",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/properties/apartamento-torre-atlas/02-recibidor.jpg",
+          "alt": "Recibidor con consola de mármol, espejo negro y vista hacia el comedor.",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/properties/apartamento-torre-atlas/03-sala.jpg",
+          "alt": "Sala con sofá negro, comedor de vidrio y vista hacia la cocina.",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/properties/apartamento-torre-atlas/04-sala-sofa.jpg",
+          "alt": "Sala con sofá negro, mesa de centro y comedor al fondo.",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/properties/apartamento-torre-atlas/05-cocina-comedor.jpg",
+          "alt": "Comedor y vista hacia la cocina con refrigerador.",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/properties/apartamento-torre-atlas/06-comedor.jpg",
+          "alt": "Comedor con mesa de vidrio, cuatro sillas y aire acondicionado.",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/properties/apartamento-torre-atlas/07-comedor-puerta.jpg",
+          "alt": "Comedor con mesa de vidrio, puerta de madera y consola al fondo.",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/properties/apartamento-torre-atlas/08-habitacion-principal.jpg",
+          "alt": "Habitación principal con cama amplia, cabecera iluminada y ventana.",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/properties/apartamento-torre-atlas/09-habitacion-principal-ventana.jpg",
+          "alt": "Habitación principal con cama, ventana de persianas y luz en la cabecera.",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/properties/apartamento-torre-atlas/10-habitacion-principal-estantes.jpg",
+          "alt": "Habitación principal con cama, estantes y pared de listones.",
+          "width": 1600,
+          "height": 1200
+        },
+        {
+          "src": "/images/properties/apartamento-torre-atlas/11-habitacion-principal-clima.jpg",
+          "alt": "Habitación principal con cama, aire acondicionado y cabecera iluminada.",
+          "width": 1600,
+          "height": 1200
+        },
+        {
+          "src": "/images/properties/apartamento-torre-atlas/12-habitacion.jpg",
+          "alt": "Segunda habitación con cama, espejo redondo y repisas.",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/properties/apartamento-torre-atlas/13-habitacion-puerta.jpg",
+          "alt": "Segunda habitación vista desde la puerta, con cama y espejo de cuerpo entero.",
+          "width": 1200,
+          "height": 1600
+        },
+        {
+          "src": "/images/properties/apartamento-torre-atlas/14-bano.jpg",
+          "alt": "Baño con lavamanos, inodoro y ducha con puerta de vidrio.",
+          "width": 1200,
+          "height": 1600
+        }
+      ],
+      "attributes": {
+        "país": "Honduras",
+        "estado / departamento": "Francisco Morazán",
+        "ciudad": "Tegucigalpa",
+        "zona": "Torre Atlas",
+        "código": "190000002",
+        "alcobas": "2",
+        "baños": "2",
+        "área": "57.2 m²",
+        "tipo de inmueble": "Apartamento",
+        "tipo de negocio": "Venta y alquiler"
       }
     }
   ]

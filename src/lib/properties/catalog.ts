@@ -27,8 +27,12 @@ function mergeManualProperties(catalog: AltairCatalog): AltairCatalog {
     properties,
     stats: {
       total: properties.length,
-      forSale: properties.filter((property) => property.listingType === "sale").length,
-      forRent: properties.filter((property) => property.listingType === "rent").length,
+      forSale: properties.filter(
+        (property) => property.listingType === "sale" || property.listingType === "both",
+      ).length,
+      forRent: properties.filter(
+        (property) => property.listingType === "rent" || property.listingType === "both",
+      ).length,
     },
   };
 }

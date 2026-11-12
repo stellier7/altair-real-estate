@@ -51,6 +51,8 @@ export type AltairRawProperty = {
   /** How many non-hero images to keep. Scraped listings stay at 8. */
   galleryLimit?: number;
   highlights?: string[];
+  /** Interior area in square meters, for example "57.2". */
+  area?: string | null;
   images: AltairImage[];
   attributes: Record<string, string | undefined>;
 };
@@ -94,6 +96,22 @@ function parseNumber(value: string | null | undefined): number | undefined {
   if (!value) return undefined;
   const n = Number.parseInt(value.replace(/\D/g, ""), 10);
   return Number.isFinite(n) ? n : undefined;
+}
+
+function parseArea(value: string | null | undefined): number | undefined {
+  if (!value) return undefined;
+  const match = value.match(/[\d]+(?:[.,]\d+)?/);
+  if (!match) return undefined;
+  const n = Number.parseFloat(match[0].replace(",", "."));
+  return Number.isFinite(n) ? n : undefined;
+}
+
+function listingTags(raw: AltairRawProperty): string[] {
+  const kind = raw.propertyType?.trim().toLowerCase() || "inmueble";
+  if (raw.listingType === "both") return ["venta", "alquiler", kind];
+  if (raw.listingType === "sale") return ["venta", kind];
+  if (raw.listingType === "rent") return ["alquiler", kind];
+  return ["listado", kind];
 }
 
 function extractPricing(raw: AltairRawProperty): PropertyPricing | undefined {
@@ -174,25 +192,21 @@ export function mapAltairProperty(
     .filter((image) => image.src && image.src !== hero)
     .slice(0, galleryLimit);
 
-  const listingTag =
-    raw.listingType === "sale"
-      ? "venta"
-      : raw.listingType === "rent"
-        ? "alquiler"
-        : "listado";
-
   const locationLabel =
     raw.locationLabel?.trim() ||
     [raw.city, raw.region, raw.country].filter(Boolean).join(", ");
 
+  const area = parseArea(raw.area);
   const residential =
     parseNumber(raw.bedrooms) ||
     parseNumber(raw.bathrooms) ||
-    parseNumber(raw.garage)
+    parseNumber(raw.garage) ||
+    area
       ? {
           bedrooms: parseNumber(raw.bedrooms),
           bathrooms: parseNumber(raw.bathrooms),
           parking: parseNumber(raw.garage),
+          totalArea: area,
         }
       : undefined;
 
@@ -211,7 +225,7 @@ export function mapAltairProperty(
     propertyType,
     status: "available",
     featured,
-    tags: [listingTag, raw.propertyType?.toLowerCase() ?? "inmueble"],
+    tags: listingTags(raw),
     location: {
       label: locationLabel || "Honduras",
       country: raw.country,
