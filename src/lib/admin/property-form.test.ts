@@ -237,7 +237,7 @@ test("the Torre Atlas form keeps both prices and the requested photo order", () 
         "Sala",
         "Comedor",
         "Cocina",
-        "Más información: 9593-0263",
+        "Más información: 9593-0261",
         "cilbia@bienesraicesaltair.com",
       ].join("\n"),
     }),
